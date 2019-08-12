@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://guanxuchao.com/</id>
+    <title>Chao&apos;s Blog</title>
+    <updated>2019-08-12T15:18:47.676Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://guanxuchao.com/"/>
+    <link rel="self" href="https://guanxuchao.com//atom.xml"/>
+    <subtitle>&lt;h4&gt;个人技术博客&lt;/h4&gt;</subtitle>
+    <logo>https://guanxuchao.com//images/avatar.png</logo>
+    <icon>https://guanxuchao.com//favicon.ico</icon>
+    <rights>All rights reserved 2019, Chao&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[项目Day08]]></title>
+        <id>https://guanxuchao.com//post/xiang-mu-day08</id>
+        <link href="https://guanxuchao.com//post/xiang-mu-day08">
+        </link>
+        <updated>2019-08-12T06:30:01.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="38-收货地址-设为默认-持久层">38. 收货地址-设为默认-持久层</h3>
+<p><strong>(a) 规划SQL语句</strong></p>
+<p>要修改一个地址数据的is_default属性的值，改为1：</p>
+<pre><code>update t_address set is_default=1, modified_user=?,modified_time=? where aid=?;   
+</code></pre>
+<p>应该将原来的默认收货地址数据设为非默认，如果要针对原来的默认地址进行修改，则需要额外进行一次查询，这里可以简化成将该用户所有的收货地址设为非默认。这里不会修改<code>modified_time</code>，避免对后续的查询造成影响:</p>
+<pre><code>update t_address set is_default=0 where uid=?;
+</code></pre>
+<p>在设为默认收货地址之前，应该对前台传来的<code>aid</code>进行验证：</p>
+<pre><code>select * from t_address where aid=?
+</code></pre>
+<p>这个查询查什么都可以，重点在于是否能够查到数据。</p>
+<p>在更新之前，还应该验证当前用户是否有操作该地址数据的权限：</p>
+<pre><code>select uid from t_address where aid=?
+</code></pre>
+<p><strong>(b) 接口和抽象方法</strong></p>
+<p>在<code>AddressMapper.java</code>接口中添加以下3个抽象方法：</p>
+<pre><code>Integer updateDefault(
+		@Param(&quot;aid&quot;) Integer aid,
+		@Param(&quot;username&quot;) String username,
+		@Param(&quot;modifiedTime&quot;) Date modifiedTime);
+
+Integer updateNonDefault(Integer uid);
+
+Address findByAid(Integer aid);
+</code></pre>
+<p><strong>(c) 配置映射</strong></p>
+<p>在<code>AddressMapper.xml</code>中配置对应的映射：</p>
+<pre><code>&lt;!-- 将一条收货地址设为默认收货地址 --&gt;
+&lt;!-- Integer updateDefault(
+		@Param(&quot;aid&quot;) Integer aid,
+		@Param(&quot;username&quot;) String username,
+		@Param(&quot;modifiedTime&quot;) Date modifiedTime) --&gt;
+&lt;update id=&quot;updateDefault&quot;&gt;
+	update 
+		t_address 
+	set 
+		is_default=1, 
+		modified_user=#{username},
+		modified_time=#{modifiedTime}
+	where 
+		aid=#{aid};
+&lt;/update&gt;
+
+&lt;!-- 将一个用户的所有收货地址设为非默认 --&gt;
+&lt;!-- Integer updateNonDefault(Integer uid) --&gt;
+&lt;update id=&quot;updateNonDefault&quot;&gt;
+	update 
+		t_address 
+	set 
+		is_default=0 
+	where 
+		uid=#{uid};
+&lt;/update&gt;
+
+&lt;!-- 根据aid查询一条收货地址数据 --&gt;
+&lt;!-- Address findByAid(Integer aid) --&gt;
+&lt;select id=&quot;findByAid&quot;
+	resultMap=&quot;AddressEntityMap&quot;&gt;
+	select 
+		* 
+	from 
+		t_address 
+	where 
+		aid=#{aid}
+&lt;/select&gt;
+</code></pre>
+<p>在<code>AddressMapperTests</code>中开发测试方法：</p>
+<pre><code>@Test
+public void updateNonDefault() {
+	Integer rows=mapper.updateNonDefault(10);
+	System.err.println(rows);
+}
+
+@Test
+public void updateDefault() {
+	Integer row=mapper.updateDefault(14, &quot;张三丰&quot;, new Date());
+	System.err.println(row);
+}
+
+@Test
+public void findByAid() {
+	Address addr=mapper.findByAid(14);
+	System.err.println(addr);
+}
+</code></pre>
+<h3 id="39-收货地址-设为默认-业务层">39. 收货地址-设为默认-业务层</h3>
+<p><strong>(a) 规划异常</strong></p>
+<p>更新操作，可能抛出<code>UpdateException</code>。</p>
+<p>使用aid查询地址数据是否存在，可能抛出<code>AddressNotFoundException</code>。</p>
+<p>查询到的地址的uid和当前操作用户的uid不一致，可能抛出<code>AccessDeniedException</code></p>
+<p><strong>(b) 接口和抽象方法</strong></p>
+<p>在<code>IAddressService</code>接口中定义以下抽象方法：</p>
+<pre><code>void setDefault(Integer aid,Integer uid,String username)throws AddressNotFoundException, AccessDeniedException, UpdateException;
+</code></pre>
+<p><strong>(c) 实现接口</strong></p>
+<p>在<code>AddressServiceImpl</code>中添加持久层<code>AddressMapper</code>中声明的3个抽象方法的私有实现：</p>
+<pre><code>/**
+ * 将一条收货地址设为默认收货地址
+ * @param aid 收货地址id
+ * @param uesrname 最后修改人姓名
+ * @param modifiedTime 最后修改时间
+ * @return 受影响的行数
+ */
+private void updateDefault(Integer aid,
+		String username, Date modifiedTime) throws UpdateException {
+	Integer row=mapper.updateDefault(aid, username, modifiedTime);
+	if(row!=1) {
+		throw new UpdateException(&quot;设置默认收货地址异常！请联系管理员&quot;);
+	}
+	
+}
+
+/**
+ * 将一个用户的所有收货地址设为非默认
+ * @param uid 用户id
+ * @return 受影响的行数
+ */
+private void updateNonDefault(Integer uid) throws UpdateException{
+	Integer rows=mapper.updateNonDefault(uid);
+	if(rows&lt;1) {
+		throw new UpdateException(&quot;设置默认收货地址异常！请联系管理员&quot;);
+	}
+}
+
+/**
+ * 根据aid查询一条收货地址数据
+ * @param aid 收货地址id
+ * @return 收货地址数据 或 null
+ */
+private Address findByAid(Integer aid) {
+	return mapper.findByAid(aid);
+}
+</code></pre>
+<p>在<code>AddressServiceImpl</code>中实现<code>IAddressService</code>声明的抽象方法：</p>
+<pre><code>public void setDefault(Integer aid,Integer uid,String username)throws AddressNotFoundException, AccessDeniedException, UpdateException{
+	// 使用aid查地址数据
+	// 判断结果是否为null
+	// 是：AddressNotFoundException
+
+	// 查询结果中的uid和方法参数的uid是否不一致
+	// 是：AccessDeniedException
+
+	// 将该用户的所有收货地址设为非默认
+
+	// 将该用户指定的收货地址设为默认
+}
+</code></pre>
+<p>代码实现为：</p>
+<pre><code>@Override
+@Transactional
+public void setDefault(Integer aid, Integer uid, String username)
+		throws AddressNotFoundException, AccessDeniedException, UpdateException {
+	// 使用aid查地址数据
+	Address address=findByAid(aid);
+	// 判断结果是否为null
+	if(address==null) {
+		// 是：AddressNotFoundException
+		throw new AddressNotFoundException(&quot;设置默认收货地址异常！地址数据不存在&quot;);
+	}
+
+	// 查询结果中的uid和方法参数的uid是否不一致
+	if(!address.getUid().equals(uid)) {
+		// 是：AccessDeniedException
+		throw new AccessDeniedException(&quot;设置默认收货地址异常！访问权限不足&quot;);
+	}
+
+	// 将该用户的所有收货地址设为非默认
+	updateNonDefault(uid);
+	// 将该用户指定的收货地址设为默认
+	updateDefault(aid, username, new Date());
+}
+</code></pre>
+<p>开发对应的测试用例：</p>
+<h3 id="40-收货地址-设为默认-控制器层">40. 收货地址-设为默认-控制器层</h3>
+<p><strong>(a) 统一异常处理</strong></p>
+<p>在<code>BaseController</code>添加2种新异常的处理逻辑：</p>
+<p><strong>(b) 设计请求</strong></p>
+<pre><code>请求路径：/addresses/set_default
+请求参数：Integer aid, HttpSession session
+请求方式：Post
+响应数据：JsonResult&lt;Void&gt;
+</code></pre>
+<p>当前比较流行的一种设计风格：RESTful</p>
+<pre><code>请求url的设计：/资源/id/命令
+使用这种设计有个前提：使用的框架要支持RESTful
+
+第一步：在请求路径中使用{xxx}作为参数的占位符
+第二步：在方法中获取参数时，前面添加@PathVariable(&quot;{xxx}&quot;)
+
+这种url的设计风格适合参数少且固定的场景
+
+请求路径：/addresses/{aid}/set_default
+请求参数：@PathVariable(&quot;{aid}&quot;) Integer aid, HttpSession session
+请求方式：Post
+响应数据：JsonResult&lt;Void&gt;
+</code></pre>
+<p><strong>(c) 实现请求</strong></p>
+<pre><code>@RequestMapping(&quot;{aid}/set_default&quot;)
+public JsonResult&lt;Void&gt; setDefault(
+	@PathVariable(&quot;aid&quot;) Integer aid, HttpSession session){
+	String username=getUsernameFromSession(session);
+	Integer uid=getUidFromSession(session);
+	service.setDefault(aid,uid,username);
+	return new JsonResult&lt;&gt;(SUCCESS);
+}
+</code></pre>
+<p>在浏览器地址栏进行测试：<code>localhost:8080/addresses/14/set_default</code></p>
+<h3 id="41-收货地址-设为默认-前端界面">41. 收货地址-设为默认-前端界面</h3>
+<h3 id="42-收货地址-删除-持久层">42. 收货地址-删除-持久层</h3>
+<p><strong>(a) 规划SQL语句</strong></p>
+<p>删除一条数据，大概的语句：</p>
+<pre><code>delete from t_address where aid=?
+</code></pre>
+<p>删除之前，应该验证aid对应的数据是否存在，然后还应该验证当前用户是否有操作该数据的权限，在之前已经实现该功能。</p>
+<p>如果用户删除的是默认收货地址，且删除之后，该用户已经没有任何收货地址了，则不需要进行额外的操作。查询该用户当前有几条收货地址，已经通过<code>countByUid()</code>实现过。</p>
+<p>如果用户删除的是默认收货地址，且删除之后，该用户还有其它收货地址，则应该选择“最后更新”的那一条收货地址，作为用户的默认收货地址。需要查找该用户“最后更新”的那条收货地址记录：</p>
+<pre><code>select * from t_address where uid=? order by modified_time desc limit 0,1;
+</code></pre>
+<p><strong>(b) 接口和抽象方法</strong></p>
+<p>在<code>AddressMapper.java</code>中添加2个抽象方法：</p>
+<pre><code>Integer deleteByAid(Integer aid);
+
+Address findLastModified(Integer uid);
+</code></pre>
+<p><strong>(c) 配置映射</strong></p>
+<pre><code>&lt;!-- 根据aid删除一条收货地址记录 --&gt;
+&lt;!-- Integer deleteByAid(Integer aid) --&gt;
+&lt;delete id=&quot;deleteByAid&quot;&gt;
+	delete from 
+		t_address 
+	where aid=#{aid}
+&lt;/delete&gt;
+
+&lt;!-- 查询一个用户的最后修改的收货地址 --&gt;
+&lt;!-- Address findLastModified(Integer uid) --&gt;
+&lt;select id=&quot;findLastModified&quot;
+	resultMap=&quot;AddressEntityMap&quot;&gt;
+	select 
+		* 
+	from 
+		t_address 
+	where 
+		uid=#{uid} 
+	order by 
+		modified_time desc 
+	limit 0,1;
+&lt;/select&gt;
+</code></pre>
+<p>开发对应的测试用例：</p>
+<pre><code>@Test
+public void deteleByAid() {
+	Integer row=mapper.deleteByAid(6);
+	System.err.println(row);
+}
+
+@Test
+public void findLastModified() {
+	Address address=mapper.findLastModified(10);
+	System.err.println(address);
+}
+</code></pre>
+<h3 id="43-收货地址-删除-业务层">43. 收货地址-删除-业务层</h3>
+<p><strong>(a) 规划异常</strong></p>
+<p>删除时：DeleteException</p>
+<p>删除前：AddressNotFoundException, AccessDeniedException</p>
+<p>删除后，可能将一条记录设为默认收货地址：UpdateException</p>
+<p><strong>(b) 接口和抽象方法</strong></p>
+<p>在<code>IAddressService</code>接口中添加以下抽象方法：</p>
+<pre><code>void removeAddress(Integer aid,
+	Integer uid, String username) throws AddressNotFoundException, AccessDeniedException, DeleteException,UpdateException;
+</code></pre>
+<p><strong>(c) 实现接口</strong></p>
+<p>在<code>AddressServiceImpl</code>中提供持久层2个抽象方法的私有实现：</p>
+<pre><code>/**
+ * 根据aid删除一条收货地址记录
+ * @param aid 收货地址id
+ * @return 受影响的行数
+ */
+private void deleteByAid(Integer aid) throws DeleteException {
+	Integer row=mapper.deleteByAid(aid);
+	if(row!=1) {
+		throw new DeleteException(&quot;删除收货地址异常！请联系管理员&quot;);
+	}
+};
+
+/**
+ * 查询一个用户的最后修改的收货地址
+ * @param uid 用户的id
+ * @return 最后修改的收货地址
+ */
+private Address findLastModified(Integer uid) {
+	return mapper.findLastModified(uid);
+};
+</code></pre>
+<p>在<code>AddressServiceImpl</code>中实现接口中定义的抽象方法：</p>
+<pre><code>@Transactional
+public void removeAddress(Integer aid,
+	Integer uid, String username) throws AddressNotFoundException, AccessDeniedException, DeleteException,UpdateException{
+
+	// 使用aid查地址数据
+	// 判断结果是否为null
+	// 是：AddressNotFoundException
+
+	// 查询结果中的uid和方法参数的uid是否不一致
+	// 是：AccessDeniedException
+
+	// 删除aid对应的地址数据
+
+	// 判断刚才的查询结果中的isDefault是否不为1
+	// return;
+
+	// 查看当前用户剩余的收货地址条数
+	// 判断条数是否为0
+	// 是：return;
+
+	// 查询该用户的最后修改的收货地址
+	// 将该条记录设为该用户的默认收货地址
+}
+</code></pre>
+<p>对应的代码实现：</p>
+<pre><code>@Override
+@Transactional
+public void removeAddress(Integer aid, Integer uid, String username)
+		throws AddressNotFoundException, AccessDeniedException, DeleteException, UpdateException {
+	// 使用aid查地址数据
+	Address result=findByAid(aid);
+	// 判断结果是否为null
+	if(result==null) {
+		// 是：AddressNotFoundException
+		throw new AddressNotFoundException(&quot;删除收货地址异常！地址数据不存在&quot;);
+	}
+
+	// 查询结果中的uid和方法参数的uid是否不一致
+	if(!result.getUid().equals(uid)) {
+		// 是：AccessDeniedException
+		throw new AccessDeniedException(&quot;删除收货地址异常！访问权限不足&quot;);
+	}
+
+	// 删除aid对应的地址数据
+	deleteByAid(aid);
+	
+	// 判断刚才的查询结果中的isDefault是否不为1
+	if(result.getIsDefault()!=1) {
+		return;
+	}
+
+	// 查看当前用户剩余的收货地址条数
+	Integer count = countByUid(uid);
+	// 判断条数是否为0
+	if(count==0) {
+		return;
+	}
+
+	// 查询该用户的最后修改的收货地址
+	Address lastModifiedAddress=findLastModified(uid);
+	// 将该条记录设为该用户的默认收货地址
+	updateDefault(lastModifiedAddress.getAid(), username, new Date());
+}
+</code></pre>
+<p>开发对应的测试用例：</p>
+<pre><code>@Test
+public void removeAddress() {
+	try {
+		service.removeAddress(15, 10, &quot;张翠山&quot;);
+	}catch(ServiceException e) {
+		System.err.println(e.getClass().getName());
+		System.err.println(e.getMessage());
+	}
+}
+</code></pre>
+<h3 id="44-收货地址-删除-控制器层">44. 收货地址-删除-控制器层</h3>
+<p><strong>(a) 统一异常处理</strong></p>
+<p>处理<code>DeleteException</code></p>
+<p><strong>(b) 设计请求</strong></p>
+<pre><code>/资源/id/命令
+
+请求路径：/addresses/{aid}/delete
+请求参数：@PathVariable(&quot;aid&quot;) Integer aid, HttpSession session
+请求方式：POST
+响应数据：JsonResult&lt;Void&gt;
+</code></pre>
+<p><strong>(c) 实现请求</strong></p>
+<pre><code>@RequestMapping(&quot;{aid}/delete&quot;)
+public JsonResult&lt;Void&gt; removeAddress(@PathVariable(&quot;aid&quot;) Integer aid, HttpSession session){
+	Integer uid=getUidFromSession(session);
+	String username=getUsernameFromSession(session);
+	return new JsonResult&lt;&gt;(SUCCESS);
+}
+</code></pre>
+<p>完成后，通过<code>localhost:8080/addresses/15/delete</code>进行测试，测试通过后，将控制器层的<code>RequestMapping</code>修改为<code>PostMapping</code></p>
+<h3 id="45-收货地址-删除-前端界面">45. 收货地址-删除-前端界面</h3>
+<h3 id="46-商品-分析">46. 商品-分析</h3>
+<p>导入商品和商品种类表及数据：</p>
+<p>首先应该选择<code>tedu_store</code>库，在使用<code>source 文件路径</code>导入文件</p>
+<p>对<code>t_product</code>和<code>t_product_category</code>表中的字段加以熟悉</p>
+<p><code>t_product_category</code>表在后续的用例中用不上，所以仅需要开发<code>t_product</code>表对应的实体类</p>
+<h3 id="-">-----------------------------</h3>
+<h3 id="基于spring-jdbc的事务">基于spring-jdbc的事务</h3>
+<p>事务的概念：事务指逻辑上对数据库的一组操作，组成这组操作的每一项操作，要么都成功，要么都不成功。主流的数据库，都提供了对事务的支持。</p>
+<p>什么时候用事务：在一组数据库操作中，存在2个及以上的更新操作(增、删、改)时，应该使用事务</p>
+<p>如何实现事务？</p>
+<p>命令式事务：</p>
+<pre><code>start transaction;
+commit;
+rollback;
+</code></pre>
+<p>编程式事务：</p>
+<pre><code>使用Java JDBC的api:
+conn.setAutoCommit(false);
+conn.commit();
+conn.rollback();
+</code></pre>
+<p>声明式事务：</p>
+<pre><code>使用Spring提供的注解： @Transactional
+</code></pre>
+<p>@Transactional的大致实现原理：</p>
+<pre><code>// 启动事务
+try{
+	调用添加了@Transactional的业务层方法
+	提交事务
+}catch(RuntimeException e){
+	回滚事务
+}
+</code></pre>
+<p>@Transactional默认仅对<code>RuntimeException</code>及其子类异常回滚，因此我们在设计异常时，要求<code>ServiceException</code>继承<code>RuntimeException</code>，以保证事务正常回滚。</p>
+<p>可以通过显式声明<code>rollbackfor</code>属性，来配置该注解对<code>Exception</code>回滚：<code>@Transactional(rollbackFor=Exception.class)</code></p>
+<p><code>@Transactional</code>也可以添加到类上，代表该类中所有的方法都是在事务下运行的，但是不推荐这么做</p>
+]]></content>
+    </entry>
+</feed>
