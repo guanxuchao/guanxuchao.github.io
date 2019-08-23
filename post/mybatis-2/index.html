@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>MyBatis-2 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566551502824">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566551502824" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">MyBatis-2</h2>
+            <div class="post-date">2019-07-27</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/mybatis-2.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h3 id="1-使用mybatis实现简单的查询">1. 使用MyBatis实现简单的查询</h3>
+<!-- more -->
+<p>在设计查询的抽象方法时：</p>
+<ol>
+<li>
+<p>返回值类型使用所期望的类型；</p>
+</li>
+<li>
+<p>其它部分的设计与增/删/改相同；</p>
+</li>
+<li>
+<p>如果查询的是某1条数据记录，如果有匹配的数据，则返回正确的查询结果，如果没有匹配的数据，将返回<code>null</code>。</p>
+</li>
+</ol>
+<p>例如：根据用户id查询用户数据详情时：</p>
+<pre><code>User findById(Integer id);
+</code></pre>
+<p>在配置该方法的XML映射时，使用的<code>&lt;select&gt;</code>节点必须配置<code>resultType</code>或者<code>resultMap</code>属性中的某一个：</p>
+<pre><code>&lt;select id=&quot;findById&quot;
+	resultType=&quot;cn.tedu.mybatis.User&quot;&gt;
+	SELECT * FROM t_user WHERE id=#{id}
+&lt;/select&gt;
+</code></pre>
+<p>例如：获取当前数据表用户数据的数量：</p>
+<pre><code>Integer count();
+</code></pre>
+<p>映射配置为：</p>
+<pre><code>&lt;select id=&quot;count&quot;
+	resultType=&quot;java.lang.Integer&quot;&gt;
+	SELECT COUNT(*) FROM t_user
+&lt;/select&gt;
+</code></pre>
+<p>例如：查询所有用户数据时：</p>
+<pre><code>List&lt;User&gt; findAll();
+</code></pre>
+<p>配置的映射：</p>
+<pre><code>&lt;select id=&quot;findAll&quot;
+	resultType=&quot;cn.tedu.mybatis.User&quot;&gt;
+	SELECT * FROM t_user ORDER BY id ASC
+&lt;/select&gt;
+</code></pre>
+<h3 id="2-使用多个参数">2. 使用多个参数</h3>
+<p>假设需要实现：将id=?的用户的密码修改为?，则抽象方法：</p>
+<pre><code>Integer updatePasswordById(Integer id, String newPassword);
+</code></pre>
+<p>然后配置xml中的映射：</p>
+<pre><code>&lt;update id=&quot;updatePasswordById&quot;&gt;
+	UPDATE t_user SET password=#{newPassword} where id=#{id}
+&lt;/update&gt;
+</code></pre>
+<p>如果直接执行以上代码，会报告错误：</p>
+<pre><code>org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.binding.BindingException: Parameter 'newPassword' not found. Available parameters are [arg1, arg0, param1, param2]
+</code></pre>
+<p>根本原因是MyBatis框架只能识别1个参数，无论这个参数是什么，都会直接被使用，而多余的参数是不可识别的！</p>
+<p>可以在抽象方法的每一个参数之前添加<code>@Param</code>注解，MyBatis框架在处理时，会将这些参数封装成1个Map，依然能满足“只能识别1个参数”的需求，后续在配置XML映射时，使用的<code>#{}</code>占位符中的名称就必须是注解中配置的名称，表示的是MyBatis自动封装的Map中的Key：</p>
+<pre><code>Integer updatePasswordById(
+		@Param(&quot;id&quot;) Integer arg0, 
+		@Param(&quot;password&quot;) String arg1);
+</code></pre>
+<p>配置的XML映射：</p>
+<pre><code>&lt;update id=&quot;updatePasswordById&quot;&gt;
+	UPDATE t_user SET password=#{password} where id=#{id}
+&lt;/update&gt;
+</code></pre>
+<p><strong>小结：如果涉及的抽象方法的参数达到2个甚至更多，则每个参数之前都必须添加<code>@Param</code>注解，并在注解中指定名称，后续配置XML映射时，使用的<code>#{}</code>中的名称也是注解中配置的名称！</strong></p>
+<p>练习：同时根据用户名和密码查询用户数据！</p>
+<h3 id="3-动态sql-foreach">3. 动态SQL-foreach</h3>
+<p>MyBatis中的动态SQL指的是根据参数不同，动态的生成不同的SQL语句。</p>
+<p>例如：根据若干个id删除用户数据，设计的抽象方法：</p>
+<pre><code>Integer deleteByIds(List&lt;Integer&gt; ids);
+</code></pre>
+<p>然后，在配置映射时：</p>
+<pre><code>&lt;delete id=&quot;deleteByIds&quot;&gt;
+	DELETE FROM 
+		t_user 
+	WHERE 
+		id 
+	IN 
+		(
+		&lt;foreach collection=&quot;list&quot;
+			item=&quot;id&quot; separator=&quot;,&quot;&gt;
+			#{id}
+		&lt;/foreach&gt;
+		)
+&lt;/delete&gt;
+</code></pre>
+<p>在配置<code>&lt;foreach&gt;</code>节点时：</p>
+<ul>
+<li>
+<p><code>collection</code>：被遍历的参数对象，首先，如果对应的抽象方法的参数只有1个时，如果参数是<code>List</code>集合类型的，取值为<code>list</code>，如果参数是数组类型的，取值为<code>array</code>，另外，如果对应的抽象方法的参数有多个，则每个参数肯定都添加了<code>@Param</code>注解，此处需要配置的值就是注解中配置的名称；</p>
+</li>
+<li>
+<p><code>item</code>：遍历过程中获取到的数据的名称，相当于增强for循环的语法中，括号中的第2个部分，在<code>&lt;foreach&gt;</code>节点的子级可以使用<code>#{}</code>占位符，占位符中的名称就是<code>item</code>属性的值；</p>
+</li>
+<li>
+<p><code>separator</code>：遍历过程中各元素使用的分隔符；</p>
+</li>
+<li>
+<p><code>open</code>和<code>close</code>：遍历产生的代码的最左侧字符和最右侧字符。</p>
+</li>
+</ul>
+<h3 id="4-动态sql-if">4. 动态SQL-if</h3>
+<p>假设存在抽象方法：</p>
+<pre><code>List&lt;User&gt; find(String where, String orderBy, Integer offset, Integer count);
+</code></pre>
+<p>在配置SQL语句时，可以使用if标签进行对参数的判断，从而产生不同的SQL语句的某个部分，例如：</p>
+<pre><code>&lt;select id=&quot;xx&quot; resultType=&quot;xx.xx.xx.User&quot;&gt;
+	SELECT
+		*
+	FROM
+		t_user
+	&lt;if test=&quot;where != null&quot;&gt;
+	WHERE
+		#{where}
+	&lt;/if&gt;
+	&lt;if test=&quot;orderBy != null&quot;&gt;
+	ORDER BY
+		#{orderBy}
+	&lt;/if&gt;
+	&lt;if test=&quot;offset != null&quot;&gt;
+	LIMIT
+		#{offset}, #{count}
+	&lt;/if&gt;
+&lt;/select&gt;
+</code></pre>
+<p>以上配置是错误的，并不能所有位置都使用<code>#{}</code>占位符，有几处需要使用<code>${}</code>格式的占位符：</p>
+<pre><code>&lt;select id=&quot;find&quot; 
+	resultType=&quot;cn.tedu.mybatis.User&quot;&gt;
+	SELECT
+		*
+	FROM
+		t_user
+	&lt;if test=&quot;where != null&quot;&gt;
+	WHERE
+		${where}
+	&lt;/if&gt;
+	&lt;if test=&quot;orderBy != null&quot;&gt;
+	ORDER BY
+		${orderBy}
+	&lt;/if&gt;
+	&lt;if test=&quot;offset != null&quot;&gt;
+	LIMIT
+		#{offset}, #{count}
+	&lt;/if&gt;
+&lt;/select&gt;
+</code></pre>
+<h3 id="5-mybatis中的占位符">5. MyBatis中的占位符</h3>
+<p>在MyBatis中，编写XML中的SQL语句时，可以使用<code>#{}</code>格式的占位符，还可以使用<code>${}</code>格式的占位符！</p>
+<p>MyBatis在处理有占位符的SQL时，如果是<code>${}</code>格式的占位符，会先通过字符串拼接的方式把变量值替换并拼接出SQL语句，然后尝试编译该SQL语句，如果是<code>#{}</code>格式的占位符，会使用<code>?</code>进行占位并尝试编译，编译过后再使用值进行替换。</p>
+<p>小结：以前在使用JDBC时，可以使用<code>?</code>表示的部分，都应该使用<code>#{}</code>，也可以理解为只有“值”才可以使用<code>#{}</code>，这种做法是预编译的，否则，如果要对SQL语句中的某个子句或者其他语句的某个部分，甚至是WHERE子句中的表达式，使用<code>${}</code>，这种做法并不会预编译。</p>
+<h3 id="6-当字段名与属性名不完全相同时的查询">6. 当字段名与属性名不完全相同时的查询</h3>
+<p>修改<code>t_user</code>表结构，添加名为<code>is_delete</code>的字段：</p>
+<pre><code>alter table t_user add column is_delete int;
+
+update t_user set is_delete=0;
+</code></pre>
+<p>然后，对应的<code>User</code>类中也需要添加对应的属性，在Java中，不推荐在变量名中使用<code>_</code>符号，所以，添加的属性应该是：</p>
+<pre><code>private Integer isDelete;
+</code></pre>
+<p>由于名称不是完全相同了，所以，此前的查询功能就无法查询出数据的<code>is_delete</code>字段的值！</p>
+<p>MyBatis封装查询结果的标准就是“将查询到的数据封装到与列名完全相同的属性中”，所以，如果字段名与属性名不一致，就会导致默认的列名与属性名不一致，可以在查询时，为列名自定义别名，以保持名称一致，所以，解决方案可以是：</p>
+<pre><code>SELECT 
+	id, username,
+	password, age,
+	phone, email,
+	is_delete AS isDelete
+FROM 
+	t_user 
+ORDER BY 
+	id ASC
+</code></pre>
+<p>如果在查询时，使用<code>*</code>表示要查询的字段列表，MyBatis就无法自动封装那些名称不一致的数据，可以在XML文件配置<code>&lt;resultMap&gt;</code>节点，并且在查询的<code>&lt;select&gt;</code>节点中，使用<code>resultMap</code>属性取代<code>resultType</code>属性：</p>
+<pre><code>&lt;!-- resultMap节点：指导MyBatis如何封装查询结果 --&gt;
+&lt;!-- id：自定义名称 --&gt;
+&lt;!-- column：查询结果中的列名 --&gt;
+&lt;!-- property：type对应的类中的属性名 --&gt;
+&lt;resultMap id=&quot;UserEntityMap&quot;
+	 type=&quot;cn.tedu.mybatis.User&quot;&gt;
+	&lt;result column=&quot;id&quot; property=&quot;id&quot; /&gt;
+	&lt;result column=&quot;username&quot; property=&quot;username&quot; /&gt;
+	&lt;result column=&quot;password&quot; property=&quot;password&quot; /&gt;
+	&lt;result column=&quot;age&quot; property=&quot;age&quot; /&gt;
+	&lt;result column=&quot;phone&quot; property=&quot;phone&quot; /&gt;
+	&lt;result column=&quot;email&quot; property=&quot;email&quot; /&gt;
+	&lt;result column=&quot;is_delete&quot; property=&quot;isDelete&quot; /&gt;
+&lt;/resultMap&gt;
+
+&lt;select id=&quot;findAll&quot;
+	resultMap=&quot;UserEntityMap&quot;&gt;
+	SELECT 
+		*
+	FROM 
+		t_user 
+	ORDER BY 
+		id ASC
+&lt;/select&gt;
+</code></pre>
+<p><strong>小结：无论是取别名，还是配置<code>&lt;resultMap&gt;</code>，只要能保证MyBatis知道如何封装名称不一致的数据，就可以正确查询到所需要的结果！如果查询时不用<code>*</code>表示字段列表，且名称不一致的字段较少，则可以优先考虑使用别名，如果使用<code>*</code>查询，或者名称不一致的字段较多，则应该优先考虑配置<code>&lt;resultMap&gt;</code>。</strong></p>
+<h3 id="7-关联表查询">7. 关联表查询</h3>
+<p>创建<code>t_department</code>部门信息表，要求表中存在<code>id</code>和<code>name</code>这2个字段，向表中插入不少于3条数据：</p>
+<pre><code>CREATE TABLE t_department (
+	id INT AUTO_INCREMENT COMMENT '部门id',
+	name VARCHAR(50) NOT NULL UNIQUE COMMENT '部门名称',
+	PRIMARY KEY (id)
+) DEFAULT CHARSET=UTF8;
+
+INSERT INTO t_department (name) VALUES ('软件研发部'), ('人力资源部'), ('财务部');
+</code></pre>
+<p>在<code>t_user</code>表中添加<code>department_id</code>字段，为每一个用户数据分配部门id：</p>
+<pre><code>ALTER TABLE t_user ADD COLUMN department_id INT;
+
+UPDATE t_user SET department_id=1 WHERE id IN (2,10,17);
+UPDATE t_user SET department_id=2 WHERE id IN (16,14,12);
+UPDATE t_user SET department_id=3 WHERE id IN (4,13);
+</code></pre>
+<p>假设存在需求：根据id查询某用户详情，要求直接显示用户所在部门的名称。</p>
+<p>首先，直接查询<code>t_user</code>表是不足以得到完整答案的，为了保证数据表管理的规范，在<code>t_user</code>表中只会存储部门的<code>id</code>，并不会存储部门的<code>name</code>，所以，需要实现该需求，就必须使用关联查询：</p>
+<pre><code>SELECT 
+	t_user.id, username,
+	phone, email,
+	password, age,
+	is_delete AS isDelete,
+	department_id AS departmentId,
+	name AS departmentName
+FROM 
+	t_user 
+LEFT JOIN
+	t_department 
+ON 
+	department_id=t_department.id
+WHERE
+	t_user.id=?
+</code></pre>
+<p>这样的查询可以符合当前需求，但是，在设计代码时，却没有任何一个实体类可以封装以上查询结果！因为实体类都是与数据表一一相对应的，所以就需要另外创建VO(Value Object)类，VO类的设计原则是根据查询结果来确定各属性的：</p>
+<pre><code>public class UserVO {
+	private Integer id;
+	private String username;
+	private String password;
+	private Integer age;
+	private String phone;
+	private String email;
+	private Integer isDelete;
+	private Integer departmentId;
+	private String departmentName;
+	// SET/GET/hashCode/equals/toString/Serializable
+}
+</code></pre>
+<p>其实，VO类与实体类的设计方式是几乎一样的，只是定位不同，实体类与数据表对应，VO类与查询结果对应。</p>
+<p>设计的抽象方法的返回值就应该是<code>UserVO</code>：</p>
+<pre><code>UserVO findUserVOById(Integer id);
+</code></pre>
+<p>然后，配置映射时，需要注意自定义别名，或者配置<code>&lt;resultMap&gt;</code>，同时，注意：如果某个字段名在2张或者涉及的多张表中都存在，必须明确的指定表名，例如这2张表中都有<code>id</code>字段，每次涉及该字段都必须在左侧指定表名：</p>
+<pre><code>&lt;select id=&quot;findUserVOById&quot;
+	resultType=&quot;cn.tedu.mybatis.UserVO&quot;&gt;
+	SELECT 
+		t_user.id, username,
+		phone, email,
+		password, age,
+		is_delete AS isDelete,
+		department_id AS departmentId,
+		name AS departmentName
+	FROM 
+		t_user 
+	LEFT JOIN
+		t_department 
+	ON 
+		department_id=t_department.id
+	WHERE
+		t_user.id=#{id}
+&lt;/select&gt;
+
+查询某个部门的信息，同时，获取该部门中所有用户的信息。
+</code></pre>
+<p>执行该操作的SQL语句大致是：</p>
+<pre><code>SELECT 
+	*
+FROM
+	t_department
+LEFT JOIN
+	t_user
+ON
+	t_department.id=t_user.department_id
+WHERE
+	t_department.id=?
+</code></pre>
+<p>执行以上查询，可能产生多条结果，因为某1个部门中可能有多个用户！但是，实际需求是“查询某个部门的信息”，结果应该只有1个数据！</p>
+<p>为了合理的表示查询结果，可以定义部门信息的VO类<code>cn.tedu.mybatis.DepartmentVO</code>，该类的设计：</p>
+<pre><code>public class DepartmentVO {
+	private Integer id; // 部门id
+	private String name; // 部门名称
+	private List&lt;User&gt; users; // 部门中的用户
+}
+</code></pre>
+<p>在开发持久层功能时，由于操作的数据主体不再是“用户”数据，则以前的<code>UserMapper</code>接口就不再适用，应该先创建新的<code>cn.tedu.mybatis.DepartmentMapper</code>持久层接口，并在接口中定义“根据部门id查询部门详情”的抽象方法：</p>
+<pre><code>public interface DepartmentMapper {
+	
+	DepartmentVO findVOById(Integer id);
+
+}
+</code></pre>
+<p>与添加新的接口的原因相同，也应该给出新的XML文件配置以上抽象方法的SQL语句，所以，可以把原有的<code>UserMapper.xml</code>复制并粘贴，然后重命名为<code>DepartmentMapper.xml</code>，删除原有的配置，再配置以上抽象方法的SQL语句：</p>
+<pre><code>&lt;select id=&quot;findVOById&quot; resultType=&quot;xx.xx.xx.DepartmentVO&quot;&gt;
+	SELECT 
+		t_department.id, name,
+		t_user.id, username,
+		password, age,
+		phone, email,
+		is_delete AS isDelete,
+		department_id AS departmentId
+	FROM
+		t_department
+	LEFT JOIN
+		t_user
+	ON
+		t_department.id=t_user.department_id
+	WHERE
+		t_department.id=#{id}
+&lt;/select&gt;
+</code></pre>
+<p>在以上查询结果中，会出现2个名为<code>id</code>的列名，后续在处理数据时，MyBatis将无法正确的区分所需要的<code>id</code>值是哪一列的数据，所以，在查询时，至少需要为以上2个<code>id</code>字段中的1个定义别名，或者将2个都定义不同的别名，保证查询结果中的列名都是唯一的，不会出现冲突：</p>
+<pre><code>SELECT 
+		t_department.id AS did, name,
+		t_user.id AS uid ... ...
+</code></pre>
+<p>在配置<code>&lt;resultMap&gt;</code>时，关于唯一字段的配置，应该使用<code>&lt;id /&gt;</code>节点进行配置，而不应该使用<code>&lt;result /&gt;</code>节点来配置，2个节点的配置方式完全相同，即使不使用<code>&lt;id /&gt;</code>而使用<code>&lt;result /&gt;</code>也能实现功能，但是，MyBatis是天生自带缓存的，使用<code>&lt;id /&gt;</code>节点配置的数据会作为缓存数据的标识，而使用<code>&lt;result /&gt;</code>节点的配置则不会。</p>
+<p>在配置1对多关系时，需要使用<code>&lt;collection&gt;</code>节点，例如1个部门有多个用户，在数据方面，1个部门的VO对象中有1个<code>List</code>集合存储多个<code>User</code>数据。</p>
+<p>完整的<code>&lt;resultMap&gt;</code>配置应该是：</p>
+<pre><code>&lt;resultMap id=&quot;DepartmentVOMap&quot;
+	type=&quot;cn.tedu.mybatis.DepartmentVO&quot;&gt;
+	&lt;id column=&quot;did&quot; property=&quot;id&quot;/&gt;
+	&lt;result column=&quot;name&quot; property=&quot;name&quot;/&gt;
+	&lt;!-- collection节点：用于配置集合类型的属性 --&gt;
+	&lt;!-- property：依然表示类的属性 --&gt;
+	&lt;!-- ofType：集合里面放的是什么类型的数据 --&gt;
+	&lt;collection property=&quot;users&quot;
+		ofType=&quot;cn.tedu.mybatis.User&quot;&gt;
+		&lt;!-- column：依然是查询结果中的列名 --&gt;
+		&lt;!-- property：ofType的类型中的属性名 --&gt;
+		&lt;id column=&quot;uid&quot; property=&quot;id&quot;/&gt;
+		&lt;result column=&quot;username&quot; property=&quot;username&quot;/&gt;
+		&lt;result column=&quot;password&quot; property=&quot;password&quot;/&gt;
+		&lt;result column=&quot;age&quot; property=&quot;age&quot;/&gt;
+		&lt;result column=&quot;phone&quot; property=&quot;phone&quot;/&gt;
+		&lt;result column=&quot;email&quot; property=&quot;email&quot;/&gt;
+		&lt;result column=&quot;is_delete&quot; property=&quot;isDelete&quot;/&gt;
+		&lt;result column=&quot;department_id&quot; property=&quot;departmentId&quot;/&gt;
+	&lt;/collection&gt;
+&lt;/resultMap&gt;
+</code></pre>
+<p>查询节点的配置为：</p>
+<pre><code>&lt;select id=&quot;findVOById&quot;
+	resultMap=&quot;DepartmentVOMap&quot;&gt;
+	SELECT 
+		t_department.id AS did, name,
+		t_user.id AS uid, username,
+		password, age,
+		phone, email,
+		is_delete, department_id
+	FROM
+		t_department
+	LEFT JOIN
+		t_user
+	ON
+		t_department.id=t_user.department_id
+	WHERE
+		t_department.id=#{id}
+&lt;/select&gt;
+</code></pre>
+<p>注意：在使用了<code>&lt;resultMap&gt;</code>的查询中，并不需要因为查询结果的列名与类的属性名不同而定义别名，例如以上的<code>is_delete</code>和<code>department_id</code>就没有再定义别名，而只需要为名字冲突的定义别名，例如以上的用户表的id和部门表的id。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/rr143Ntja" class="tag">
+                    MyBatis
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/mybatis-1">
+                  <h3 class="post-title">
+                    MyBatis-1
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

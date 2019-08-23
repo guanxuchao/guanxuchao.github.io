@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guanxuchao.com/</id>
     <title>Chao&apos;s Blog</title>
-    <updated>2019-08-12T15:18:47.676Z</updated>
+    <updated>2019-08-23T09:12:11.595Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guanxuchao.com/"/>
     <link rel="self" href="https://guanxuchao.com//atom.xml"/>
@@ -11,439 +11,1973 @@
     <icon>https://guanxuchao.com//favicon.ico</icon>
     <rights>All rights reserved 2019, Chao&apos;s Blog</rights>
     <entry>
-        <title type="html"><![CDATA[项目Day08]]></title>
-        <id>https://guanxuchao.com//post/xiang-mu-day08</id>
-        <link href="https://guanxuchao.com//post/xiang-mu-day08">
+        <title type="html"><![CDATA[Spring Boot与Spring MVC的区别[转]]]></title>
+        <id>https://guanxuchao.com//post/spring-boot-yu-spring-mvc-de-qu-bie</id>
+        <link href="https://guanxuchao.com//post/spring-boot-yu-spring-mvc-de-qu-bie">
         </link>
-        <updated>2019-08-12T06:30:01.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="38-收货地址-设为默认-持久层">38. 收货地址-设为默认-持久层</h3>
-<p><strong>(a) 规划SQL语句</strong></p>
-<p>要修改一个地址数据的is_default属性的值，改为1：</p>
-<pre><code>update t_address set is_default=1, modified_user=?,modified_time=? where aid=?;   
+        <updated>2019-08-11T08:56:30.000Z</updated>
+        <summary type="html"><![CDATA[<p>Spring 框架就像一个家族，有众多衍生产品例如 boot、security、jpa等等。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Spring 框架就像一个家族，有众多衍生产品例如 boot、security、jpa等等。</p>
+<!-- more -->
+<p>但他们的基础都是Spring 的 ioc和 aop ioc 提供了依赖注入的容器 aop ，解决了面向横切面的编程，然后在此两者的基础上实现了其他延伸产品的高级功能。Spring MVC是基于 Servlet 的一个 MVC 框架 主要解决 WEB 开发的问题，因为 Spring 的配置非常复杂，各种XML、 JavaConfig、hin处理起来比较繁琐。于是为了简化开发者的使用，从而创造性地推出了Spring boot，约定优于配置，简化了spring的配置流程。</p>
+<p>说得更简便一些：Spring 最初利用“工厂模式”（DI）和“代理模式”（AOP）解耦应用组件。大家觉得挺好用，于是按照这种模式搞了一个 MVC框架（一些用Spring 解耦的组件），用开发 web 应用（ SpringMVC ）。然后有发现每次开发都写很多样板代码，为了简化工作流程，于是开发出了一些“懒人整合包”（starter），这套就是 Spring Boot。</p>
+<h3 id="spring-mvc的功能">Spring MVC的功能</h3>
+<pre><code>Spring MVC提供了一种轻度耦合的方式来开发web应用。
 </code></pre>
-<p>应该将原来的默认收货地址数据设为非默认，如果要针对原来的默认地址进行修改，则需要额外进行一次查询，这里可以简化成将该用户所有的收货地址设为非默认。这里不会修改<code>modified_time</code>，避免对后续的查询造成影响:</p>
-<pre><code>update t_address set is_default=0 where uid=?;
+<p>Spring MVC是Spring的一个模块，式一个web框架。通过Dispatcher Servlet, ModelAndView 和 View Resolver，开发web应用变得很容易。解决的问题领域是网站应用程序或者服务开发——URL路由、Session、模板引擎、静态Web资源等等。</p>
+<h3 id="spring-boot的功能">Spring Boot的功能</h3>
+<pre><code>Spring Boot实现了自动配置，降低了项目搭建的复杂度。
 </code></pre>
-<p>在设为默认收货地址之前，应该对前台传来的<code>aid</code>进行验证：</p>
-<pre><code>select * from t_address where aid=?
-</code></pre>
-<p>这个查询查什么都可以，重点在于是否能够查到数据。</p>
-<p>在更新之前，还应该验证当前用户是否有操作该地址数据的权限：</p>
-<pre><code>select uid from t_address where aid=?
-</code></pre>
-<p><strong>(b) 接口和抽象方法</strong></p>
-<p>在<code>AddressMapper.java</code>接口中添加以下3个抽象方法：</p>
-<pre><code>Integer updateDefault(
-		@Param(&quot;aid&quot;) Integer aid,
-		@Param(&quot;username&quot;) String username,
-		@Param(&quot;modifiedTime&quot;) Date modifiedTime);
+<p>众所周知Spring框架需要进行大量的配置，Spring Boot引入自动配置的概念，让项目设置变得很容易。Spring Boot本身并不提供Spring框架的核心特性以及扩展功能，只是用于快速、敏捷地开发新一代基于Spring框架的应用程序。也就是说，它并不是用来替代Spring的解决方案，而是和Spring框架紧密结合用于提升Spring开发者体验的工具。同时它集成了大量常用的第三方库配置(例如Jackson, JDBC, Mongo, Redis, Mail等等)，Spring Boot应用中这些第三方库几乎可以零配置的开箱即用(out-of-the-box)，大部分的Spring Boot应用都只需要非常少量的配置代码，开发者能够更加专注于业务逻辑。</p>
+<p>Spring Boot只是承载者，辅助你简化项目搭建过程的。如果承载的是WEB项目，使用Spring MVC作为MVC框架，那么工作流程和你上面描述的是完全一样的，因为这部分工作是Spring MVC做的而不是Spring Boot。</p>
+<p>对使用者来说，换用Spring Boot以后，项目初始化方法变了，配置文件变了，另外就是不需要单独安装Tomcat这类容器服务器了，maven打出jar包直接跑起来就是个网站，但你最核心的业务逻辑实现与业务流程实现没有任何变化。</p>
+<pre><code>所以，用最简练的语言概括就是： 	
 
-Integer updateNonDefault(Integer uid);
+Spring 是一个“引擎”； 
 
-Address findByAid(Integer aid);
+Spring MVC 是基于Spring的一个 MVC 框架 ；
+
+Spring Boot 是基于Spring4的条件注册的一套快速开发整合包。
 </code></pre>
-<p><strong>(c) 配置映射</strong></p>
-<p>在<code>AddressMapper.xml</code>中配置对应的映射：</p>
-<pre><code>&lt;!-- 将一条收货地址设为默认收货地址 --&gt;
-&lt;!-- Integer updateDefault(
-		@Param(&quot;aid&quot;) Integer aid,
-		@Param(&quot;username&quot;) String username,
-		@Param(&quot;modifiedTime&quot;) Date modifiedTime) --&gt;
-&lt;update id=&quot;updateDefault&quot;&gt;
-	update 
-		t_address 
-	set 
-		is_default=1, 
-		modified_user=#{username},
-		modified_time=#{modifiedTime}
-	where 
-		aid=#{aid};
-&lt;/update&gt;
-
-&lt;!-- 将一个用户的所有收货地址设为非默认 --&gt;
-&lt;!-- Integer updateNonDefault(Integer uid) --&gt;
-&lt;update id=&quot;updateNonDefault&quot;&gt;
-	update 
-		t_address 
-	set 
-		is_default=0 
-	where 
-		uid=#{uid};
-&lt;/update&gt;
-
-&lt;!-- 根据aid查询一条收货地址数据 --&gt;
-&lt;!-- Address findByAid(Integer aid) --&gt;
-&lt;select id=&quot;findByAid&quot;
-	resultMap=&quot;AddressEntityMap&quot;&gt;
-	select 
-		* 
-	from 
-		t_address 
-	where 
-		aid=#{aid}
-&lt;/select&gt;
+<p><br>链接：https://www.zhihu.com/question/64671972/answer/223383505</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[阻塞队列&二叉树]]></title>
+        <id>https://guanxuchao.com//post/zu-sai-dui-lie-ander-cha-shu</id>
+        <link href="https://guanxuchao.com//post/zu-sai-dui-lie-ander-cha-shu">
+        </link>
+        <updated>2019-08-11T07:47:45.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="1生产者-消息者模型与阻塞队列">1.生产者、消息者模型与阻塞队列</h1>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="1生产者-消息者模型与阻塞队列">1.生产者、消息者模型与阻塞队列</h1>
+<!-- more -->
+<h2 id="1什么是生产者">(1)什么是生产者?</h2>
+<pre><code>生产者负责产生数据。
 </code></pre>
-<p>在<code>AddressMapperTests</code>中开发测试方法：</p>
-<pre><code>@Test
-public void updateNonDefault() {
-	Integer rows=mapper.updateNonDefault(10);
-	System.err.println(rows);
+<h2 id="2什么是消费者">(2)什么是消费者?</h2>
+<pre><code>消费者负责消费数据。
+</code></pre>
+<h2 id="3生产者-消费者模型用来解决什么问题">(3)生产者、消费者模型用来解决什么问题?</h2>
+<pre><code>用来解决生产者生产数据与消费者消费数据
+不同步的问题。
+生产者产生数据之后，将这些数据存放到阻塞
+队列里面，消息者从阻塞队列当中取出数据。
+</code></pre>
+<h2 id="4什么是阻塞队列">(4)什么是阻塞队列?</h2>
+<pre><code>阻塞队列可以在多线程环境下使用，当阻塞队列满时，
+生产者线程会阻塞（即暂时挂起)。当阻塞队列为空时，
+消费者线程会阻塞。
+阻塞队列一般都解决了线程安全问题。
+</code></pre>
+<p><img src="https://guanxuchao.com//post-images/1566402565227.png" alt=""></p>
+<h2 id="5生产者-消费者模型的经典使用场合">(5)生产者、消费者模型的经典使用场合</h2>
+<pre><code>a.订单处理
+	订单信息先写入到阻塞队列，然后消息者
+	线程从阻塞队列中取出数据，写到数据库。
+b.应用服务器设计(用于任务的分派)
+</code></pre>
+<p><img src="https://guanxuchao.com//post-images/1566402579830.png" alt=""></p>
+<pre><code>c.日志
+	可以让生产者线程将日志信息先写入阻塞
+	队列，然后让消息者线程从阻塞队列当中取
+	出日志信息，然后写入数据库。　
+</code></pre>
+<h2 id="6经典案例日志处理">(6)经典案例(日志处理)</h2>
+<p><img src="https://guanxuchao.com//post-images/1566402586852.png" alt=""></p>
+<h2 id="7相关的接口与类">(7)相关的接口与类</h2>
+<pre><code>BlockingQueue接口
+	注：该接口继承Queue接口。
+LinkedBlockingQueue类
+	注：底层实现是一个链表，每添加一个消息(数据),
+	就需要创建一个新的结点，如果并发量很大，
+	可能会影响系统GC。
+	除此之外，LinkedBlockQueue的put方法和
+	take方法用的是不同的锁，并发性能比较好。
+ArrayBlockingQueue类
+	注：底层实现是一个数组。
+	ArrayBlockingQueue的take方法和put方法
+	用的是同一个锁，并发性能差一些。
+</code></pre>
+<h1 id="练习">练习</h1>
+<pre><code>Producer线程每隔5秒向阻塞队列当中添加一个
+随机数。Consumer线程每隔2秒从阻塞队列当中
+取出随机数然后输出。
+Producer类(Producer线程类)
+Consumer类(Consumer线程类)
+Test类(启动Producer线程和Consumer线程)
+</code></pre>
+<h1 id="2二叉树">2.二叉树</h1>
+<h2 id="1什么是二叉树">(1)什么是二叉树?</h2>
+<pre><code>任意一个节点，最多只有两棵子树的树结构。
+注：
+	这两棵子树一般称之为左子树和右子树。
+</code></pre>
+<p><img src="https://guanxuchao.com//post-images/1566402676075.png" alt=""></p>
+<h2 id="2排序二叉树搜索二叉树">(2)排序二叉树(搜索二叉树)</h2>
+<pre><code>任意一个节点，其左子树上的节点值比该节点的
+值小，其右子树上的节点值比该节点的值要大。
+左右子树也是一个排序二叉树。
+注：
+	排序二叉树不允许出现重复元素。
+</code></pre>
+<p><img src="https://guanxuchao.com//post-images/1566402603064.png" alt=""></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[链表]]></title>
+        <id>https://guanxuchao.com//post/lian-biao</id>
+        <link href="https://guanxuchao.com//post/lian-biao">
+        </link>
+        <updated>2019-08-10T07:47:25.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="1什么是链表">1.什么是链表?</h1>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="1什么是链表">1.什么是链表?</h1>
+<!-- more -->
+<pre><code>链表由一系列节点构成，其中，每个节点
+包含两部分内容(一部分是数据，另外一部分是
+指针）。
+注:
+	指针指向了下一个节点(也就是说通过该指针
+可以找到下一个节点)。
+	如果只有一个指向下一个节点的指针，称之为
+单向链表。
+	如果有两个指针(一个指向上一个节点，一个指)
+向下一个节点)，称之为两向链表。
+	如果最后一个节点与第一个节点也通过指针
+连接起来，称之为双向循环链表。
+</code></pre>
+<p><img src="https://guanxuchao.com//post-images/1565882087342.png" alt=""></p>
+<h1 id="2链表跟数组相比优缺点是什么">2.链表跟数组相比，优缺点是什么?</h1>
+<pre><code>数组的优点:
+	依据下标可以非常快速的找到某个元素。
+数组的缺点:
+	删除和插入操作比较耗费时间，需要重新
+移动大量元素(包括扩容)。
+	数组需要有连续的地址空间。
+
+链表的优点:
+	删除和插入操作速度非常快。
+	链表不需要连续的地址空间。
+链表的缺点:
+	依据下标查找某个元素比较慢。			
+	链表节点需要保存节点的地址，同数组相比，
+	需要占用更多的内存。
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[SpringBoot]]></title>
+        <id>https://guanxuchao.com//post/springboot</id>
+        <link href="https://guanxuchao.com//post/springboot">
+        </link>
+        <updated>2019-08-03T07:46:18.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="1-springboot的作用">1. SpringBoot的作用</h3>
+<p>SpringBoot是默认整合了Spring、SpringMVC及相关常用框架的一个综合性框架，大量的减少了相关的配置，使得创建项目和使用变得更加简单。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="1-springboot的作用">1. SpringBoot的作用</h3>
+<p>SpringBoot是默认整合了Spring、SpringMVC及相关常用框架的一个综合性框架，大量的减少了相关的配置，使得创建项目和使用变得更加简单。</p>
+<!-- more -->
+<p>在常规配置方面，SpringBoot的思想是“约定大于配置”，即：大多数开发者都会使用某种配置方式的话，则SpringBoot就会直接配置成那个样子，然后，开发者在使用SpringBoot时就不用再进行相关配置，只需要知道已经被配置为那个样子了就可以了！</p>
+<h3 id="2-创建springboot项目">2. 创建SpringBoot项目</h3>
+<p>需要打开浏览器，访问<code>https://start.spring.io/</code>，填写创建项目的参数，配置完成后，点击<strong>Generate the project</strong>即可生成项目。</p>
+<p>解压缩下载得到的压缩包，其中的文件夹就是项目文件夹，推荐将该文件夹移动到Workspace中，然后通过Eclipse的<strong>Import</strong> -&gt; <strong>Exsiting Maven Projects</strong>导入该项目，务必保证当前可以连接到Maven服务器，导入后，会自动下载大量依赖，直至项目结构完整。</p>
+<h3 id="3-springboot-helloworld">3. SpringBoot HelloWorld</h3>
+<p>在<strong>src/main/resources</strong>下默认已经存在<strong>static</strong>的文件夹，该文件是SpringBoot项目用于存放静态资源的文件夹，例如存放<code>.html</code>文件、图片、<code>.css</code>文件、<code>.js</code>文件等，相当于传统项目中的<strong>webapp</strong>文件夹，则可以在<strong>static</strong>创建<strong>index.html</strong>欢迎页面。</p>
+<p>在<strong>src/main/java</strong>下默认已经存在<code>cn.tedu.springboot.sample</code>包，该包名是根据创建项目时的参数决定的，这个包就是当前项目的根包(Base-Package)，并且在该包下已经存在<code>SampleApplication.java</code>文件，该文件的名称也是根据创建项目时填写的<strong>artifact</strong>决定的，该文件中包含<code>main()</code>方法，直接执行<code>main()</code>方法就可以启动当前项目，所以，该类也是SpringBoot的启动类！</p>
+<p>SpringBoot项目在启动时会启动内置的Tomcat，默认占用8080端口，如果此前该端口已经处于占用状态，则项目会启动失败！</p>
+<p>通过<code>http://localhost:8080</code>即可访问所涉及的网页，由于SpringBoot项目内置Tomcat，该Tomcat只为当前项目服务，所以启动时设置的Context Path是空字符串，在访问时URL中不必添加项目名称，而<strong>index.html</strong>是默认的欢迎页面，其文件名也不必体现在URL中！</p>
+<h3 id="4-springboot-mybatis环境">4. SpringBoot + MyBatis环境</h3>
+<p>SpringBoot项目默认没有集成持久层相关依赖，需要手动补充，或者创建项目时就选中：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+	&lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+	&lt;version&gt;2.1.0&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+	&lt;groupId&gt;mysql&lt;/groupId&gt;
+	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+	&lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>当添加以上依赖之后，SpringBoot项目再启动时就会尝试读取连接数据库的相关配置，如果还没有配置，则会启动失败！</p>
+<p>在<strong>src/main/resources</strong>下有<strong>application.properties</strong>，该文件就是SpringBoot的配置文件，在该文件中添加配置：</p>
+<pre><code>spring.datasource.url=jdbc:mysql://localhost:3306/tedu_ums?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai
+spring.datasource.username=root
+spring.datasource.password=root
+</code></pre>
+<blockquote>
+<p>一般情况下，不需要配置连接数据库的driverClassName，因为SpringBoot会自动从jar中读取！</p>
+</blockquote>
+<p>添加以上配置后，项目可以正常启动，但是，如果以上配置信息是错误的，也不影响启动过程，也就是说，SpringBoot启动时，会读取相关配置，但是，并不执行数据库连接，所以，就算是配置错误也并不会体现出来。</p>
+<h3 id="5-测试数据库连接">5. 测试数据库连接</h3>
+<p>在<strong>src/test/java</strong>下，默认已经存在项目的根包及测试类，且测试类中已经存在一个空的测试方法：</p>
+<pre><code>@RunWith(SpringRunner.class)
+@SpringBootTest
+public class SampleApplicationTests {
+
+	@Test
+	public void contextLoads() {
+	}
+
 }
+</code></pre>
+<p>可以先执行以上<code>contextLoads()</code>方法的单元测试，如果测试出错，一定是测试环境或者框架环境有问题，多考虑为jar包已经损坏，应该重新下载或者更换版本！</p>
+<p>可以在该测试类中编写单元测试：</p>
+<pre><code>@Autowired
+private DataSource dataSource;
 
 @Test
-public void updateDefault() {
-	Integer row=mapper.updateDefault(14, &quot;张三丰&quot;, new Date());
-	System.err.println(row);
+public void getConnection() throws SQLException {
+	Connection conn = dataSource.getConnection();
+	System.err.println(conn);
 }
+</code></pre>
+<p>如果测试通过，则此前配置的数据库连接信息是正确的！</p>
+<h3 id="6-注册功能的持久层接口">6. 注册功能的持久层接口</h3>
+<p>先创建与数据表对应的实体类<code>cn.tedu.springboot.sample.entity.User</code>：</p>
+<pre><code>public class User implements Serializable {
 
-@Test
-public void findByAid() {
-	Address addr=mapper.findByAid(14);
-	System.err.println(addr);
+	private static final long serialVersionUID = 7019981109167736281L;
+
+	private Integer id;
+	private String username;
+	private String password;
+	private Integer age;
+	private String phone;
+	private String email;
+	private Integer isDelete;
+	private Integer departmentId;
+
+	// ...
 }
 </code></pre>
-<h3 id="39-收货地址-设为默认-业务层">39. 收货地址-设为默认-业务层</h3>
-<p><strong>(a) 规划异常</strong></p>
-<p>更新操作，可能抛出<code>UpdateException</code>。</p>
-<p>使用aid查询地址数据是否存在，可能抛出<code>AddressNotFoundException</code>。</p>
-<p>查询到的地址的uid和当前操作用户的uid不一致，可能抛出<code>AccessDeniedException</code></p>
-<p><strong>(b) 接口和抽象方法</strong></p>
-<p>在<code>IAddressService</code>接口中定义以下抽象方法：</p>
-<pre><code>void setDefault(Integer aid,Integer uid,String username)throws AddressNotFoundException, AccessDeniedException, UpdateException;
+<p>然后，创建持久层接口<code>cn.tedu.springboot.sample.mapper.UserMapper</code>：</p>
+<pre><code>public interface UserMapper {
+	
+	Integer insert(User user);
+	
+	User findByUsername(String username);
+
+}
 </code></pre>
-<p><strong>(c) 实现接口</strong></p>
-<p>在<code>AddressServiceImpl</code>中添加持久层<code>AddressMapper</code>中声明的3个抽象方法的私有实现：</p>
-<pre><code>/**
- * 将一条收货地址设为默认收货地址
- * @param aid 收货地址id
- * @param uesrname 最后修改人姓名
- * @param modifiedTime 最后修改时间
- * @return 受影响的行数
- */
-private void updateDefault(Integer aid,
-		String username, Date modifiedTime) throws UpdateException {
-	Integer row=mapper.updateDefault(aid, username, modifiedTime);
-	if(row!=1) {
-		throw new UpdateException(&quot;设置默认收货地址异常！请联系管理员&quot;);
+<p>为了保证MyBatis框架能确定接口文件的位置，可以在接口的声明之前添加<code>@Mapper</code>注解，不过，这样的做法就要求每一个持久层接口之前都需要添加该注解，也可以在启动类<code>SampleApplication</code>之前添加<code>@MapperScan</code>注解进行配置，则后续只需要把持久层接口都放在这个包中就可以了，无需反复添加注解：</p>
+<pre><code>@SpringBootApplication
+@MapperScan(&quot;cn.tedu.springboot.sample.mapper&quot;)
+public class SampleApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SampleApplication.class, args);
+	}
+
+}
+</code></pre>
+<h3 id="7-注册功能的映射">7. 注册功能的映射</h3>
+<p>可以在每一个抽象方法之前使用注解配置所对应的SQL语句，例如：</p>
+<pre><code>@Options(useGeneratedKeys=true, keyProperty=&quot;id&quot;)
+@Insert(&quot;insert into t_user (字段列表) values (值列表)&quot;)
+Integer insert(User user);
+</code></pre>
+<p>这种做法是MyBatis本身就支持的，并不是SpringBoot所特有的！这种做法最大的优点在于：对应关系非常直观。主要的缺陷在于：配置长篇的SQL语句时，代码不易于阅读和维护！所以，一般仍然推荐使用XML配置映射的SQL语句！</p>
+<p>与此前一样，在<strong>src/main/resources</strong>下创建名为<strong>mappers</strong>的文件夹，然后使用<strong>UserMapper.xml</strong>进行配置：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;  
+&lt;!DOCTYPE mapper PUBLIC &quot;-//ibatis.apache.org//DTD Mapper 3.0//EN&quot;      
+	&quot;http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd&quot;&gt;
+
+&lt;!-- namespace：当前XML文件用于配置哪个接口中抽象方法对应的SQL语句 --&gt;
+&lt;mapper namespace=&quot;cn.tedu.springboot.sample.mapper.UserMapper&quot;&gt;
+
+	&lt;!-- resultMap节点：指导MyBatis如何封装查询结果 --&gt;
+	&lt;!-- id：自定义名称 --&gt;
+	&lt;!-- column：查询结果中的列名 --&gt;
+	&lt;!-- property：type对应的类中的属性名 --&gt;
+	&lt;resultMap id=&quot;UserEntityMap&quot;
+		 type=&quot;cn.tedu.springboot.sample.entity.User&quot;&gt;
+		&lt;id column=&quot;id&quot; property=&quot;id&quot; /&gt;
+		&lt;result column=&quot;username&quot; property=&quot;username&quot; /&gt;
+		&lt;result column=&quot;password&quot; property=&quot;password&quot; /&gt;
+		&lt;result column=&quot;age&quot; property=&quot;age&quot; /&gt;
+		&lt;result column=&quot;phone&quot; property=&quot;phone&quot; /&gt;
+		&lt;result column=&quot;email&quot; property=&quot;email&quot; /&gt;
+		&lt;result column=&quot;is_delete&quot; property=&quot;isDelete&quot; /&gt;
+		&lt;result column=&quot;department_id&quot; property=&quot;departmentId&quot; /&gt;
+	&lt;/resultMap&gt;
+
+	&lt;!-- 使用insert节点配置插入数据的SQL语句 --&gt;
+	&lt;!-- id：抽象方法的方法名 --&gt;
+	&lt;!-- 在#{}中间的是方法的参数User类中的属性名称 --&gt;
+	&lt;insert id=&quot;insert&quot;
+		useGeneratedKeys=&quot;true&quot;
+		keyProperty=&quot;id&quot;&gt;
+		INSERT INTO t_user (
+			username, password,
+			age, phone,
+			email, is_delete,
+			department_id
+		) VALUES (
+			#{username}, #{password},
+			#{age}, #{phone},
+			#{email}, #{isDelete},
+			#{departmentId}
+		)
+	&lt;/insert&gt;
+	
+	&lt;select id=&quot;findByUsername&quot;
+		resultMap=&quot;UserEntityMap&quot;&gt;
+		SELECT 
+			* 
+		FROM 
+			t_user 
+		WHERE 
+			username=#{username} 
+	&lt;/select&gt;
+	
+&lt;/mapper&gt;
+</code></pre>
+<p>另外，还需要配置XML文件的位置，则打开<strong>application.properties</strong>文件添加配置：</p>
+<pre><code>mybatis.mapper-locations=classpath:mappers/*.xml
+</code></pre>
+<h3 id="8-持久层单元测试">8. 持久层单元测试</h3>
+<p>在<strong>src/test/java</strong>下创建<code>cn.tedu.springboot.sample.mapper.UserMapperTests</code>单元测试类，将默认存在的<code>SampleApplicationTests</code>类之前的2行注解复制到<code>UserMapperTests</code>类之前：</p>
+<pre><code>@RunWith(SpringRunner.class)
+@SpringBootTest
+public class UserMapperTests {
+}
+</code></pre>
+<p>然后，在类中声明持久层对象的属性：</p>
+<pre><code>@RunWith(SpringRunner.class)
+@SpringBootTest
+public class UserMapperTests {
+	
+	@Autowired
+	private UserMapper mapper;
+
+}
+</code></pre>
+<blockquote>
+<p>凡是以前在SSM项目中可以通过<code>getBean()</code>方式获取的对象，在SpringBoot项目中都可以自动装配！</p>
+</blockquote>
+<p>然后，编写并执行测试方法：</p>
+<pre><code>@RunWith(SpringRunner.class)
+@SpringBootTest
+public class UserMapperTests {
+	
+	@Autowired
+	private UserMapper mapper;
+
+	@Test
+	public void insert() {
+		User user = new User();
+		user.setUsername(&quot;springboot&quot;);
+		user.setPassword(&quot;1234&quot;);
+		Integer rows = mapper.insert(user);
+		System.err.println(&quot;rows=&quot; + rows);
 	}
 	
-}
-
-/**
- * 将一个用户的所有收货地址设为非默认
- * @param uid 用户id
- * @return 受影响的行数
- */
-private void updateNonDefault(Integer uid) throws UpdateException{
-	Integer rows=mapper.updateNonDefault(uid);
-	if(rows&lt;1) {
-		throw new UpdateException(&quot;设置默认收货地址异常！请联系管理员&quot;);
+	@Test
+	public void findByUsername() {
+		String username = &quot;springboot&quot;;
+		User user = mapper.findByUsername(username);
+		System.err.println(user);
 	}
 }
+</code></pre>
+<h3 id="9-编写控制器处理请求">9. 编写控制器处理请求</h3>
+<p>先创建控制器处理请求后的返回结果对象的类型<code>cn.tedu.springboot.sample.util.JsonResult</code>：</p>
+<pre><code>public class JsonResult {
+	private Integer state;
+	private String message;
 
-/**
- * 根据aid查询一条收货地址数据
- * @param aid 收货地址id
- * @return 收货地址数据 或 null
- */
-private Address findByAid(Integer aid) {
-	return mapper.findByAid(aid);
+	// SET/GET ...
 }
 </code></pre>
-<p>在<code>AddressServiceImpl</code>中实现<code>IAddressService</code>声明的抽象方法：</p>
-<pre><code>public void setDefault(Integer aid,Integer uid,String username)throws AddressNotFoundException, AccessDeniedException, UpdateException{
-	// 使用aid查地址数据
-	// 判断结果是否为null
-	// 是：AddressNotFoundException
+<p>SpringBoot项目不需要开发者配置组件扫描，它默认的组件扫描就是项目的根包，即<code>cn.tedu.springboot.sample</code>包，当前项目中所有的组件都必须在这个包或者其子包下！</p>
+<p>所以，创建<code>cn.tedu.springboot.sample.controller.UserController</code>控制器类，在类之前添加<code>@RestController</code>注解和<code>@RequestMapping(&quot;user&quot;)</code>注解：</p>
+<pre><code>@RestController
+@RequestMapping(&quot;user&quot;)
+public class UserController {
 
-	// 查询结果中的uid和方法参数的uid是否不一致
-	// 是：AccessDeniedException
-
-	// 将该用户的所有收货地址设为非默认
-
-	// 将该用户指定的收货地址设为默认
 }
 </code></pre>
-<p>代码实现为：</p>
-<pre><code>@Override
-@Transactional
-public void setDefault(Integer aid, Integer uid, String username)
-		throws AddressNotFoundException, AccessDeniedException, UpdateException {
-	// 使用aid查地址数据
-	Address address=findByAid(aid);
-	// 判断结果是否为null
-	if(address==null) {
-		// 是：AddressNotFoundException
-		throw new AddressNotFoundException(&quot;设置默认收货地址异常！地址数据不存在&quot;);
+<blockquote>
+<p>使用<code>@RestController</code>相当于<code>@Controller</code>和<code>@ResponseBody</code>的组合使用方式，当使用了<code>@RestController</code>时，该控制器类中所有处理请求的方法都是相当于添加了<code>@ResponseBody</code>注解的！一旦使用了该注解，该控制器类中的方法将不可以转发或者重定向，如果一定要转发或者重定向，必须使用<code>ModelAndView</code>作为处理请求的方法的返回值！</p>
+</blockquote>
+<p>然后，在控制器类中添加处理请求的方法：</p>
+<pre><code>// /user/reg
+@RequestMapping(&quot;reg&quot;)
+public JsonResult reg(User user) {
+}
+</code></pre>
+<blockquote>
+<p>在SpringBoot项目中，默认已经将<code>DispatcherServlet</code>映射的路径配置为<code>/*</code>，即所有请求。</p>
+</blockquote>
+<p>在处理过程中，显然需要使用到持久层对象来完成数据操作，所以，应该声明持久层对象的属性：</p>
+<pre><code>@Autowired
+private UserMapper userMapper;
+</code></pre>
+<p>然后，完成处理请求的细节：</p>
+<pre><code>@RequestMapping(&quot;reg&quot;)
+public JsonResult reg(User user) {
+	// 创建返回值对象
+	// 从参数user中获取尝试注册的用户名
+	// 根据以上用户名查询用户数据
+	// 检查查询结果是否为null
+	// 是：用户名未被占用
+	// -- 执行注册
+	// -- 封装返回值对象的属性：1
+	// 否：用户名已经被占用
+	// -- 封装返回值对象的属性：2, 错误提示信息
+	// 返回
+}
+</code></pre>
+<p>具体实现代码：</p>
+<pre><code>@RequestMapping(&quot;reg&quot;)
+public JsonResult reg(User user) {
+	// 创建返回值对象
+	JsonResult jsonResult = new JsonResult();
+	// 从参数user中获取尝试注册的用户名
+	String username = user.getUsername();
+	// 根据以上用户名查询用户数据
+	User result = userMapper.findByUsername(username);
+	// 检查查询结果是否为null
+	if (result == null) {
+		// 是：用户名未被占用
+		// 执行注册
+		userMapper.insert(user);
+		// 封装返回值对象的属性：1
+		jsonResult.setState(1);
+	} else {
+		// 否：用户名已经被占用
+		// 封装返回值对象的属性：2, 错误提示信息
+		jsonResult.setState(2);
+		jsonResult.setMessage(&quot;注册失败！尝试注册的用户名(&quot; + username + &quot;)已经被占用！&quot;);
+	}
+	// 返回
+	return jsonResult;
+}
+</code></pre>
+<p>完成后，通过启动类启动项目，打开浏览器，输入<code>http://localhost:8080/user/reg?username=junit&amp;password=1234</code>进行测试。</p>
+<p>在对方法添加注解配置映射的路径时，除了<code>@RequestMapping</code>以外，还可以使用<code>@GetMapping</code>、<code>@PostMapping</code>等，它们都是限制了请求方式的！</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AJAX]]></title>
+        <id>https://guanxuchao.com//post/ajax</id>
+        <link href="https://guanxuchao.com//post/ajax">
+        </link>
+        <updated>2019-07-28T07:45:04.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="1-服务器端如何响应请求">1. 服务器端如何响应请求</h3>
+<p>服务器端只响应客户端所需要的数据</p>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="1-服务器端如何响应请求">1. 服务器端如何响应请求</h3>
+<p>服务器端只响应客户端所需要的数据</p>
+<!-- more -->
+<p>传统的响应方式有转发和重定向，这样的做法有很多问题，比如：转发和重定向都决定了响应的具体页面，不适合多种客户端（浏览器、Android手机、Android平板电脑、iOS手机、iOS平板电脑……）的项目，因为不同的终端设备的性能特征是不一样的，把同样的一个页面都显示给不同的终端设备是极不合适的！正确的做法应该是“服务器端只响应客户端所需要的数据”，至于这些数据如何呈现在终端设备中，由各客户端的开发团队去解决！</p>
+<p>如果使用响应正文的方式，还存在“响应数据量小”的优势，则响应速度更快，产生的流量消耗小，用户体验好！</p>
+<h3 id="2-服务器端响应正文">2. 服务器端响应正文</h3>
+<p>假设客户端会提交<code>http://localhost:8080/AJAX/user/login.do</code>请求，如果需要响应方式是“响应正文”，则需要在处理请求的方法之前补充添加<code>@ResponseBody</code>注解：</p>
+<pre><code>@Controller
+@RequestMapping(&quot;user&quot;)
+public class UserController {
+	
+	@RequestMapping(&quot;login.do&quot;)
+	@ResponseBody
+	public String login() {
+		return &quot;LOGIN SUCCESS.&quot;;
 	}
 
-	// 查询结果中的uid和方法参数的uid是否不一致
-	if(!address.getUid().equals(uid)) {
-		// 是：AccessDeniedException
-		throw new AccessDeniedException(&quot;设置默认收货地址异常！访问权限不足&quot;);
+}
+</code></pre>
+<p>默认情况下，响应的内容使用了ISO-8859-1编码，所以，不支持中文。</p>
+<p>练习：用户在此次提交请求时，<strong>必须</strong>提交用户名和密码作为请求参数，仅当用户名为<code>root</code>且密码为<code>1234</code>时会登录成功(<code>LOGIN SUCCESS.</code>)，否则，响应用户名错误(<code>USERNAME ERROR.</code>)或者密码错误(<code>PASSWORD ERROR.</code>)。</p>
+<h3 id="3-服务器响应的正文格式-json格式">3. 服务器响应的正文格式--JSON格式</h3>
+<p>JSON(JavaScript Object Notation, JS 对象简谱) 是一种轻量级的数据交换格式。它基于 ECMAScript (欧洲计算机协会制定的js规范)的一个子集，采用完全独立于编程语言的文本格式来存储和表示数据。简洁和清晰的层次结构使得 JSON成为理想的数据交换语言。易于人阅读和编写，同时也易于机器解析和生成，并有效地提升网络传输效率。</p>
+<p>通常，服务器向客户端响应的数据可能不只是1个数据，以登录操作为例，也许可以响应为<code>1</code>表示登录成功，使用<code>2</code>表示登录失败且是因为用户名错误，使用<code>3</code>表示密码错误，则客户端就可以通过对这个值的判断，得知当前操作结果，但是，其它操作可能会需要更多的数据，例如“客户端尝试获取当前登录的用户信息”，需要响应的数据可能包括：用户名、手机号码、电子邮箱、年龄等一系列数据，由于响应结果只是1个字符串，要把这些数据很好的组织起来，才可以方便客户端从这1个字符串中获取其中某部分的数据，否则，如果只是响应为<code>&quot;root13800138001root@163.com26&quot;</code>这样，客户端就无法处理这个响应结果。</p>
+<p>早期通常使用XML语法来组织这些数据：</p>
+<pre><code>&lt;user&gt;
+	&lt;username&gt;root&lt;/username&gt;
+	&lt;age&gt;26&lt;/age&gt;
+	&lt;phone&gt;13800138001&lt;/phone&gt;
+	&lt;email&gt;root@163.com&lt;/email&gt;
+&lt;/user&gt;
+</code></pre>
+<p>使用XML存在的问题：</p>
+<ul>
+<li>
+<p>数据量略大，传输略慢，流量消耗略大，用户体验略差；</p>
+</li>
+<li>
+<p>解析难度大。</p>
+</li>
+</ul>
+<p>目前推荐使用的组织数据的格式是JSON格式，以上数据使用JSON组织后的表现为：</p>
+<pre><code>{
+	&quot;username&quot;:&quot;root&quot;,
+	&quot;age&quot;:26,
+	&quot;phone&quot;:&quot;13800138001&quot;,
+	&quot;email&quot;:&quot;root@163.com&quot;,
+	&quot;skill&quot;:[&quot;Java&quot;, &quot;Java OOP&quot;, &quot;Java SE&quot;, &quot;Java WEB&quot;, &quot;MySQL&quot;, &quot;Spring&quot;],
+	&quot;department&quot;:{
+		&quot;id&quot;:1,
+		&quot;name&quot;:&quot;RD&quot;
+	}
+}
+</code></pre>
+<p>JSON数据在Javascript中是默认即识别的对象，可以直接得到其中的属性值：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+	var json = {
+		&quot;username&quot;:&quot;root&quot;,
+		&quot;age&quot;:26,
+		&quot;phone&quot;:&quot;13800138001&quot;,
+		&quot;email&quot;:&quot;root@163.com&quot;
+	};
+
+	console.log(json.username);
+	console.log(json.age);
+&lt;/script&gt;
+</code></pre>
+<p>关于JSON数据格式：</p>
+<ul>
+<li>
+<p>使用<code>{}</code>表示对象，整个JSON数据就是1个对象；</p>
+</li>
+<li>
+<p>所有的属性名都是字符串类型的，在JavaScript中，可以使用单引号或者双引号框柱，因为JSON数据可能在多种不同的编程语言中都出现，一般推荐使用双引号，属性值如果是字符串，也需要使用双引号框柱，如果是数值或者布尔值，则可以不用双引号框柱，属性名和属性值使用冒号<code>:</code>分隔，多个属性的配置之间使用逗号<code>,</code>分隔；</p>
+</li>
+<li>
+<p>属性值的类型还可以是数组，使用中括号<code>[]</code>框柱数组的各元素，各元素之间使用逗号<code>,</code>分隔，在JavaScript中处理时，使用例如<code>json.skill</code>就可以获取到整个数组，使用<code>json.skill.length</code>就可以获取数组的长度，使用<code>json.skill[0]</code>就可以获取数组中下标为0的元素，也可以使用循环语法进行循环；</p>
+</li>
+<li>
+<p>属性值的类型还可以是另一个对象，使用<code>{}</code>表示对象。</p>
+</li>
+</ul>
+<p>如果在JavaScript中，得到是一个使用JSON语法组织的字符串，而不是JSON对象，可以调用<code>JSON.parse(str)</code>函数，将字符串转换为JSON对象。</p>
+<h3 id="4-服务器端实现响应json格式的数据">4. 服务器端实现响应JSON格式的数据</h3>
+<p>如果需要服务端响应JSON格式的数据，不可能自行拼接出JSON格式的字符串，可以通过工具来解决，首先，需要添加<code>jackson-databind</code>的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+	&lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+	&lt;version&gt;2.9.8&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>然后，在项目中自定义<code>cn.tedu.ajax.JsonResult</code>响应结果类型：</p>
+<pre><code>public class JsonResult {
+	
+	private Integer state;
+	private String message;
+
+	public Integer getState() {
+		return state;
 	}
 
-	// 将该用户的所有收货地址设为非默认
-	updateNonDefault(uid);
-	// 将该用户指定的收货地址设为默认
-	updateDefault(aid, username, new Date());
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 }
 </code></pre>
-<p>开发对应的测试用例：</p>
-<h3 id="40-收货地址-设为默认-控制器层">40. 收货地址-设为默认-控制器层</h3>
-<p><strong>(a) 统一异常处理</strong></p>
-<p>在<code>BaseController</code>添加2种新异常的处理逻辑：</p>
-<p><strong>(b) 设计请求</strong></p>
-<pre><code>请求路径：/addresses/set_default
-请求参数：Integer aid, HttpSession session
-请求方式：Post
-响应数据：JsonResult&lt;Void&gt;
-</code></pre>
-<p>当前比较流行的一种设计风格：RESTful</p>
-<pre><code>请求url的设计：/资源/id/命令
-使用这种设计有个前提：使用的框架要支持RESTful
-
-第一步：在请求路径中使用{xxx}作为参数的占位符
-第二步：在方法中获取参数时，前面添加@PathVariable(&quot;{xxx}&quot;)
-
-这种url的设计风格适合参数少且固定的场景
-
-请求路径：/addresses/{aid}/set_default
-请求参数：@PathVariable(&quot;{aid}&quot;) Integer aid, HttpSession session
-请求方式：Post
-响应数据：JsonResult&lt;Void&gt;
-</code></pre>
-<p><strong>(c) 实现请求</strong></p>
-<pre><code>@RequestMapping(&quot;{aid}/set_default&quot;)
-public JsonResult&lt;Void&gt; setDefault(
-	@PathVariable(&quot;aid&quot;) Integer aid, HttpSession session){
-	String username=getUsernameFromSession(session);
-	Integer uid=getUidFromSession(session);
-	service.setDefault(aid,uid,username);
-	return new JsonResult&lt;&gt;(SUCCESS);
+<p>并修改处理请求的方法，返回值类型使用以上自定义的类型：</p>
+<pre><code>@RequestMapping(&quot;login.do&quot;)
+@ResponseBody
+public JsonResult login(
+	@RequestParam(&quot;username&quot;) String username,
+	@RequestParam(&quot;password&quot;) String password) {
+	Integer state;
+	String message = null;
+	
+	if (&quot;root&quot;.equals(username)) {
+		if (&quot;1234&quot;.equals(password)) {
+			state = 1;
+		} else {
+			state = 3;
+			message = &quot;密码错误！&quot;;
+		}
+	} else {
+		state = 2;
+		message = &quot;用户名不存在！&quot;;
+	}
+	
+	JsonResult jsonResult = new JsonResult();
+	jsonResult.setState(state);
+	jsonResult.setMessage(message);
+	return jsonResult;
 }
 </code></pre>
-<p>在浏览器地址栏进行测试：<code>localhost:8080/addresses/14/set_default</code></p>
-<h3 id="41-收货地址-设为默认-前端界面">41. 收货地址-设为默认-前端界面</h3>
-<h3 id="42-收货地址-删除-持久层">42. 收货地址-删除-持久层</h3>
-<p><strong>(a) 规划SQL语句</strong></p>
-<p>删除一条数据，大概的语句：</p>
-<pre><code>delete from t_address where aid=?
+<p>如果直接运行，会提示406错误：</p>
+<pre><code>HTTP Status 406 – Not Acceptable
 </code></pre>
-<p>删除之前，应该验证aid对应的数据是否存在，然后还应该验证当前用户是否有操作该数据的权限，在之前已经实现该功能。</p>
-<p>如果用户删除的是默认收货地址，且删除之后，该用户已经没有任何收货地址了，则不需要进行额外的操作。查询该用户当前有几条收货地址，已经通过<code>countByUid()</code>实现过。</p>
-<p>如果用户删除的是默认收货地址，且删除之后，该用户还有其它收货地址，则应该选择“最后更新”的那一条收货地址，作为用户的默认收货地址。需要查找该用户“最后更新”的那条收货地址记录：</p>
-<pre><code>select * from t_address where uid=? order by modified_time desc limit 0,1;
+<p>需要在spring.xml中添加配置：</p>
+<pre><code>&lt;!-- 注解驱动 --&gt;
+&lt;mvc:annotation-driven /&gt;
 </code></pre>
-<p><strong>(b) 接口和抽象方法</strong></p>
-<p>在<code>AddressMapper.java</code>中添加2个抽象方法：</p>
-<pre><code>Integer deleteByAid(Integer aid);
-
-Address findLastModified(Integer uid);
+<p>然后，控制器中处理请求的方法响应的正文就是JSON格式的字符串了。</p>
+<p>在控制器中响应正文时，需要添加<code>@ResponseBody</code>注解，SpringMVC框架内置了一系列的转换器(Converter)，用于将方法的返回值转换为响应的正文，在这一系列的转换器中，SpringMVC设计了对应关系和优先级，例如，当方法的返回值类型是<code>String</code>时，就会自动调用<code>StringHttpMessageConverter</code>，当项目中添加了<code>jackson-databind</code>依赖时，如果方法的返回值类型是SpringMVC默认不识别的，就会自动使用<code>Jackson</code>依赖中的转换器！<code>Jackson</code>依赖还会将响应头(Response Headers)中的<code>Content-Type</code>设置为<code>application/json, charset=utf-8</code>。</p>
+<p><strong>小结：需要自定义数据类型，以决定响应的JSON数据格式(有哪些属性，分别是什么类型)，然后用自定义类型作为方法的返回值，并处理完成后返回该类型的对象，<code>Jackson</code>依赖就会自动的设置为支持中文，且把响应的对象转换成JSON字符串。</strong></p>
+<h3 id="5-ajax">5. AJAX</h3>
+<p>AJAX = Asynchronous JavaScript and XML（异步的JavaScript和XML）。</p>
+<p>AJAX不是新的编程语言，而是一种使用现有标准的新方法。</p>
+<p>AJAX是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。</p>
+<p>在实际实现时，通常是基于jQuery框架实现AJAX访问，主要是因为原生技术的代码比较繁琐，且存在浏览器的兼容性问题，在jQuery中，定义了<code>$.ajax()</code>函数，用于处理AJAX请求，调用该函数即可实现异步访问：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-3.4.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(&quot;#btn-login&quot;).click(function(){
+	// $.ajax()函数的参数是1个JSON对象
+	// url：请求提交到哪里
+	// data：需要提交的请求参数
+	// type：请求类型
+	// dataType：服务器端响应的数据类型，可以是text/xml/json，取值取决于Response Headers中的Content-Type
+	// success：服务器端HTTP响应码是2xx时的回调(callback)函数，函数的参数就是服务器端响应的正文结果
+	$.ajax({
+		&quot;url&quot;:&quot;user/login.do&quot;,
+		&quot;data&quot;:$(&quot;#form-login&quot;).serialize(),
+		&quot;type&quot;:&quot;post&quot;,
+		&quot;dataType&quot;:&quot;json&quot;,
+		&quot;success&quot;:function(result) {
+			if (result.state == 1) {
+				alert(&quot;登录成功！&quot;);
+			} else {
+				alert(result.message);
+			}
+		}
+	});
+});
+&lt;/script&gt;</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MyBatis-2]]></title>
+        <id>https://guanxuchao.com//post/mybatis-2</id>
+        <link href="https://guanxuchao.com//post/mybatis-2">
+        </link>
+        <updated>2019-07-27T07:44:31.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="1-使用mybatis实现简单的查询">1. 使用MyBatis实现简单的查询</h3>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="1-使用mybatis实现简单的查询">1. 使用MyBatis实现简单的查询</h3>
+<!-- more -->
+<p>在设计查询的抽象方法时：</p>
+<ol>
+<li>
+<p>返回值类型使用所期望的类型；</p>
+</li>
+<li>
+<p>其它部分的设计与增/删/改相同；</p>
+</li>
+<li>
+<p>如果查询的是某1条数据记录，如果有匹配的数据，则返回正确的查询结果，如果没有匹配的数据，将返回<code>null</code>。</p>
+</li>
+</ol>
+<p>例如：根据用户id查询用户数据详情时：</p>
+<pre><code>User findById(Integer id);
 </code></pre>
-<p><strong>(c) 配置映射</strong></p>
-<pre><code>&lt;!-- 根据aid删除一条收货地址记录 --&gt;
-&lt;!-- Integer deleteByAid(Integer aid) --&gt;
-&lt;delete id=&quot;deleteByAid&quot;&gt;
-	delete from 
-		t_address 
-	where aid=#{aid}
+<p>在配置该方法的XML映射时，使用的<code>&lt;select&gt;</code>节点必须配置<code>resultType</code>或者<code>resultMap</code>属性中的某一个：</p>
+<pre><code>&lt;select id=&quot;findById&quot;
+	resultType=&quot;cn.tedu.mybatis.User&quot;&gt;
+	SELECT * FROM t_user WHERE id=#{id}
+&lt;/select&gt;
+</code></pre>
+<p>例如：获取当前数据表用户数据的数量：</p>
+<pre><code>Integer count();
+</code></pre>
+<p>映射配置为：</p>
+<pre><code>&lt;select id=&quot;count&quot;
+	resultType=&quot;java.lang.Integer&quot;&gt;
+	SELECT COUNT(*) FROM t_user
+&lt;/select&gt;
+</code></pre>
+<p>例如：查询所有用户数据时：</p>
+<pre><code>List&lt;User&gt; findAll();
+</code></pre>
+<p>配置的映射：</p>
+<pre><code>&lt;select id=&quot;findAll&quot;
+	resultType=&quot;cn.tedu.mybatis.User&quot;&gt;
+	SELECT * FROM t_user ORDER BY id ASC
+&lt;/select&gt;
+</code></pre>
+<h3 id="2-使用多个参数">2. 使用多个参数</h3>
+<p>假设需要实现：将id=?的用户的密码修改为?，则抽象方法：</p>
+<pre><code>Integer updatePasswordById(Integer id, String newPassword);
+</code></pre>
+<p>然后配置xml中的映射：</p>
+<pre><code>&lt;update id=&quot;updatePasswordById&quot;&gt;
+	UPDATE t_user SET password=#{newPassword} where id=#{id}
+&lt;/update&gt;
+</code></pre>
+<p>如果直接执行以上代码，会报告错误：</p>
+<pre><code>org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.binding.BindingException: Parameter 'newPassword' not found. Available parameters are [arg1, arg0, param1, param2]
+</code></pre>
+<p>根本原因是MyBatis框架只能识别1个参数，无论这个参数是什么，都会直接被使用，而多余的参数是不可识别的！</p>
+<p>可以在抽象方法的每一个参数之前添加<code>@Param</code>注解，MyBatis框架在处理时，会将这些参数封装成1个Map，依然能满足“只能识别1个参数”的需求，后续在配置XML映射时，使用的<code>#{}</code>占位符中的名称就必须是注解中配置的名称，表示的是MyBatis自动封装的Map中的Key：</p>
+<pre><code>Integer updatePasswordById(
+		@Param(&quot;id&quot;) Integer arg0, 
+		@Param(&quot;password&quot;) String arg1);
+</code></pre>
+<p>配置的XML映射：</p>
+<pre><code>&lt;update id=&quot;updatePasswordById&quot;&gt;
+	UPDATE t_user SET password=#{password} where id=#{id}
+&lt;/update&gt;
+</code></pre>
+<p><strong>小结：如果涉及的抽象方法的参数达到2个甚至更多，则每个参数之前都必须添加<code>@Param</code>注解，并在注解中指定名称，后续配置XML映射时，使用的<code>#{}</code>中的名称也是注解中配置的名称！</strong></p>
+<p>练习：同时根据用户名和密码查询用户数据！</p>
+<h3 id="3-动态sql-foreach">3. 动态SQL-foreach</h3>
+<p>MyBatis中的动态SQL指的是根据参数不同，动态的生成不同的SQL语句。</p>
+<p>例如：根据若干个id删除用户数据，设计的抽象方法：</p>
+<pre><code>Integer deleteByIds(List&lt;Integer&gt; ids);
+</code></pre>
+<p>然后，在配置映射时：</p>
+<pre><code>&lt;delete id=&quot;deleteByIds&quot;&gt;
+	DELETE FROM 
+		t_user 
+	WHERE 
+		id 
+	IN 
+		(
+		&lt;foreach collection=&quot;list&quot;
+			item=&quot;id&quot; separator=&quot;,&quot;&gt;
+			#{id}
+		&lt;/foreach&gt;
+		)
 &lt;/delete&gt;
-
-&lt;!-- 查询一个用户的最后修改的收货地址 --&gt;
-&lt;!-- Address findLastModified(Integer uid) --&gt;
-&lt;select id=&quot;findLastModified&quot;
-	resultMap=&quot;AddressEntityMap&quot;&gt;
-	select 
-		* 
-	from 
-		t_address 
-	where 
-		uid=#{uid} 
-	order by 
-		modified_time desc 
-	limit 0,1;
+</code></pre>
+<p>在配置<code>&lt;foreach&gt;</code>节点时：</p>
+<ul>
+<li>
+<p><code>collection</code>：被遍历的参数对象，首先，如果对应的抽象方法的参数只有1个时，如果参数是<code>List</code>集合类型的，取值为<code>list</code>，如果参数是数组类型的，取值为<code>array</code>，另外，如果对应的抽象方法的参数有多个，则每个参数肯定都添加了<code>@Param</code>注解，此处需要配置的值就是注解中配置的名称；</p>
+</li>
+<li>
+<p><code>item</code>：遍历过程中获取到的数据的名称，相当于增强for循环的语法中，括号中的第2个部分，在<code>&lt;foreach&gt;</code>节点的子级可以使用<code>#{}</code>占位符，占位符中的名称就是<code>item</code>属性的值；</p>
+</li>
+<li>
+<p><code>separator</code>：遍历过程中各元素使用的分隔符；</p>
+</li>
+<li>
+<p><code>open</code>和<code>close</code>：遍历产生的代码的最左侧字符和最右侧字符。</p>
+</li>
+</ul>
+<h3 id="4-动态sql-if">4. 动态SQL-if</h3>
+<p>假设存在抽象方法：</p>
+<pre><code>List&lt;User&gt; find(String where, String orderBy, Integer offset, Integer count);
+</code></pre>
+<p>在配置SQL语句时，可以使用if标签进行对参数的判断，从而产生不同的SQL语句的某个部分，例如：</p>
+<pre><code>&lt;select id=&quot;xx&quot; resultType=&quot;xx.xx.xx.User&quot;&gt;
+	SELECT
+		*
+	FROM
+		t_user
+	&lt;if test=&quot;where != null&quot;&gt;
+	WHERE
+		#{where}
+	&lt;/if&gt;
+	&lt;if test=&quot;orderBy != null&quot;&gt;
+	ORDER BY
+		#{orderBy}
+	&lt;/if&gt;
+	&lt;if test=&quot;offset != null&quot;&gt;
+	LIMIT
+		#{offset}, #{count}
+	&lt;/if&gt;
 &lt;/select&gt;
 </code></pre>
-<p>开发对应的测试用例：</p>
-<pre><code>@Test
-public void deteleByAid() {
-	Integer row=mapper.deleteByAid(6);
-	System.err.println(row);
+<p>以上配置是错误的，并不能所有位置都使用<code>#{}</code>占位符，有几处需要使用<code>${}</code>格式的占位符：</p>
+<pre><code>&lt;select id=&quot;find&quot; 
+	resultType=&quot;cn.tedu.mybatis.User&quot;&gt;
+	SELECT
+		*
+	FROM
+		t_user
+	&lt;if test=&quot;where != null&quot;&gt;
+	WHERE
+		${where}
+	&lt;/if&gt;
+	&lt;if test=&quot;orderBy != null&quot;&gt;
+	ORDER BY
+		${orderBy}
+	&lt;/if&gt;
+	&lt;if test=&quot;offset != null&quot;&gt;
+	LIMIT
+		#{offset}, #{count}
+	&lt;/if&gt;
+&lt;/select&gt;
+</code></pre>
+<h3 id="5-mybatis中的占位符">5. MyBatis中的占位符</h3>
+<p>在MyBatis中，编写XML中的SQL语句时，可以使用<code>#{}</code>格式的占位符，还可以使用<code>${}</code>格式的占位符！</p>
+<p>MyBatis在处理有占位符的SQL时，如果是<code>${}</code>格式的占位符，会先通过字符串拼接的方式把变量值替换并拼接出SQL语句，然后尝试编译该SQL语句，如果是<code>#{}</code>格式的占位符，会使用<code>?</code>进行占位并尝试编译，编译过后再使用值进行替换。</p>
+<p>小结：以前在使用JDBC时，可以使用<code>?</code>表示的部分，都应该使用<code>#{}</code>，也可以理解为只有“值”才可以使用<code>#{}</code>，这种做法是预编译的，否则，如果要对SQL语句中的某个子句或者其他语句的某个部分，甚至是WHERE子句中的表达式，使用<code>${}</code>，这种做法并不会预编译。</p>
+<h3 id="6-当字段名与属性名不完全相同时的查询">6. 当字段名与属性名不完全相同时的查询</h3>
+<p>修改<code>t_user</code>表结构，添加名为<code>is_delete</code>的字段：</p>
+<pre><code>alter table t_user add column is_delete int;
+
+update t_user set is_delete=0;
+</code></pre>
+<p>然后，对应的<code>User</code>类中也需要添加对应的属性，在Java中，不推荐在变量名中使用<code>_</code>符号，所以，添加的属性应该是：</p>
+<pre><code>private Integer isDelete;
+</code></pre>
+<p>由于名称不是完全相同了，所以，此前的查询功能就无法查询出数据的<code>is_delete</code>字段的值！</p>
+<p>MyBatis封装查询结果的标准就是“将查询到的数据封装到与列名完全相同的属性中”，所以，如果字段名与属性名不一致，就会导致默认的列名与属性名不一致，可以在查询时，为列名自定义别名，以保持名称一致，所以，解决方案可以是：</p>
+<pre><code>SELECT 
+	id, username,
+	password, age,
+	phone, email,
+	is_delete AS isDelete
+FROM 
+	t_user 
+ORDER BY 
+	id ASC
+</code></pre>
+<p>如果在查询时，使用<code>*</code>表示要查询的字段列表，MyBatis就无法自动封装那些名称不一致的数据，可以在XML文件配置<code>&lt;resultMap&gt;</code>节点，并且在查询的<code>&lt;select&gt;</code>节点中，使用<code>resultMap</code>属性取代<code>resultType</code>属性：</p>
+<pre><code>&lt;!-- resultMap节点：指导MyBatis如何封装查询结果 --&gt;
+&lt;!-- id：自定义名称 --&gt;
+&lt;!-- column：查询结果中的列名 --&gt;
+&lt;!-- property：type对应的类中的属性名 --&gt;
+&lt;resultMap id=&quot;UserEntityMap&quot;
+	 type=&quot;cn.tedu.mybatis.User&quot;&gt;
+	&lt;result column=&quot;id&quot; property=&quot;id&quot; /&gt;
+	&lt;result column=&quot;username&quot; property=&quot;username&quot; /&gt;
+	&lt;result column=&quot;password&quot; property=&quot;password&quot; /&gt;
+	&lt;result column=&quot;age&quot; property=&quot;age&quot; /&gt;
+	&lt;result column=&quot;phone&quot; property=&quot;phone&quot; /&gt;
+	&lt;result column=&quot;email&quot; property=&quot;email&quot; /&gt;
+	&lt;result column=&quot;is_delete&quot; property=&quot;isDelete&quot; /&gt;
+&lt;/resultMap&gt;
+
+&lt;select id=&quot;findAll&quot;
+	resultMap=&quot;UserEntityMap&quot;&gt;
+	SELECT 
+		*
+	FROM 
+		t_user 
+	ORDER BY 
+		id ASC
+&lt;/select&gt;
+</code></pre>
+<p><strong>小结：无论是取别名，还是配置<code>&lt;resultMap&gt;</code>，只要能保证MyBatis知道如何封装名称不一致的数据，就可以正确查询到所需要的结果！如果查询时不用<code>*</code>表示字段列表，且名称不一致的字段较少，则可以优先考虑使用别名，如果使用<code>*</code>查询，或者名称不一致的字段较多，则应该优先考虑配置<code>&lt;resultMap&gt;</code>。</strong></p>
+<h3 id="7-关联表查询">7. 关联表查询</h3>
+<p>创建<code>t_department</code>部门信息表，要求表中存在<code>id</code>和<code>name</code>这2个字段，向表中插入不少于3条数据：</p>
+<pre><code>CREATE TABLE t_department (
+	id INT AUTO_INCREMENT COMMENT '部门id',
+	name VARCHAR(50) NOT NULL UNIQUE COMMENT '部门名称',
+	PRIMARY KEY (id)
+) DEFAULT CHARSET=UTF8;
+
+INSERT INTO t_department (name) VALUES ('软件研发部'), ('人力资源部'), ('财务部');
+</code></pre>
+<p>在<code>t_user</code>表中添加<code>department_id</code>字段，为每一个用户数据分配部门id：</p>
+<pre><code>ALTER TABLE t_user ADD COLUMN department_id INT;
+
+UPDATE t_user SET department_id=1 WHERE id IN (2,10,17);
+UPDATE t_user SET department_id=2 WHERE id IN (16,14,12);
+UPDATE t_user SET department_id=3 WHERE id IN (4,13);
+</code></pre>
+<p>假设存在需求：根据id查询某用户详情，要求直接显示用户所在部门的名称。</p>
+<p>首先，直接查询<code>t_user</code>表是不足以得到完整答案的，为了保证数据表管理的规范，在<code>t_user</code>表中只会存储部门的<code>id</code>，并不会存储部门的<code>name</code>，所以，需要实现该需求，就必须使用关联查询：</p>
+<pre><code>SELECT 
+	t_user.id, username,
+	phone, email,
+	password, age,
+	is_delete AS isDelete,
+	department_id AS departmentId,
+	name AS departmentName
+FROM 
+	t_user 
+LEFT JOIN
+	t_department 
+ON 
+	department_id=t_department.id
+WHERE
+	t_user.id=?
+</code></pre>
+<p>这样的查询可以符合当前需求，但是，在设计代码时，却没有任何一个实体类可以封装以上查询结果！因为实体类都是与数据表一一相对应的，所以就需要另外创建VO(Value Object)类，VO类的设计原则是根据查询结果来确定各属性的：</p>
+<pre><code>public class UserVO {
+	private Integer id;
+	private String username;
+	private String password;
+	private Integer age;
+	private String phone;
+	private String email;
+	private Integer isDelete;
+	private Integer departmentId;
+	private String departmentName;
+	// SET/GET/hashCode/equals/toString/Serializable
 }
+</code></pre>
+<p>其实，VO类与实体类的设计方式是几乎一样的，只是定位不同，实体类与数据表对应，VO类与查询结果对应。</p>
+<p>设计的抽象方法的返回值就应该是<code>UserVO</code>：</p>
+<pre><code>UserVO findUserVOById(Integer id);
+</code></pre>
+<p>然后，配置映射时，需要注意自定义别名，或者配置<code>&lt;resultMap&gt;</code>，同时，注意：如果某个字段名在2张或者涉及的多张表中都存在，必须明确的指定表名，例如这2张表中都有<code>id</code>字段，每次涉及该字段都必须在左侧指定表名：</p>
+<pre><code>&lt;select id=&quot;findUserVOById&quot;
+	resultType=&quot;cn.tedu.mybatis.UserVO&quot;&gt;
+	SELECT 
+		t_user.id, username,
+		phone, email,
+		password, age,
+		is_delete AS isDelete,
+		department_id AS departmentId,
+		name AS departmentName
+	FROM 
+		t_user 
+	LEFT JOIN
+		t_department 
+	ON 
+		department_id=t_department.id
+	WHERE
+		t_user.id=#{id}
+&lt;/select&gt;
 
-@Test
-public void findLastModified() {
-	Address address=mapper.findLastModified(10);
-	System.err.println(address);
+查询某个部门的信息，同时，获取该部门中所有用户的信息。
+</code></pre>
+<p>执行该操作的SQL语句大致是：</p>
+<pre><code>SELECT 
+	*
+FROM
+	t_department
+LEFT JOIN
+	t_user
+ON
+	t_department.id=t_user.department_id
+WHERE
+	t_department.id=?
+</code></pre>
+<p>执行以上查询，可能产生多条结果，因为某1个部门中可能有多个用户！但是，实际需求是“查询某个部门的信息”，结果应该只有1个数据！</p>
+<p>为了合理的表示查询结果，可以定义部门信息的VO类<code>cn.tedu.mybatis.DepartmentVO</code>，该类的设计：</p>
+<pre><code>public class DepartmentVO {
+	private Integer id; // 部门id
+	private String name; // 部门名称
+	private List&lt;User&gt; users; // 部门中的用户
 }
 </code></pre>
-<h3 id="43-收货地址-删除-业务层">43. 收货地址-删除-业务层</h3>
-<p><strong>(a) 规划异常</strong></p>
-<p>删除时：DeleteException</p>
-<p>删除前：AddressNotFoundException, AccessDeniedException</p>
-<p>删除后，可能将一条记录设为默认收货地址：UpdateException</p>
-<p><strong>(b) 接口和抽象方法</strong></p>
-<p>在<code>IAddressService</code>接口中添加以下抽象方法：</p>
-<pre><code>void removeAddress(Integer aid,
-	Integer uid, String username) throws AddressNotFoundException, AccessDeniedException, DeleteException,UpdateException;
-</code></pre>
-<p><strong>(c) 实现接口</strong></p>
-<p>在<code>AddressServiceImpl</code>中提供持久层2个抽象方法的私有实现：</p>
-<pre><code>/**
- * 根据aid删除一条收货地址记录
- * @param aid 收货地址id
- * @return 受影响的行数
- */
-private void deleteByAid(Integer aid) throws DeleteException {
-	Integer row=mapper.deleteByAid(aid);
-	if(row!=1) {
-		throw new DeleteException(&quot;删除收货地址异常！请联系管理员&quot;);
-	}
-};
-
-/**
- * 查询一个用户的最后修改的收货地址
- * @param uid 用户的id
- * @return 最后修改的收货地址
- */
-private Address findLastModified(Integer uid) {
-	return mapper.findLastModified(uid);
-};
-</code></pre>
-<p>在<code>AddressServiceImpl</code>中实现接口中定义的抽象方法：</p>
-<pre><code>@Transactional
-public void removeAddress(Integer aid,
-	Integer uid, String username) throws AddressNotFoundException, AccessDeniedException, DeleteException,UpdateException{
-
-	// 使用aid查地址数据
-	// 判断结果是否为null
-	// 是：AddressNotFoundException
-
-	// 查询结果中的uid和方法参数的uid是否不一致
-	// 是：AccessDeniedException
-
-	// 删除aid对应的地址数据
-
-	// 判断刚才的查询结果中的isDefault是否不为1
-	// return;
-
-	// 查看当前用户剩余的收货地址条数
-	// 判断条数是否为0
-	// 是：return;
-
-	// 查询该用户的最后修改的收货地址
-	// 将该条记录设为该用户的默认收货地址
-}
-</code></pre>
-<p>对应的代码实现：</p>
-<pre><code>@Override
-@Transactional
-public void removeAddress(Integer aid, Integer uid, String username)
-		throws AddressNotFoundException, AccessDeniedException, DeleteException, UpdateException {
-	// 使用aid查地址数据
-	Address result=findByAid(aid);
-	// 判断结果是否为null
-	if(result==null) {
-		// 是：AddressNotFoundException
-		throw new AddressNotFoundException(&quot;删除收货地址异常！地址数据不存在&quot;);
-	}
-
-	// 查询结果中的uid和方法参数的uid是否不一致
-	if(!result.getUid().equals(uid)) {
-		// 是：AccessDeniedException
-		throw new AccessDeniedException(&quot;删除收货地址异常！访问权限不足&quot;);
-	}
-
-	// 删除aid对应的地址数据
-	deleteByAid(aid);
+<p>在开发持久层功能时，由于操作的数据主体不再是“用户”数据，则以前的<code>UserMapper</code>接口就不再适用，应该先创建新的<code>cn.tedu.mybatis.DepartmentMapper</code>持久层接口，并在接口中定义“根据部门id查询部门详情”的抽象方法：</p>
+<pre><code>public interface DepartmentMapper {
 	
-	// 判断刚才的查询结果中的isDefault是否不为1
-	if(result.getIsDefault()!=1) {
-		return;
-	}
+	DepartmentVO findVOById(Integer id);
 
-	// 查看当前用户剩余的收货地址条数
-	Integer count = countByUid(uid);
-	// 判断条数是否为0
-	if(count==0) {
-		return;
-	}
-
-	// 查询该用户的最后修改的收货地址
-	Address lastModifiedAddress=findLastModified(uid);
-	// 将该条记录设为该用户的默认收货地址
-	updateDefault(lastModifiedAddress.getAid(), username, new Date());
 }
 </code></pre>
-<p>开发对应的测试用例：</p>
+<p>与添加新的接口的原因相同，也应该给出新的XML文件配置以上抽象方法的SQL语句，所以，可以把原有的<code>UserMapper.xml</code>复制并粘贴，然后重命名为<code>DepartmentMapper.xml</code>，删除原有的配置，再配置以上抽象方法的SQL语句：</p>
+<pre><code>&lt;select id=&quot;findVOById&quot; resultType=&quot;xx.xx.xx.DepartmentVO&quot;&gt;
+	SELECT 
+		t_department.id, name,
+		t_user.id, username,
+		password, age,
+		phone, email,
+		is_delete AS isDelete,
+		department_id AS departmentId
+	FROM
+		t_department
+	LEFT JOIN
+		t_user
+	ON
+		t_department.id=t_user.department_id
+	WHERE
+		t_department.id=#{id}
+&lt;/select&gt;
+</code></pre>
+<p>在以上查询结果中，会出现2个名为<code>id</code>的列名，后续在处理数据时，MyBatis将无法正确的区分所需要的<code>id</code>值是哪一列的数据，所以，在查询时，至少需要为以上2个<code>id</code>字段中的1个定义别名，或者将2个都定义不同的别名，保证查询结果中的列名都是唯一的，不会出现冲突：</p>
+<pre><code>SELECT 
+		t_department.id AS did, name,
+		t_user.id AS uid ... ...
+</code></pre>
+<p>在配置<code>&lt;resultMap&gt;</code>时，关于唯一字段的配置，应该使用<code>&lt;id /&gt;</code>节点进行配置，而不应该使用<code>&lt;result /&gt;</code>节点来配置，2个节点的配置方式完全相同，即使不使用<code>&lt;id /&gt;</code>而使用<code>&lt;result /&gt;</code>也能实现功能，但是，MyBatis是天生自带缓存的，使用<code>&lt;id /&gt;</code>节点配置的数据会作为缓存数据的标识，而使用<code>&lt;result /&gt;</code>节点的配置则不会。</p>
+<p>在配置1对多关系时，需要使用<code>&lt;collection&gt;</code>节点，例如1个部门有多个用户，在数据方面，1个部门的VO对象中有1个<code>List</code>集合存储多个<code>User</code>数据。</p>
+<p>完整的<code>&lt;resultMap&gt;</code>配置应该是：</p>
+<pre><code>&lt;resultMap id=&quot;DepartmentVOMap&quot;
+	type=&quot;cn.tedu.mybatis.DepartmentVO&quot;&gt;
+	&lt;id column=&quot;did&quot; property=&quot;id&quot;/&gt;
+	&lt;result column=&quot;name&quot; property=&quot;name&quot;/&gt;
+	&lt;!-- collection节点：用于配置集合类型的属性 --&gt;
+	&lt;!-- property：依然表示类的属性 --&gt;
+	&lt;!-- ofType：集合里面放的是什么类型的数据 --&gt;
+	&lt;collection property=&quot;users&quot;
+		ofType=&quot;cn.tedu.mybatis.User&quot;&gt;
+		&lt;!-- column：依然是查询结果中的列名 --&gt;
+		&lt;!-- property：ofType的类型中的属性名 --&gt;
+		&lt;id column=&quot;uid&quot; property=&quot;id&quot;/&gt;
+		&lt;result column=&quot;username&quot; property=&quot;username&quot;/&gt;
+		&lt;result column=&quot;password&quot; property=&quot;password&quot;/&gt;
+		&lt;result column=&quot;age&quot; property=&quot;age&quot;/&gt;
+		&lt;result column=&quot;phone&quot; property=&quot;phone&quot;/&gt;
+		&lt;result column=&quot;email&quot; property=&quot;email&quot;/&gt;
+		&lt;result column=&quot;is_delete&quot; property=&quot;isDelete&quot;/&gt;
+		&lt;result column=&quot;department_id&quot; property=&quot;departmentId&quot;/&gt;
+	&lt;/collection&gt;
+&lt;/resultMap&gt;
+</code></pre>
+<p>查询节点的配置为：</p>
+<pre><code>&lt;select id=&quot;findVOById&quot;
+	resultMap=&quot;DepartmentVOMap&quot;&gt;
+	SELECT 
+		t_department.id AS did, name,
+		t_user.id AS uid, username,
+		password, age,
+		phone, email,
+		is_delete, department_id
+	FROM
+		t_department
+	LEFT JOIN
+		t_user
+	ON
+		t_department.id=t_user.department_id
+	WHERE
+		t_department.id=#{id}
+&lt;/select&gt;
+</code></pre>
+<p>注意：在使用了<code>&lt;resultMap&gt;</code>的查询中，并不需要因为查询结果的列名与类的属性名不同而定义别名，例如以上的<code>is_delete</code>和<code>department_id</code>就没有再定义别名，而只需要为名字冲突的定义别名，例如以上的用户表的id和部门表的id。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MyBatis-1]]></title>
+        <id>https://guanxuchao.com//post/mybatis-1</id>
+        <link href="https://guanxuchao.com//post/mybatis-1">
+        </link>
+        <updated>2019-07-26T07:42:02.000Z</updated>
+        <summary type="html"><![CDATA[<h4 id="21-框架的作用">2.1. 框架的作用</h4>
+<p>简化数据库编程，开发者只要指定每项数据操作时的SQL语句及对应的抽象方法即可。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h4 id="21-框架的作用">2.1. 框架的作用</h4>
+<p>简化数据库编程，开发者只要指定每项数据操作时的SQL语句及对应的抽象方法即可。</p>
+<!-- more -->
+<h4 id="22-创建springmybatis的项目">2.2. 创建Spring+MyBatis的项目</h4>
+<p>创建Maven Project，Group Id为cn.tedu.mybatis，Artifact Id为MyBatis，Packaing选择war。</p>
+<p>创建完成后，生成web.xml，添加依赖，添加Tomcat运行环境，复制web.xml中的配置，复制前序项目中的spring.xml(需要删除拦截器的配置)。</p>
+<p>然后，需要添加一些新的依赖，首先，添加mybatis的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+	&lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+	&lt;version&gt;3.5.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>MyBatis框架是可以独立使用的，但是配置相对繁琐，且没有实际价值，通常都是与Spring结合使用的，甚至结合了SpringMVC，所以，需要添加<code>mybatis-spring</code>的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+	&lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+	&lt;version&gt;2.0.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>MyBatis的底层是基于jdbc实现的，所以，结合Spring使用后，需要添加<code>spring-jdbc</code>依赖，该依赖的代码与<code>spring-webmvc</code>几乎一样，只是<code>artifact id</code>不同，通常，这2个依赖的版本应该完全相同：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+	&lt;version&gt;4.3.8.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>还需要添加<code>mysql-connector-java</code>的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;mysql&lt;/groupId&gt;
+	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+	&lt;version&gt;8.0.16&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>另外，还需要<code>commons-dbcp</code>数据库连接池的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;commons-dbcp&lt;/groupId&gt;
+	&lt;artifactId&gt;commons-dbcp&lt;/artifactId&gt;
+	&lt;version&gt;1.4&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>最后，检查是否已经添加好了<code>junit</code>依赖，如果已经存在，则跳过，如果没有添加，则补充。</p>
+<h4 id="23-配置数据库连接">2.3. 配置数据库连接</h4>
+<p>在<strong>src/main/resources</strong>下创建<strong>db.properties</strong>文件，以确定数据库连接的相关配置：</p>
+<pre><code>url=jdbc:mysql://localhost:3306/tedu_ums?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai
+driver=com.mysql.cj.jdbc.Driver
+username=root
+password=root
+initialSize=2
+maxActive=5
+</code></pre>
+<p>然后，需要在Spring的配置文件中读取以上配置信息：</p>
+<pre><code>&lt;!-- 读取db.properties --&gt;
+&lt;util:properties id=&quot;dbConfig&quot;
+	location=&quot;classpath:db.properties&quot; /&gt;
+</code></pre>
+<p>最终，程序运行时，需要使用的数据源是<code>BasicDataSource</code>，框架会通过这个类的对象获取数据库连接对象，然后实现数据访问，所以，就需要为这个类的相关属性注入值，把数据库配置信息确定下来：</p>
+<pre><code>&lt;!-- 配置数据源 --&gt;
+&lt;bean id=&quot;dataSource&quot;
+	class=&quot;org.apache.commons.dbcp.BasicDataSource&quot;&gt;
+	&lt;property name=&quot;url&quot; 
+		value=&quot;#{dbConfig.url}&quot; /&gt;
+	&lt;property name=&quot;driverClassName&quot; 
+		value=&quot;#{dbConfig.driver}&quot; /&gt;
+	&lt;property name=&quot;username&quot; 
+		value=&quot;#{dbConfig.username}&quot; /&gt;
+	&lt;property name=&quot;password&quot; 
+		value=&quot;#{dbConfig.password}&quot; /&gt;
+	&lt;property name=&quot;initialSize&quot; 
+		value=&quot;#{dbConfig.initialSize}&quot; /&gt;
+	&lt;property name=&quot;maxActive&quot; 
+		value=&quot;#{dbConfig.maxActive}&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>接下来，可以检验一下以上完成的配置是否正确，则在<strong>src/test/java</strong>下创建<code>cn.tedu.mybatis.Tests</code>测试类，编写并执行测试方法：</p>
 <pre><code>@Test
-public void removeAddress() {
-	try {
-		service.removeAddress(15, 10, &quot;张翠山&quot;);
-	}catch(ServiceException e) {
-		System.err.println(e.getClass().getName());
-		System.err.println(e.getMessage());
+public void getConnection() throws SQLException {
+	ClassPathXmlApplicationContext ac
+		= new ClassPathXmlApplicationContext(
+			&quot;spring.xml&quot;);
+	
+	BasicDataSource ds = ac.getBean(&quot;dataSource&quot;, BasicDataSource.class);
+	
+	Connection conn = ds.getConnection();
+	System.out.println(conn);
+	
+	ac.close();
+}
+</code></pre>
+<h4 id="24-设计接口和抽象方法">2.4. 设计接口和抽象方法</h4>
+<p>创建<code>cn.tedu.mybatis.User</code>类，类的属性与<code>t_user</code>表保持一致：</p>
+<pre><code>public class User {
+
+	private Integer id;
+	private String username;
+	private String password;
+	private Integer age;
+	private String phone;
+	private String email;
+
+	// SET/GET/toString/hashCode/equals/Serializable
+
+}
+</code></pre>
+<p>在MyBatis中，要求抽象方法写在接口中，所以，需要先创建<code>cn.tedu.mybatis.UserMapper</code>接口：</p>
+<pre><code>public interface UserMapper {
+}
+</code></pre>
+<p>然后，在接口中添加抽象方法，设计原则：</p>
+<ul>
+<li>
+<p>如果要执行的操作是<code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>，返回值类型使用<code>Integer</code>，表示受影响的行数；</p>
+</li>
+<li>
+<p>方法的名称可以自定义，但是，不允许重载；</p>
+</li>
+<li>
+<p>参数列表根据执行SQL语句时的不确定数据来设计。</p>
+</li>
+</ul>
+<p>对于要执行的数据操作，先完成“增加”操作，则添加关于“增加”用户数据的抽象方法：</p>
+<pre><code>Integer insert(User user);
+</code></pre>
+<p>然后，需要通过配置，让MyBatis框架知道接口在哪里，所以，在Spring的配置文件中添加配置：</p>
+<pre><code>&lt;!-- 配置MapperScannerConfigurer --&gt;
+&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+	&lt;!-- 指定MyBatis所需的接口在哪里 --&gt;
+	&lt;property name=&quot;basePackage&quot;
+		value=&quot;cn.tedu.mybatis&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<h4 id="25-配置sql语句">2.5. 配置SQL语句</h4>
+<p>下载<code>http://doc.canglaoshi.org/config/mybatis-mapper.zip</code>文件，得到压缩包，在项目的<strong>src/main/resources</strong>下创建名为<strong>mappers</strong>的文件夹，解压下载的压缩包，将得到的xml文件复制到<strong>mappers</strong>文件夹中，并重命名为<strong>UserMapper.xml</strong>。</p>
+<p>然后在该文件中配置SQL语句：</p>
+<pre><code>&lt;!-- namespace：当前XML文件用于配置哪个接口中抽象方法对应的SQL语句 --&gt;
+&lt;mapper namespace=&quot;cn.tedu.mybatis.UserMapper&quot;&gt;
+
+	&lt;!-- 使用insert节点配置插入数据的SQL语句 --&gt;
+	&lt;!-- id：抽象方法的方法名 --&gt;
+	&lt;!-- 在#{}中间的是方法的参数User类中的属性名称 --&gt;
+	&lt;insert id=&quot;insert&quot;&gt;
+		INSERT INTO t_user (
+			username, password,
+			age, phone,
+			email
+		) VALUES (
+			#{username}, #{password},
+			#{age}, #{phone},
+			#{email}
+		)
+	&lt;/insert&gt;
+	
+&lt;/mapper&gt;
+</code></pre>
+<p>最后，还是需要补充配置，使得MyBatis框架知道这些XML文件在哪里，且执行时使用的数据源是哪一个，则在Spring的配置文件中补充配置：</p>
+<pre><code>&lt;!-- SqlSessionFactoryBean --&gt;
+&lt;bean class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+	&lt;!-- XML文件在哪里 --&gt;
+	&lt;property name=&quot;mapperLocations&quot;
+		value=&quot;classpath:mappers/*.xml&quot; /&gt;
+	&lt;!-- 使用哪个数据源 --&gt;
+	&lt;property name=&quot;dataSource&quot;
+		ref=&quot;dataSource&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>完成之后，在<code>Tests</code>中编写并执行单元测试：</p>
+<pre><code>@Test
+public void insert() {
+	ClassPathXmlApplicationContext ac
+		= new ClassPathXmlApplicationContext(
+			&quot;spring.xml&quot;);
+	
+	UserMapper userMapper
+		= ac.getBean(&quot;userMapper&quot;, UserMapper.class);
+	System.out.println(userMapper.getClass());
+	
+	User user = new User();
+	user.setUsername(&quot;admin&quot;);
+	user.setPassword(&quot;1234&quot;);
+	Integer rows = userMapper.insert(user);
+	System.out.println(&quot;rows=&quot; + rows);
+	
+	ac.close();
+}
+</code></pre>
+<h4 id="26-实时获取新插入的数据的id">2.6. 实时获取新插入的数据的id</h4>
+<p>在配置<code>&lt;insert&gt;</code>节点时，添加<code>useGeneratedKeys=&quot;true&quot;</code>和<code>keyProperty=&quot;id&quot;</code>的配置：</p>
+<pre><code>&lt;insert id=&quot;insert&quot;
+	useGeneratedKeys=&quot;true&quot;
+	keyProperty=&quot;id&quot;&gt;
+</code></pre>
+<p>然后，执行数据操作后，方法的参数对象中就会被封装自动编号的id值！</p>
+<p>以上配置的2个属性，<code>useGeneratedKeys</code>表示“要不要获取自动生成的字段的值，即自动编号的值”，<code>keyProperty</code>表示“获取到的自动编号的值封装在参数对象的哪个属性中”，所以，在本例中，指的是<code>User</code>类中的<code>id</code>属性，并不是<code>t_user</code>表中的<code>id</code>字段。</p>
+<blockquote>
+<p>通常，Property单词表示“属性”，类才有属性，数据表没有属性，Field表示“字段”，仅当描述数据表结构时才称之为字段，Column表示“列”，仅当描述查询结果时才称之为列。</p>
+</blockquote>
+<h3 id="-">----------------------------------</h3>
+<h3 id="附1如果快速的向数据表中插入已知的1000万条数据">附1：如果快速的向数据表中插入已知的1000万条数据</h3>
+<p>假设这1000万条数据在1个<code>List</code>集合中，将这个集合进行遍历，循环1000万次，结合数据库编程技术，就可以将这些数据插入到数据库中。</p>
+<p>这样做的缺陷：</p>
+<ol>
+<li>
+<p>在实际工作环境中，应用服务器(程序运行所在的Tomcat服务器)与MySQL数据库服务器并不是同一台服务器，当需要执行数据操作时，会由应用服务器将SQL语句发送到MySQL数据库服务器，发送过程中就需要建立网络连接，才可以发送SQL语句，如果使用以上原始做法，就需要连接1000万次，每次发送1条SQL语句，效率非常低下！</p>
+</li>
+<li>
+<p>每次执行1条SQL语句之前，MySQL服务器还会对SQL语句进行词法分析、语义分析、编译等过程，才可以执行，假设有1000万条SQL语句，则这些词法分析、语义分析、编译等过程就需要经历1000万次！</p>
+</li>
+</ol>
+<p>针对问题1，可以使用批处理来解决，批处理可以一次性发送多条SQL语句到数据库服务器，减少传递SQL语句的次数，从而提高运行效率；</p>
+<p>针对问题2，可以把<code>INSERT INTO xx () VALUES ();</code>这种语法调整为<code>INSERT INTO xx () VALUES (值列表1), (值列表2), ..., (值列表N)</code>，这种做法可以使得1条SQL语句插入多条数据，假设每条SQL语句插入了1000条数据，则只需要1万条SQL语句即可！</p>
+<p>所以，总的来说，可以使用每条SQL语句插入100条数据，批处理时每次发送1000条这样的SQL语句，整体循环100次，就可以完成所有数据的插入！</p>
+<blockquote>
+<p>理论上来说，批处理时，不建议一次性处理超过5000条SQL语句。另外，每条SQL语句也不是插入越多数据就越快，拼接这样的SQL语句也是需要耗时的。</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[SpringMVC-3]]></title>
+        <id>https://guanxuchao.com//post/springmvc-3</id>
+        <link href="https://guanxuchao.com//post/springmvc-3">
+        </link>
+        <updated>2019-07-21T07:01:44.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="1-使用session">1. 使用Session</h3>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="1-使用session">1. 使用Session</h3>
+<!-- more -->
+<p>当需要向Session中存入数据时，可以使用<code>ModelMap</code>对象将数据进行封装，操作方式与封装转发的数据完全相同，例如：</p>
+<pre><code>modelMap.addAttribute(&quot;username&quot;, username);
+</code></pre>
+<p>然后，需要在当前控制器类之前添加<code>@SessionAttributes</code>注解，并且，在注解中显式的指定<code>ModelMap</code>中封装的哪些数据是需要存储在Session中的，例如：</p>
+<pre><code>@Controller 
+@RequestMapping(value=&quot;user&quot;)
+@SessionAttributes(&quot;username&quot;)
+public class UserController {
+	// ...
+}
+</code></pre>
+<p>当添加了以上注解后，如果<code>ModelMap</code>中被存入了名为<code>username</code>的数据，该数据就在Session中，而<code>ModelMap</code>中的其它数据依然只能用于转发，也就是数据的作用域只在Request级别。</p>
+<p>关于<code>@SessionAttributes</code>注解，其属性的配置可以参考该注解的源代码：</p>
+<pre><code>@AliasFor(&quot;names&quot;)
+String[] value() default {};
+
+@AliasFor(&quot;value&quot;)
+String[] names() default {};
+
+Class&lt;?&gt;[] types() default {};
+</code></pre>
+<p>通过以上源代码可以看到：<code>value</code>和<code>names</code>属性的作用是完全相同，用于指定<code>ModelMap</code>中的哪些名称对应的数据需要存放到Session中，可以使用字符串数组表示多个属性，另外，还可以配置<code>types</code>属性用于指定Session的数据的数据类型，也可以是数组类型，与配置的<code>names</code>保持一致即可。</p>
+<p>使用这种做法操作Session非常简单，但是，也存在一系列的问题：</p>
+<ol>
+<li>
+<p>默认情况下，重定向时会把Session中的数据暴露在URL中；</p>
+</li>
+<li>
+<p>通过<code>ModelMap</code>存放的数据一定会在Request的作用域中，所以，通过这种方式存放到Session中的数据，其实在Request中也是存在的；</p>
+</li>
+<li>
+<p>通过这种方式存放到Session中的数据，不可以通过Session对象的<code>invalidate()</code>方法清除！只能通过<code>SessionStatus</code>类的<code>setComplete()</code>方法进行清除！</p>
+</li>
+</ol>
+<p>更加简单的操作Session的方式就是直接在处理请求的方法中添加<code>HttpSession</code>类型的参数，然后在方法体中直接操作即可，例如：</p>
+<pre><code>@RequestMapping(&quot;handle_login.do&quot;) 
+public String handleLogin(String username, String password,
+		ModelMap modelMap, HttpSession session) {
+	// 日志
+	System.out.println(&quot;UserController.handleLogin()&quot;);
+	System.out.println(&quot;\tusername=&quot; + username);
+	System.out.println(&quot;\tpassword=&quot; + password);
+	
+	// 判断用户名是否正确
+	if (&quot;root&quot;.equals(username)) {
+		// 是：判断密码是否正确
+		if (&quot;1234&quot;.equals(password)) {
+			// 是：登录成功，将用户名存入到Session
+			// modelMap.addAttribute(&quot;username&quot;, username);
+			session.setAttribute(&quot;username&quot;, username);
+			// 重定向到主页
+			return &quot;redirect:../index.do&quot;;
+		} else {
+			// 否：密码错误
+			modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：密码错误&quot;);
+			return &quot;error&quot;;
+		}
+	} else {
+		// 否：用户名错误
+		modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：用户名错误&quot;);
+		return &quot;error&quot;;
 	}
 }
 </code></pre>
-<h3 id="44-收货地址-删除-控制器层">44. 收货地址-删除-控制器层</h3>
-<p><strong>(a) 统一异常处理</strong></p>
-<p>处理<code>DeleteException</code></p>
-<p><strong>(b) 设计请求</strong></p>
-<pre><code>/资源/id/命令
+<p>使用这种做法并不存在以上使用<code>@SessionAttributes</code>时的各种问题，操作也非常简单，缺点就是不易于执行单元测试！</p>
+<p>可以忽略“不易于执行单元测试”，甚至“不使用<code>@SessionAttributes</code>”的原因可能是：可以使用专门的测试工具去测试控制器，所以，在控制器中的方法本身是不需要执行单元测试的，甚至在大型项目中根本就不会使用Session，那各种使用方式都是不需要的！</p>
+<h3 id="2-springmvc的拦截器interceptor">2. SpringMVC的拦截器(Interceptor)</h3>
+<p>如果项目中有多个请求需要执行相同的数据处理方案，就可以使用拦截器来实现。</p>
+<p>拦截器的作用并不一定是要把请求“拦截下来，不允许向后执行”，其主要特征是：若干种不同的请求都需要先执行拦截器中的代码，才可以向后执行。</p>
+<p>当然，拦截器也确实具备“拦截”的功能，即：可以将请求拦截下来，不允许向后执行。</p>
+<p>假设需要定义一个“登录拦截器”，实现“如果用户已经登录，则放行，如果未登录，则拦截，不允许向后执行”。</p>
+<p>首先，需要自定义<code>cn.tedu.spring.LoginInterceptor</code>拦截器类，实现<code>HandlerInterceptor</code>：</p>
+<pre><code>public class LoginInterceptor implements HandlerInterceptor {
 
-请求路径：/addresses/{aid}/delete
-请求参数：@PathVariable(&quot;aid&quot;) Integer aid, HttpSession session
-请求方式：POST
-响应数据：JsonResult&lt;Void&gt;
-</code></pre>
-<p><strong>(c) 实现请求</strong></p>
-<pre><code>@RequestMapping(&quot;{aid}/delete&quot;)
-public JsonResult&lt;Void&gt; removeAddress(@PathVariable(&quot;aid&quot;) Integer aid, HttpSession session){
-	Integer uid=getUidFromSession(session);
-	String username=getUsernameFromSession(session);
-	return new JsonResult&lt;&gt;(SUCCESS);
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		System.out.println(&quot;LoginInterceptor.preHandle()&quot;);
+		return false;
+	}
+
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
+		System.out.println(&quot;LoginInterceptor.postHandle()&quot;);
+	}
+
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+			throws Exception {
+		System.out.println(&quot;LoginInterceptor.afterCompletion()&quot;);
+	}
+
 }
 </code></pre>
-<p>完成后，通过<code>localhost:8080/addresses/15/delete</code>进行测试，测试通过后，将控制器层的<code>RequestMapping</code>修改为<code>PostMapping</code></p>
-<h3 id="45-收货地址-删除-前端界面">45. 收货地址-删除-前端界面</h3>
-<h3 id="46-商品-分析">46. 商品-分析</h3>
-<p>导入商品和商品种类表及数据：</p>
-<p>首先应该选择<code>tedu_store</code>库，在使用<code>source 文件路径</code>导入文件</p>
-<p>对<code>t_product</code>和<code>t_product_category</code>表中的字段加以熟悉</p>
-<p><code>t_product_category</code>表在后续的用例中用不上，所以仅需要开发<code>t_product</code>表对应的实体类</p>
-<h3 id="-">-----------------------------</h3>
-<h3 id="基于spring-jdbc的事务">基于spring-jdbc的事务</h3>
-<p>事务的概念：事务指逻辑上对数据库的一组操作，组成这组操作的每一项操作，要么都成功，要么都不成功。主流的数据库，都提供了对事务的支持。</p>
-<p>什么时候用事务：在一组数据库操作中，存在2个及以上的更新操作(增、删、改)时，应该使用事务</p>
-<p>如何实现事务？</p>
-<p>命令式事务：</p>
-<pre><code>start transaction;
-commit;
-rollback;
+<p>拦截器需要在Spring的配置文件中进行配置才可以使用：</p>
+<pre><code>&lt;!-- 配置拦截器链 --&gt;
+&lt;mvc:interceptors&gt;
+	&lt;!-- 配置第1个拦截器 --&gt;
+	&lt;mvc:interceptor&gt;
+		&lt;!-- 拦截的路径 --&gt;
+		&lt;mvc:mapping path=&quot;/index.do&quot;/&gt;
+		&lt;!-- 拦截器类 --&gt;
+		&lt;bean class=&quot;cn.tedu.spring.LoginInterceptor&quot; /&gt;
+	&lt;/mvc:interceptor&gt;
+&lt;/mvc:interceptors&gt;
 </code></pre>
-<p>编程式事务：</p>
-<pre><code>使用Java JDBC的api:
-conn.setAutoCommit(false);
-conn.commit();
-conn.rollback();
-</code></pre>
-<p>声明式事务：</p>
-<pre><code>使用Spring提供的注解： @Transactional
-</code></pre>
-<p>@Transactional的大致实现原理：</p>
-<pre><code>// 启动事务
-try{
-	调用添加了@Transactional的业务层方法
-	提交事务
-}catch(RuntimeException e){
-	回滚事务
+<p>如果需要实现“验证登录以决定是否拦截或者放行”的功能，需要重写拦截器类中的<code>preHandle()</code>方法：</p>
+<pre><code>public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+		throws Exception {
+	System.out.println(&quot;LoginInterceptor.preHandle()&quot;);
+	// 获取HttpSession对象
+	HttpSession session = request.getSession();
+	// 判断Session中有没有登录的数据
+	if (session.getAttribute(&quot;username&quot;) == null) {
+		// 没有登录数据，即未登录，则重定向到登录页
+		// http://localhost:8080/XX/index.do
+		// http://localhost:8080/XX/user/password.do
+		String projectName = request.getServletContext().getContextPath();
+		response.sendRedirect(projectName + &quot;/user/login.do&quot;);
+		// 返回false表示拦截，不允许向后执行
+		return false;
+	}
+	// 返回true表示放行，允许向后执行
+	return true;
 }
 </code></pre>
-<p>@Transactional默认仅对<code>RuntimeException</code>及其子类异常回滚，因此我们在设计异常时，要求<code>ServiceException</code>继承<code>RuntimeException</code>，以保证事务正常回滚。</p>
-<p>可以通过显式声明<code>rollbackfor</code>属性，来配置该注解对<code>Exception</code>回滚：<code>@Transactional(rollbackFor=Exception.class)</code></p>
-<p><code>@Transactional</code>也可以添加到类上，代表该类中所有的方法都是在事务下运行的，但是不推荐这么做</p>
+<p>注意：即使调用了<code>response.sendRedirect()</code>进行重定向，如果要阻止继续向后运行，仍然需要<code>return false;</code>。</p>
+<p>在配置拦截器时，使用的是<code>&lt;mvc:mapping /&gt;</code>配置需要拦截的路径，每个拦截器都可以配置1~N个该节点。</p>
+<p>在配置路径时，还可以使用<code>*</code>作为通配符，例如配置为<code>&lt;mvc:mapping path=&quot;/product/*&quot; /&gt;</code>，则表示例如<code>/product/index.do</code>、<code>/product/add.do</code>、<code>/product/list.do</code>等路径都会被拦截！但是，1个<code>*</code>只能通配1层资源，例如<code>/product/*</code>就不会匹配上<code>/product/x/y.do</code>，如果需要通配若干层路径，可以使用2个<code>*</code>，即配置为<code>/product/**</code>，使用2个<code>*</code>是无视层级的，无论是<code>/product/list.do</code>，还是<code>/product/x/y.do</code>，甚至更多层级的，都可以通配！</p>
+<p>另外，还可以添加<code>&lt;mvc:exclude-mapping /&gt;</code>用于配置例外路径，也就是“白名单”，被添加在白名单中的路径将不被拦截器处理，与<code>&lt;mvc:mapping /&gt;</code>的配置方式完全相同，可以有多个配置白名单的节点，在配置时，路径中也可以使用通配符。</p>
+<p>在配置整个<code>&lt;mvc:interceptor&gt;</code>节点时，其子级的节点必须先配置<code>&lt;mvc:mapping /&gt;</code>，再配置<code>&lt;mvc:exclude-mapping /&gt;</code>，最后配置<code>&lt;bean&gt;</code>，不可以颠倒顺序！</p>
+<h3 id="3-在springmvc中统一处理异常">3. 在SpringMVC中统一处理异常</h3>
+<p>在Java中，异常的继承体系是：</p>
+<pre><code>Throwable
+	Error
+		OutOfMemoryError
+	Exception
+		SQLException
+		IOException
+			FileNotFoundException
+		RuntimeException
+			NullPointerException
+			ClassCastException
+			ArithmeticException
+			NumberFormatException
+			IndexOutOfBoundsException
+				ArrayIndexOutOfBoundsException
+				StringIndexOutOfBoundsException
+</code></pre>
+<p>在Exception中，RuntimeException及其子孙类异常是比较特殊的异常，完全不受Java处理异常的语法约束，因为这些异常可能出现的频率极高，并且，这些异常是可以通过更加严谨的编程来杜绝异常的发生的！</p>
+<p>常见的处理异常的做法是捕获(try...catch)或者声明抛出(throw/throws)，在实际处理时，如果当前类适合处理异常，就应该使用try...catch捕获并处理，如果当前类不适合处理异常，则应该声明抛出，然后续调用这个方法的角色进行处理。</p>
+<p>在服务器端的项目中，通常适合处理异常的都是控制器，但是，某些异常可能在多个不同的功能中都会出现，在处理不同的请求时采取相同的代码进行处理，就会导致代码冗余，不便于统一管理，所以，在SpringMVC框架中就提供了统一处理异常的机制。</p>
+<p>可以在控制器类中添加统一处理异常的方法，关于该方法：</p>
+<ol>
+<li>
+<p>应该使用<code>public</code>权限；</p>
+</li>
+<li>
+<p>返回值的意义与处理请求的方法完全相同；</p>
+</li>
+<li>
+<p>方法名称可以自定义；</p>
+</li>
+<li>
+<p>方法中必须包含异常类型的参数，且参数的类型能包括所有可能需要处理的异常，例如可能处理<code>NullPointerException</code>，则参数的类型可以是<code>NullPointerException</code>或者<code>RuntimeException</code>或者<code>Exception</code>甚至<code>Throwable</code>，如果同时还需要处理<code>NumberFormatException</code>，参数类型就不可以是<code>NullPointerException</code>，简单来说，写<code>Throwable</code>绝对错不了；</p>
+</li>
+<li>
+<p>与处理请求的方法不同，不可以随心所欲的添加参数，如果需要转发数据，只能添加<code>HttpServletRequest</code>参数，不可以使用<code>ModelMap</code>；</p>
+</li>
+<li>
+<p>必须添加<code>@ExceptionHandler</code>注解。</p>
+</li>
+</ol>
+<p>所以，处理请求的方法可以是：</p>
+<pre><code>@ExceptionHandler
+public String handleException(Throwable ex, HttpServletRequest request) {
+	if (ex instanceof NullPointerException) {
+		request.setAttribute(&quot;errorMessage&quot;, &quot;空指针异常！&quot;);
+	} else if (ex instanceof ArrayIndexOutOfBoundsException) {
+		request.setAttribute(&quot;errorMessage&quot;, &quot;数据下标越界异常异常！&quot;);
+	} else {
+		request.setAttribute(&quot;errorMessage&quot;, &quot;未知异常：&quot; + ex.getClass().getName());
+	}
+	
+	return &quot;error&quot;;
+}
+</code></pre>
+<p>一旦添加了该方法，当前类中任何处理请求的方法都不必处理相关异常，等同于这些方法把异常抛出了，将由以上方法进行统一处理！</p>
+<p>需要注意的是：该方法只能处理当前类处理请求时出现的异常，如果其他控制器类的方法抛出了异常，是不会被处理的！可以把该处理异常的方法放在所有控制器类公共的父类中！</p>
+<p>关于<code>@ExceptionHandler</code>的源代码：</p>
+<pre><code>public @interface ExceptionHandler {
+
+	/**
+	 * Exceptions handled by the annotated method. If empty, will default to any
+	 * exceptions listed in the method argument list.
+	 */
+	Class&lt;? extends Throwable&gt;[] value() default {};
+
+}
+</code></pre>
+<p>该注解可以指定需要被处理的异常的种类！参数可以是数组，即同时指定多种异常都将被该方法进行处理！</p>
+<h3 id="4-springmvc框架小结">4. SpringMVC框架小结</h3>
+<ol>
+<li>
+<p>理解SpringMVC执行核心流程；</p>
+</li>
+<li>
+<p>掌握获取请求参数的方式；</p>
+</li>
+<li>
+<p>理解转发与重定向；</p>
+</li>
+<li>
+<p>了解转发时如何转发数据；</p>
+</li>
+<li>
+<p>掌握@RequestMapping、@RequestParam注解的使用；</p>
+</li>
+<li>
+<p>掌握拦截器的使用；</p>
+</li>
+<li>
+<p>掌握处理异常的使用。</p>
+</li>
+</ol>
+<h3 id="-">---------------------------</h3>
+<h3 id="附1什么时候需要使用session">附1：什么时候需要使用Session</h3>
+<p>由于Http协议是无状态协议，每次请求与响应结束后，服务器与客户端就会断开，期间产生的数据及使用数据创建的状态都不会被保留下来，导致下次再次访问时，不可以使用前序产生的数据和状态，为了解决这个问题，就产生了Cookie和Session的用法，其中，Cookie是把特定的数据存储在客户端，而Session是把特定的信息存储在服务器端的内存中。</p>
+<p>通常，使用Session存储：</p>
+<ol>
+<li>
+<p>用户的身份的唯一标识，例如：用户的id；</p>
+</li>
+<li>
+<p>使用频率较高的数据，例如：用户名；</p>
+</li>
+<li>
+<p>不便于使用其它解决方案去存储或者传递的数据。</p>
+</li>
+</ol>
+<h3 id="附2-拦截器interceptor和过滤器filter的区别">附2. 拦截器(Interceptor)和过滤器(Filter)的区别</h3>
+<p>拦截器和过滤器都是可以设置在若干种不同的请求处理之前的，都可以实现“拦截”和“放行”的做法，项目中，都可以存在若干个拦截器或者过滤器形成拦截器链或者过滤器链。</p>
+<p>过滤器是JavaEE中的组件，拦截器是SpringMVC中的组件，只要是使用Java语言做服务器端开发都可以使用过滤器，但是，只有使用了SpringMVC框架才可以使用拦截器，并且，如果使用SpringMVC时，<code>DispatcherServlet</code>映射的路径是<code>*.do</code>，则只有以<code>.do</code>为后缀的请求才可能被拦截器处理，也就是说，只有被<code>DispatcherServlet</code>映射到的路径才可能被拦截器处理。</p>
+<p>过滤器是执行在所有<code>Servlet</code>组件之前的，而拦截器是执行在<code>DispatcherServlet</code>之后、且在各Controller控制器之前及之后的组件！</p>
+<p>过滤器是需要在<strong>web.xml</strong>中进行配置的，其过滤的路径只能通过<code>&lt;url-pattern&gt;</code>节点配置1个路径，配置非常不灵活，拦截器可以通过若干个<code>&lt;mvc:mapping /&gt;</code>节点配置若干个黑名单，还可以通过若干个<code>&lt;mvc:exclude-mapping /&gt;</code>节点配置若干个白名单，配置就非常灵活！</p>
+<p>虽然拦截器和过滤器可以实现的的功能几乎相同，且拦截器的配置更加灵活，但是，由于执行时间节点的差异，拦截器也并不能完全取代过滤器！</p>
+<h3 id="附3-解决乱码问题">附3. 解决乱码问题</h3>
+<p>计算机能够直接识别并处理的都是二进制数，也就是由0和1组成的序列，每个存储0或者1的空间称为“位(bit)”，由于每个二进制位只能存储1个0或者1个1，只能表达2种可能性，就不足以表示更多的内容，在计算机中，使用了更大的单位“字节(byte)”作为基本单位，每个字节由8个二进制位组成。</p>
+<p>在ASCII编码表中指定了人类生活使用的字符与二进制数的对应关系，例如<code>a</code>对应的就是<code>110 0001</code>，假设输入了1个<code>a</code>，其实计算机处理的是<code>110 0001</code>，当计算机运算得到<code>110 0001</code>，就会显示为<code>a</code>。</p>
+<p>由于ASCII编码表只制定了1个字节的对应关系，但是，中文的汉字种类太多，1个字节无法表达，就需要更多的字节数，例如使用2个字节，就可以表示更多种对应关系，Java语言在处理字符时，内存中就使用的Unicode编码。</p>
+<p>当数据需要传输时，如果传输的是<code>a</code>，只需要1个字节就够了，如果传输的是<code>中</code>这个汉字，至少需要2个字节，所以，如果单纯直接传输二进制数的序列，接收方可能接收到<code>1110 0001 1101 1100 1011 1010</code>，却不知道如何进行分隔！所以，为了保证能够正确的分隔这些二进制的序列，就产生了传输编码，例如UTF-8。</p>
+<p>在UTF-8中，如果某个字符是2个字节的，则使用的格式是：</p>
+<pre><code>110x xxxx	10xx xxxx
+</code></pre>
+<p>如果某个字符是3个字节的，则使用的格式是：</p>
+<pre><code>1110 xxxx	10xx xxxx	10xx xxxx
+</code></pre>
+<p>如果某个字符是4个字节的，则使用的格式是：</p>
+<pre><code>1111 0xxx	10xx xxxx	10xx xxxx	10xx xxxx
+</code></pre>
+<p>通常，UTF-8分为常用版本(utf8mb3)和包括了不常用字符的版本(utf8mb4)，一般默认指的是常用版本。</p>
+<p>当然，除了UTF-8以外，还有其它的编码格式，例如GBK、GB2312、ISO-8859-1、latin1等，不同的编码格式的编码规范是不相同的，甚至有些编码格式并不支持中文！所以，如果发出和接收使用的是不同的编码，甚至使用了不支持中文的编码，就会导致无法解读，进而出现乱码！</p>
+<p>所以，乱码问题都是由于“使用的编码不统一”所导致的，而解决方案就是“使用统一的编码”，在项目中，常见的需要指定编码的位置有：项目的源代码、网络传输和接收的编码、界面、其它网络连接、数据库等存储位置……可以简单的理解为：只要能够指定编码的位置，统统指定同一种编码，就不会出现乱码，如果没有指定，就可能出现乱码。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[SpringMVC-2]]></title>
+        <id>https://guanxuchao.com//post/springmvc-2</id>
+        <link href="https://guanxuchao.com//post/springmvc-2">
+        </link>
+        <updated>2019-07-20T07:01:07.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="1-接收请求参数">1. 接收请求参数</h3>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="1-接收请求参数">1. 接收请求参数</h3>
+<!-- more -->
+<h4 id="11-不推荐通过httpservletrequest获取请求参数">1.1. 【不推荐】通过HttpServletRequest获取请求参数</h4>
+<p>可以在处理请求的方法中，添加<code>HttpServletRequest</code>类型的参数，在处理过程中，调用该参数对象的<code>String getParameter(String name)</code>就可以获取请求参数，例如：</p>
+<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
+public String handleReg(HttpServletRequest request) {
+	System.out.println(&quot;UserController.handleReg()&quot;);
+	String username = request.getParameter(&quot;username&quot;);
+	String password = request.getParameter(&quot;password&quot;);
+	Integer age = Integer.valueOf(request.getParameter(&quot;age&quot;));
+	String phone = request.getParameter(&quot;phone&quot;);
+	String email = request.getParameter(&quot;email&quot;);
+	
+	System.out.println(&quot;\tusenrame=&quot; + username);
+	System.out.println(&quot;\tpassword=&quot; + password);
+	System.out.println(&quot;\tage=&quot; + age);
+	System.out.println(&quot;\tphone=&quot; + phone);
+	System.out.println(&quot;\temail=&quot; + email);
+	return null;
+}
+</code></pre>
+<p>通常，并不推荐使用这种做法！主要原因有：</p>
+<ul>
+<li>
+<p>使用比较繁琐，代码量较多；</p>
+</li>
+<li>
+<p>需要手动实现数据类型的转换；</p>
+</li>
+<li>
+<p>不便于实现单元测试。</p>
+</li>
+</ul>
+<h4 id="12-推荐将请求参数设计为处理请求的方法的参数">1.2. 【推荐】将请求参数设计为处理请求的方法的参数</h4>
+<p>假设客户端将提交名为<code>username</code>的参数，则在控制器的方法中添加同名参数即可，参数的类型可以是期望的数据类型，例如期望<code>age</code>是<code>Integer</code>类型的，则声明为<code>Integer age</code>即可：</p>
+<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
+public String handleReg(String username, String password, 
+		Integer age, String phone, String email) {
+	System.out.println(&quot;UserController.handleReg()&quot;);
+	System.out.println(&quot;\t[2]username=&quot; + username);
+	System.out.println(&quot;\t[2]password=&quot; + password);
+	System.out.println(&quot;\t[2]age=&quot; + age);
+	System.out.println(&quot;\t[2]phone=&quot; + phone);
+	System.out.println(&quot;\t[2]email=&quot; + email);
+	return null;
+}
+</code></pre>
+<p>使用这种做法时，需要保证参数的名称与客户端提交的请求参数名称保持一致，否则，在控制器中的参数将是<code>null</code>值。</p>
+<p>使用这种做法的优点很多，基本上解决了使用<code>HttpServletRequest</code>获取参数时的所有问题！</p>
+<p>使用这种做法并不适用于请求参数的数量较多的应用场景！</p>
+<h4 id="13-推荐使用封装的类型接收较多的请求参数">1.3. 【推荐】使用封装的类型接收较多的请求参数</h4>
+<p>当客户端提交的请求参数较多时，可以将这些参数全部封装为1个自定义的数据类型，例如：</p>
+<pre><code>public class User {
+
+	private String username;
+	private String password;
+	private Integer age;
+	private String phone;
+	private String email;
+	
+	// SET/GET
+}
+</code></pre>
+<p>然后，将该类型作为处理请求的方法的参数即可：</p>
+<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
+public String handleReg(User user) {
+	System.out.println(&quot;UserController.handleReg()&quot;);
+	System.out.println(&quot;\t&quot; + user);
+	return null;
+}
+</code></pre>
+<p>在使用这种做法时，需要保证客户端提交的请求参数，与自定义的数据类型中的属性名称是保持一致的！</p>
+<h4 id="14-小结">1.4. 小结</h4>
+<p>第1种使用<code>HttpServletRequest</code>的方式是不会再使用的。</p>
+<p>如果请求参数的数量较少，且从业务功能来说参数的数量基本固定，推荐使用第2种方式，即直接将请求参数逐一的设计在处理请求的方法中，否则，就使用第3种方式，将多个参数封装成1个自定义的数据类型。</p>
+<p>另外，第2种方式和第3种方式是可以组合使用的，即出现在同一个处理请求的方法中！</p>
+<h3 id="2-重定向">2. 重定向</h3>
+<p>当处理请求的方法的返回值是<code>String</code>类型的，则返回的字符串使用<code>redirect:</code>作为前缀，加上重定向的目标路径，就可以实现重定向的效果。</p>
+<p>假设注册一定成功，且注册成功后需要跳转到登录页面，则：</p>
+<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
+public String handleReg(User user) {
+	System.out.println(&quot;UserController.handleReg()&quot;);
+	System.out.println(&quot;\t&quot; + user);
+	
+	// 注册成功，重定向到登录页
+	// 当前位置：handle_reg.do
+	// 目标位置：login.do
+	return &quot;redirect:login.do&quot;;
+}
+</code></pre>
+<p>练习：希望通过<code>http://localhost:8080/项目名/index.do</code>访问主页，主页的页面显示内容可以自由定制，当用户尝试登录时，假设一定登录成功，且登录成功后到主页。</p>
+<h3 id="3-转发">3. 转发</h3>
+<h4 id="31-执行转发">3.1. 执行转发</h4>
+<p>当处理请求的方法的返回值是<code>String</code>类型，默认情况下，返回值就表示转发的意思，返回值将经过视图解析器，确定转发到的目标页面。</p>
+<p>转发时，处理请求的方法的返回值也可以使用<code>forward:</code>作为前缀，由于默认就是转发，所以不必显式的添加前缀。</p>
+<h4 id="32-不推荐通过httpservletrequest封装需要转发的数据">3.2. 【不推荐】通过HttpServletRequest封装需要转发的数据</h4>
+<p>假设在登录过程中，仅当用户名为<code>root</code>且密码是<code>1234</code>时允许登录，否则，在错误提示页面中提示错误的原因。</p>
+<p>由于错误信息可能有2种，分别是用户名错误和密码错误，使用JSP页面结合EL表达式可以显示转发的数据，在控制器转发之前，就需要将错误信息封装到<code>HttpServletRequest</code>对象中，则后续JSP页面才可以通过EL表达式读取<code>HttpServletRequest</code>对象中的数据。</p>
+<p>可以在处理请求的方法的参数列表中添加<code>HttpServletRequest</code>类型的参数，当添加多项参数时（既有用户名、密码，又有HttpServletRequest），各参数不必区分先后顺序，当添加了参数后，调用<code>HttpServletRequest</code>参数对象的<code>setAttribute(String name, String value)</code>方法封装需要转发的数据即可，无需获取转发器对象执行转发，只要最后返回字符串就表示转发：</p>
+<pre><code>@RequestMapping(&quot;handle_login.do&quot;)
+public String handleLogin(String username, String password,
+		HttpServletRequest request) {
+	// 日志
+	System.out.println(&quot;UserController.handleLogin()&quot;);
+	
+	// 判断用户名是否正确
+	if (&quot;root&quot;.equals(username)) {
+		// 是：判断密码是否正确
+		if (&quot;1234&quot;.equals(password)) {
+			// 是：登录成功，重定向到主页
+			return &quot;redirect:index.do&quot;;
+		} else {
+			// 否：密码错误
+			request.setAttribute(&quot;errorMessage&quot;, &quot;密码错误&quot;);
+			return &quot;error&quot;;
+		}
+	} else {
+		// 否：用户名错误
+		request.setAttribute(&quot;errorMessage&quot;, &quot;用户名错误&quot;);
+		return &quot;error&quot;;
+	}
+}
+</code></pre>
+<p>当然，这种做法依然是不推荐的，使用了<code>HttpServletRequest</code>作为参数后不便于执行单元测试。</p>
+<h4 id="33-更不推荐使用modelandview">3.3. 【更不推荐】使用ModelAndView</h4>
+<p>使用<code>ModelAndView</code>作为处理请求的方法的返回值类型，在返回结果之前，调用<code>ModelAndView</code>对象的<code>setViewName(String viewName)</code>方法确定转发的视图名称，调用<code>addObject(String name, Object value)</code>方法封装需要转发的数据，然后返回结果即可：</p>
+<pre><code>@RequestMapping(&quot;handle_login.do&quot;)
+public ModelAndView handleLogin(String username, String password) {
+	// 创建返回值对象
+	ModelAndView mav = new ModelAndView();
+	
+	// 判断用户名是否正确
+	if (&quot;root&quot;.equals(username)) {
+		// 是：判断密码是否正确
+		if (&quot;1234&quot;.equals(password)) {
+			// 是：登录成功，重定向到主页
+			return null;
+		} else {
+			// 否：密码错误
+			mav.addObject(&quot;errorMessage&quot;, &quot;ModelAndView：密码错误&quot;);
+			mav.setViewName(&quot;error&quot;);
+			return mav;
+		}
+	} else {
+		// 否：用户名错误
+		mav.addObject(&quot;errorMessage&quot;, &quot;ModelAndView：用户名错误&quot;);
+		mav.setViewName(&quot;error&quot;);
+		return mav;
+	}
+	
+}
+</code></pre>
+<p>因为对于初学SpringMVC的人来说，<code>ModelAndView</code>是一个新的、比较麻烦的数据类型，并且SpringMVC提供了更简单的操作方式，所以不推荐使用<code>ModelAndView</code>。</p>
+<h4 id="34-推荐使用modelmap封装需要转发的数据">3.4. 【推荐】使用ModelMap封装需要转发的数据</h4>
+<p>使用<code>ModelMap</code>的方式与使用<code>HttpServletRequest</code>几乎完全相同：</p>
+<pre><code>@RequestMapping(&quot;handle_login.do&quot;)
+public String handleLogin(String username, String password,
+		ModelMap modelMap) {
+	// 日志
+	System.out.println(&quot;UserController.handleLogin()&quot;);
+	
+	// 判断用户名是否正确
+	if (&quot;root&quot;.equals(username)) {
+		// 是：判断密码是否正确
+		if (&quot;1234&quot;.equals(password)) {
+			// 是：登录成功，重定向到主页
+			return &quot;redirect:index.do&quot;;
+		} else {
+			// 否：密码错误
+			modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：密码错误&quot;);
+			return &quot;error&quot;;
+		}
+	} else {
+		// 否：用户名错误
+		modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：用户名错误&quot;);
+		return &quot;error&quot;;
+	}
+}
+</code></pre>
+<p>相比<code>HttpServletRequest</code>而言，使用<code>ModelMap</code>更加易于实现单元测试，并且更加轻量级，所以，推荐使用这种方式来封装需要转发的数据。</p>
+<p>练习：假设<code>root</code>是已经被注册的用户名，在处理注册时，如果用户提交的用户名是<code>root</code>，则提示错误，否则，视为注册成功，重定向到登录页。</p>
+<h3 id="4-关于requestmapping注解">4. 关于@RequestMapping注解</h3>
+<h4 id="41-基本使用">4.1. 基本使用</h4>
+<p>在处理请求的方法之前添加<code>@RequestMapping</code>，可以配置请求路径与处理请求的方法的映射关系。</p>
+<p>除此以外，还可以在控制器类之前添加该注解，表示增加了访问路径中的层级，例如：</p>
+<pre><code>@Controller 
+@RequestMapping(&quot;user&quot;)
+public class UserController {
+}
+</code></pre>
+<p>添加该注解以后，原本通过<code>login.do</code>访问的请求路径就需要调整为<code>user/login.do</code>才可以访问。</p>
+<p>通常，推荐为每一个控制器类都添加该注解！</p>
+<p>同时在类和方法之前都添加了注解后，最终的访问路径就是类与方法的注解中的路径组合出来的URL。</p>
+<p>在配置路径时，会无视两端的<code>/</code>符号，以下各种配置方式是等效的：</p>
+<pre><code>user	login.do
+/user	/login.do
+user/	login.do
+user	/login.do
+/user/	/login.do
+</code></pre>
+<p>在实际使用时，只要保持语法风格的统一，就是对的，例如整个项目开发过程中，始终使用以上第1种，或者始终使用以上第2种，都是正确的做法。</p>
+<h4 id="42-注解配置">4.2. 注解配置</h4>
+<p>在配置<code>@RequestMapping</code>时，可以显式的配置为：</p>
+<pre><code>@RequestMapping(value=&quot;reg.do&quot;)
+</code></pre>
+<p>关于<code>value</code>属性在注解中的声明是：</p>
+<pre><code>@AliasFor(&quot;path&quot;)
+String[] value() default {};
+</code></pre>
+<p>可以看到，该属性的数据类型是<code>String[]</code>，所以，也可以配置为：</p>
+<pre><code>@RequestMapping(value= {&quot;reg.do&quot;, &quot;register.do&quot;})
+</code></pre>
+<p>则后续无论通过这里的哪个URL都会导致映射的方法被执行。</p>
+<p>在<code>value</code>属性的声明上方还使用了<code>@AliasFor</code>注解，表示<code>value</code>和<code>path</code>是完全等效的！从SpringMVC 4.2版本开始支持使用<code>path</code>属性，并推荐使用<code>path</code>属性取代<code>value</code>属性。</p>
+<p>在使用时，还可以指定<code>method</code>属性，其声明是：</p>
+<pre><code>RequestMethod[] method() default {};
+</code></pre>
+<p>该属性的作用是用于限制请求方式，例如：</p>
+<pre><code>@RequestMapping(path= {&quot;reg.do&quot;, &quot;register.do&quot;}, method=RequestMethod.POST) 
+</code></pre>
+<p>以上代码表示提交的请求必须是POST请求，如果不是，会导致405错误：</p>
+<pre><code>HTTP Status 405 – Method Not Allowed
+</code></pre>
+<p>在没有配置<code>method</code>之前，是不限定请求方式的，如果配置了，则必须使用配置的请求方式中的某一种！</p>
+<p>当为注解配置多个属性时，每一个属性都必须显式的指定属性名称！</p>
+<h3 id="5-关于requestparam注解">5. 关于@RequestParam注解</h3>
+<p>可以在处理请求的方法的参数之前添加<code>@RequestParam</code>注解，首先，使用该注解可以解决名称不一致的问题，即客户端提交的请求参数名称与服务器端处理请求的方法的参数名称不一致的问题，例如：</p>
+<pre><code>@RequestParam(&quot;uname&quot;) String username
+</code></pre>
+<p>如果添加了该注解，仍然存在名称不一致的问题，会导致400错误（如果没有添加该注解，即使名称不一致，服务器端的参数只是null值，并不会报错）：</p>
+<pre><code>HTTP Status 400 – Bad Request
+</code></pre>
+<p>原因在于在该注解的源代码中：</p>
+<pre><code>boolean required() default true;
+</code></pre>
+<p>所以，添加了该注解，默认是必须提交指定名称的参数的！如果希望该请求参数不是必须提交的，可以：</p>
+<pre><code>@RequestParam(name=&quot;uname&quot;, required=false) String username 
+</code></pre>
+<p>另外，该注解中还有：</p>
+<pre><code>String defaultValue() default ValueConstants.DEFAULT_NONE;
+</code></pre>
+<p>该属性用于指定默认值，即客户端没有提交指定名称的参数时，默认为某个值，例如：</p>
+<pre><code>@RequestParam(name=&quot;uname&quot;, required=false, defaultValue=&quot;admin&quot;) String username
+</code></pre>
+<p>注意：在设置默认值时，必须显式的将<code>required</code>属性设置为<code>false</code>。</p>
+<p><strong>小结：在什么时候需要使用该注解？</strong></p>
+<ul>
+<li>
+<p>前后端使用的名称不统一时；</p>
+</li>
+<li>
+<p>强制要求客户端必须提交某参数时；</p>
+</li>
+<li>
+<p>允许客户端不提交某参数，且视为提交了某默认值时；</p>
+</li>
+<li>
+<p>其他固定使用场景。</p>
+</li>
+</ul>
+<h3 id="-">--------------------------</h3>
+<h3 id="附1关于get和post的区别">附1：关于GET和POST的区别</h3>
+<p>GET请求会将请求参数体现在URL中，POST请求会将请求参数封装在请求体中，并不会体现在URL中。</p>
+<p>GET请求不适用于涉及隐私、安全方面的数据，也不适用于传输数据量较大的数据，通常限制值是2K，该值既取决于客户端的浏览器，也取决于服务器端。</p>
+<p>所以，在涉及隐私、安全的数据提交，或者较大数据的提交（特别是上传文件），都应该优先考虑POST方式提交请求。</p>
+<p>由于POST方法将请求参数封装在请求体中，没有体现在URL中，所以，如果涉及URL分享等操作，必须使用GET方式提交请求。</p>
+<p>在发生请求时，如果使用GET请求，将一次性将请求的URL提交到服务器，所以，请求参数也就直接提交到了服务器，如果使用POST请求，会先向服务器提交第1次请求，此次请求并不携带请求参数，当服务器响应100后，客户端发出第2次请求，再将请求参数提交到服务器。所以，GET请求的访问速度比POST请求更快。</p>
+<h3 id="附2关于转发和重定向">附2：关于转发和重定向</h3>
+<p>无论是转发还是重定向，都是客户端请求的第1个目标无法实现请求的响应，需要配合服务器端的其它组件来完成响应！</p>
+<p>转发的原因是因为使用控制器可以处理用户请求，但是，当得到数据结果后，存在不便于显示的问题，毕竟控制器是Java类，不便于组织HTML代码，所以，会将数据结果转发给JSP页面，由JSP页面来完成数据的呈现，当然，JSP也存在不便于处理数据逻辑的问题，即与HTML高度相似的代码结构中不便于编写Java代码，所以，推荐的做法就是控制器负责处理数据，得到数据结果后把这些数据结果转发给JSP，由JSP呈现，整个过程是发生在服务器内部的，对于客户端来说是不可见的，所以，在转发时，客户端只发出了1次请求，请求的URL就是控制器的URL，并且，即使WEB-INF文件夹的内容是不可以被客户端直接访问的，也不影响把JSP放在这个文件夹下。</p>
+<p>重定向是客户端发出第1次请求后，服务器端无法完成最终的响应，所以，只能给出302(通常是302)响应码，让客户端请求另一个URL来完成最终响应，在整个过程中，客户端是发出了2次请求的，同时，客户端也明确第2次的请求目标，所以，在客户端的浏览器中，会显示第2次请求的URL，由于客户端共发出2次请求，所以，在没有经过特殊的处理方式时，第1次请求的数据不可以直接应用到第2次请求中。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[SpringMVC-1]]></title>
+        <id>https://guanxuchao.com//post/springmvc-1</id>
+        <link href="https://guanxuchao.com//post/springmvc-1">
+        </link>
+        <updated>2019-07-19T06:56:02.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="1-springmvc的作用">1. SpringMVC的作用</h3>
+<p>SpringMVC主要解决了View-Controller交互的问题。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="1-springmvc的作用">1. SpringMVC的作用</h3>
+<p>SpringMVC主要解决了View-Controller交互的问题。</p>
+<!-- more -->
+<p>传统的<code>Controller</code>具体表现为一个个的<code>Servlet</code>类，在一个普通的项目中，需要实现的功能至少有50个以上，假设是50个，则项目中就需要创建50个<code>Servlet</code>类去处理这50个功能对应的请求，在<strong>web.xml</strong>中每个<code>Servlet</code>类至少需要8行代码进行配置，则共计需要400行代码进行配置（当然，JavaEE允许通过注解的方式进行配置），如果是一个更加复杂的系统，就会导致：<code>Servlet</code>实例过多，类文件太多，配置文件太长，所导致的代码开发难度和维护难度大的问题。另外，还存在<code>Servlet</code>或其它Java EE中的API功能较弱的问题。</p>
+<h3 id="2-springmvc中的核心组件">2. SpringMVC中的核心组件</h3>
+<ul>
+<li>
+<p><code>DispatcherServlet</code>：前端控制器，用于接收所有请求，并进行分发；</p>
+</li>
+<li>
+<p><code>HandlerMapping</code>：记录了请求路径与实际处理请求的控制器之间的对应关系；</p>
+</li>
+<li>
+<p><code>Controller</code>：实际处理请求的控制器；</p>
+</li>
+<li>
+<p><code>ModelAndView</code>：控制器的处理结果，其中<code>Model</code>表示处理请求时得到的即将响应给客户端数据，<code>View</code>表示负责响应时显示的视图的名称；</p>
+</li>
+<li>
+<p><code>ViewResolver</code>：根据视图的名称，确定视图组件。</p>
+</li>
+</ul>
+<p><img src="01.png" alt=""></p>
+<h3 id="3-springmvc-helloworld">3. SpringMVC HelloWorld</h3>
+<h4 id="31-案例目标">3.1. 案例目标</h4>
+<p>在浏览器中，通过<code>http://localhost:8080/项目名称/hello.do</code>进行访问，页面中将显示“Hello, SpringMVC!!!”字样。</p>
+<h4 id="32-创建项目">3.2. 创建项目</h4>
+<p>创建<strong>Maven Project</strong>，勾选<strong>Create a simple project</strong>，<strong>Group Id</strong>为<code>cn.tedu.spring</code>，<strong>Artifact Id</strong>为<code>SPRINGMVC-01</code>，<strong>Packaging</strong>必须选择<code>war</code>。</p>
+<p>创建完成后，先生成<strong>web.xml</strong>；从前序项目中复制<strong>spring-webmvc</strong>依赖；复制Spring的配置文件到新项目中，删除原有配置；添加Tomcat运行环境。</p>
+<h4 id="33-通过dispatcherservlet接收所有请求">3.3. 通过DispatcherServlet接收所有请求</h4>
+<p>SpringMVC中已经定义好了<code>DispatcherSerlvet</code>类，如果需要该<code>Servlet</code>能够接收并处理请求，首先，就需要在<strong>web.xml</strong>中进行配置：</p>
+<pre><code>&lt;servlet&gt;
+	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+<blockquote>
+<p>在配置时，如果不明确<code>DispatcherServlet</code>的包名，可以随意创建某个Java类，在类中声明该<code>Servlet</code>，由Eclipse完成导包，则<code>import</code>语句中就有了该类的全名。</p>
+</blockquote>
+<p>至此，<code>DispatcherServlet</code>就可以接收所有以<code>.do</code>为后缀的请求。</p>
+<p>默认情况下，所有的<code>Servlet</code>都是第一次接收并处理请求时才完成的初始化操作，并且，SpringMVC框架是基于Spring框架基础之上的，在项目启动初期，就应该加载整个Spring环境，以保证SpringMVC框架能正常运行！所以，可以通过配置去实现：当启动Tomcat时，就直接初始化<code>DispatcherServlet</code>，在<code>DispatcherServlet</code>中，已经定义了某个属性，值是Spring配置文件的位置，当<code>DispatcherServlet</code>被初始化时，就会读取该配置文件！</p>
+<p>在配置时，可以通过<code>&lt;load-on-startup&gt;</code>使得<code>DispatcherServlet</code>是默认直接初始化的！</p>
+<p>在<code>DispatcherServlet</code>的父类<code>FrameworkServlet</code>中，有<code>contextConfigLocation</code>属性，其作用就是制定Spring配置文件的位置，一旦创建了<code>DispatcherServlet</code>对象，就会自动读取所配置的文件，以加载Spring的环境！则配置为：</p>
+<pre><code>&lt;init-param&gt;
+	&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+	&lt;param-value&gt;classpath:spring.xml&lt;/param-value&gt;
+&lt;/init-param&gt;
+</code></pre>
+<p>至此，关于<code>DispatcherServlet</code>的完整配置：</p>
+<pre><code>&lt;servlet&gt;
+	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;classpath:spring.xml&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+<p>以上配置实现的效果就是：当Tomcat启动时，就会创建<code>DispatcherServlet</code>的对象，并且，<code>DispatcherServlet</code>会读取所配置的<code>spring.xml</code>文件，以加载Spring环境，后续，<code>DispatcherServlet</code>将接收所有以<code>.do</code>为后缀的请求！</p>
+<p>如果需要验证现在的配置结果，可以自定义<code>cn.tedu.spring.User</code>类，然后，在类中显式的定义构造方法：</p>
+<pre><code>public class User {
+	public User() {
+		System.out.println(&quot;创建了User的对象！&quot;);
+	}
+}
+</code></pre>
+<p>然后在Spring的配置文件中进行配置：</p>
+<pre><code>&lt;bean class=&quot;cn.tedu.spring.User&quot; /&gt;
+</code></pre>
+<p>由于Tomcat启动时就会初始化<code>DispatcherServlet</code>，进而加载Spring配置文件，就会由Spring框架创建<code>User</code>对象，导致构造方法被执行，所以，当启动Tomcat时，就会看到构造方法中输出的内容！</p>
+<h4 id="34-使用控制器接收请求">3.4. 使用控制器接收请求</h4>
+<p>首先创建<code>cn.tedu.spring.HelloController</code>控制器类，在类之前添加<code>@Controller</code>注解：</p>
+<pre><code>package cn.tedu.spring;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class HelloController {
+
+}
+</code></pre>
+<p>然后，需要在Spring的配置文件设置组件扫描：</p>
+<pre><code>&lt;!-- 组件扫描 --&gt;
+&lt;context:component-scan base-package=&quot;cn.tedu.spring&quot; /&gt;
+</code></pre>
+<p>然后，在控制类中添加处理请求的方法，方法的设计原则是：</p>
+<ol>
+<li>
+<p>应该使用<code>public</code>权限；</p>
+</li>
+<li>
+<p>暂时使用<code>String</code>作为返回值类型；</p>
+</li>
+<li>
+<p>方法名称自由定义；</p>
+</li>
+<li>
+<p>方法中暂时不添加参数。</p>
+</li>
+</ol>
+<p>所以，可以将方法设计为：</p>
+<pre><code>public String showHello() {
+	return null;
+}
+</code></pre>
+<p>然后，在方法之前添加<code>@RequestMapping</code>注解，用于配置请求路径，以确定请求路径与处理请求的方法的对应关系：</p>
+<pre><code>@RequestMapping(&quot;hello.do&quot;)
+public String showHello() {
+	return null;
+}
+</code></pre>
+<p>所以，可以在方法中加入一段测试代码：</p>
+<pre><code>@RequestMapping(&quot;hello.do&quot;)
+public String showHello() {
+	System.out.println(&quot;HelloController.showHello()&quot;);
+	return null;
+}
+</code></pre>
+<p>然后，打开浏览器，输入<code>http://localhost:8080/SPRINGMVC-01/hello.do</code>，在浏览器中会提示404错误，因为目前尚未处理页面，在Eclipse的控制台应该可以看到以上输出的内容！每访问一次，就会出现1次输出语句！</p>
+<h4 id="35-响应页面">3.5. 响应页面</h4>
+<p>处理请求的方法的参数是<code>String</code>类型时，默认表示响应给客户端的视图的名称，后续，会经过<code>ViewResolver</code>进行处理，得到具体的视图。</p>
+<p>首先，应该创建jsp页面，例如在<strong>WEB-INF</strong>下创建<strong>index.jsp</strong>文件，页面内容随意，例如显示“Hello, SpringMVC!!!”字样。</p>
+<p>然后，需要设计处理请求的方法的返回值，并配置<code>ViewResolver</code>！<code>ViewResolver</code>是一个接口，具体使用的实现类是<code>InternalResourceViewResolver</code>，需要在Spring的配置文件中配置它的<code>prefix</code>和<code>suffix</code>属性，分别表示“前缀”和“后缀”，<code>InternalResourceViewResolver</code>的工作模式是以<strong>webapp</strong>文件夹为根路径，将“前缀 + 处理请求的方法的返回值 + 后缀”得到具体的JSP文件的位置，刚才创建的JSP文件在<strong>webapp/WEB-INF/index.jsp</strong>，则可以：</p>
+<pre><code>/WEB-INF/	+	index	+	.jsp
+
+&quot;&quot;	+	/WEB-INF/index.jsp	+	&quot;&quot;
+</code></pre>
+<p>还可以是其他组合方式，只要能组合出文件的路径都是正确的，可以在处理请求的方法中返回<code>&quot;index&quot;</code>，然后配置为：</p>
+<pre><code>&lt;!-- 视图解析器 --&gt;
+&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+	&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/&quot; /&gt;
+	&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>至此，开发完成，可以再次测试访问。</p>
+<h3 id="-">--------------------------</h3>
+<h3 id="附1tomcat启动失败的解决方案">附1：Tomcat启动失败的解决方案</h3>
+<p>首先，如果启动时，弹出对话框，对话框中提示了端口号，多是因为端口号冲突，例如此前已经启动了Tomcat却没有关闭，仍再次启动，就会出现冲突。如果要解决问题，可以先停止此前占用端口的程序，例如在Eclipse找到停止按钮，或者在Tomcat的bin目录下执行shutdown指令，如果不知道如何，可以重启电脑！</p>
+<p>如果启动过程中报告异常信息，提示<code>ClassNotFoundException</code>或者<code>FileNotFoundException</code>，就检查对应的类是否存在，如果提示的类是依赖的jar包中的类，可能是jar包文件已经损坏，需要重新下载(可以删除.m2中的jar包或者更换版本)。</p>
+<p>如果启动过程中报告的异常信息是<code>ZipException</code>，一定是某个jar包损坏，则检查最近添加的依赖的jar包并重新下载。</p>
+<p>如果启动过程中报告的异常信息是<code>LifeCycleException</code>，通常是由于缓存问题导致的，则需要Clean项目及Tomcat。</p>
+<p>如果把项目和Tomcat都Clean了仍错误，可以在<strong>Servers</strong>面板中删除现有的Tomcat，同时删除名为<strong>Servers</strong>的项目，然后重新添加Tomcat。</p>
+<p>如果问题依然存在，则继续删除Tomcat，添加时，添加其他Tomcat。</p>
+<h3 id="附2spring配置文件没有提示的解决方案">附2：Spring配置文件没有提示的解决方案</h3>
+<p>参考：http://doc.canglaoshi.org/schema.html</p>
+<p><img src="https://guanxuchao.com//post-images/1563894080926.png" alt=""></p>
 ]]></content>
     </entry>
 </feed>

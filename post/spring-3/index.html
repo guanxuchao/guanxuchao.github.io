@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Spring-3 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566551502824">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566551502824" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Spring-3</h2>
+            <div class="post-date">2019-07-14</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/spring-3.png')">
+              </div>
+            
+            <div class="post-content">
+              <h3 id="1-spring注解">1. Spring注解</h3>
+<!-- more -->
+<h4 id="11-通用注解">1.1. 通用注解</h4>
+<p>使用注解的方式来管理对象时，就不必在Spring的配置文件中使用<code>&lt;bean&gt;</code>节点进行配置了，但是，需要先配置一项“组件扫描”，使得Spring框架知道需要管理的类在哪里：</p>
+<pre><code>&lt;!-- 配置组件扫描的根包 --&gt;
+&lt;context:component-scan base-package=&quot;cn.tedu.spring&quot; /&gt;
+</code></pre>
+<p>然后，为需要创建对象的类添加<code>@Component</code>注解即可：</p>
+<pre><code>@Component
+public class UserDao {
+
+}
+</code></pre>
+<p>也就是说，“组件扫描 + 注解”就可以实现Spring创建对象！</p>
+<p>在配置组件扫描时，<code>base-package</code>表示“根包”，假设类都在<code>cn.tedu.spring</code>包中，可以直接配置为这个包，也可以配置为<code>cn.tedu</code>，甚至配置为<code>cn</code>都是可以的！一般不推荐使用过于简单的根包，例如实际使用的是<code>cn.tedu.spring.dao</code>、<code>cn.tedu.spring.servlet</code>等，可以把根包设置为<code>cn.tedu.spring</code>，却不建议设置为<code>cn</code>或者<code>cn.tedu</code>！</p>
+<p>关于使用的注解，可以是：</p>
+<ul>
+<li>
+<p><code>@Component</code>：通用注解</p>
+</li>
+<li>
+<p><code>@Controller</code>：添加在控制器之前的注解</p>
+</li>
+<li>
+<p><code>@Service</code>：添加在业务类之前的注解</p>
+</li>
+<li>
+<p><code>@Repository</code>：添加在处理持久层的类之前的注解</p>
+</li>
+</ul>
+<p>在配置Spring创建和管理对象时，在类之前添加以上4个注解中的任意1个即可，以上4个注解的作用相同，使用方式相同，语义不同。</p>
+<p>在使用以上注解后，由Spring创建的对象的bean-id默认就是类名首字母改为小写的名称，例如<code>UserDao</code>类的默认bean-id就是<code>userDao</code>，如果需要自定义bean-id，可以对注解进行配置，例如：</p>
+<pre><code>@Component(&quot;dao&quot;)
+public class UserDao {
+
+}
+</code></pre>
+<h4 id="12-关于作用域与生命周期的注解">1.2. 关于作用域与生命周期的注解</h4>
+<p>使用<code>@Scope</code>注解可以配置某类的对象是否是单例的，可以在该注解中配置属性为<code>singleton</code>或<code>prototype</code>，当配置为<code>@Scope(&quot;prototype&quot;)</code>时表示非单例的，如果希望是单例，则不需要配置该注解，默认就是单例的。</p>
+<p>在单例的前提下，默认是饿汉式的单例，如果希望是懒汉式的单例模式，可以在类之前添加<code>@Lazy</code>注解，在该注解中还可以配置<code>true</code>或<code>false</code>，例如<code>@Lazy(false)</code>，但是，没有必要这样配置，如果希望是饿汉式的，根本就不需要添加该注解，如果希望是懒汉式的，只需要配置<code>@Lazy</code>即可，而不需要写成<code>@Lazy(true)</code>。</p>
+<p>在被Spring管理的类中，可以自定义方法，作为初始化方法和销毁时调用的方法，需要添加<code>@PostConstruct</code>和<code>@PreDestroy</code>注解，例如：</p>
+<pre><code>@Component
+public class UserDao {
+
+	public UserDao() {
+		System.out.println(&quot;创建UserDao的对象！&quot;);
+	}
+	
+	@PostConstruct
+	public void init() {
+		System.out.println(&quot;UserDao.init()&quot;);
+	}
+	
+	@PreDestroy
+	public void destroy() {
+		System.out.println(&quot;UserDao.destroy()&quot;);
+	}
+	
+}
+</code></pre>
+<p>以上2个注解是<code>javax</code>包中的注解，使用时，需要为项目添加Tomcat运行环境，以使用Java EE相关的jar包，才可以识别以上2个注解！</p>
+<h4 id="13-自动装配">1.3. 自动装配</h4>
+<p>假设存在：</p>
+<pre><code>@Repositor
+public class UserDao {
+	
+	public void reg() {
+		System.out.println(&quot;UserDao.reg()&quot;);
+	}
+
+}
+</code></pre>
+<p>如果存在<code>UserServlet</code>需要依赖于以上<code>UserDao</code>，则在<code>UserServlet</code>中的属性之前添加<code>@Autowired</code>注解即可，例如：</p>
+<pre><code>@Controller
+public class UserServlet {
+	
+	@Autowired
+	public UserDao userDao;
+	
+	public void reg() {
+		System.out.println(&quot;UserServlet.reg()&quot;);
+		userDao.reg();
+	}
+
+}
+</code></pre>
+<p>当然，以上2个类都必须是被Spring所管理的，即：都在组件扫描的包下，且都添加了<code>@Component</code>或等同功能的注解。</p>
+<p>通过注解实现自动装配时，并不需要属性有SET方法！Spring框架就是将值直接赋值过去的！</p>
+<p>使用<code>@Resource</code>注解也可以实现自动装配，它是Java EE中的注解，它的装配模式是：优先<code>byName</code>实现装配，如果装配失败，会尝试<code>byType</code>实现装配，且，如果<code>byType</code>装配，要求匹配类型的对象必须有且仅有1个，无论是0个还是超过1个，都会报告错误！</p>
+<p>使用<code>@Resource</code>时还可以配置需要注入的bean的id，例如：</p>
+<pre><code>@Resource(name=&quot;ud1&quot;)
+</code></pre>
+<p>使用<code>@Autowired</code>时，会优先<code>byType</code>，如果找到1个匹配类型的对象，则直接装配，如果没有匹配类型的对象，则直接报告错误，如果找到多个匹配类型的对象，则会尝试<code>byName</code>，如果<code>byName</code>装配失败，则报告错误！</p>
+<h3 id="2-spring小结">2. Spring小结</h3>
+<ol>
+<li>
+<p>Spring的作用是创建和管理对象，使用Spring可以实现解耦；</p>
+</li>
+<li>
+<p>掌握<code>&lt;bean&gt;</code>节点的<code>id</code>和<code>class</code>属性的配置；</p>
+</li>
+<li>
+<p>了解<code>&lt;bean&gt;</code>节点的<code>scope</code>、<code>lazy-init</code>、<code>init-method</code>、<code>destroy-method</code>属性的配置；</p>
+</li>
+<li>
+<p>了解<code>&lt;bean&gt;</code>节点的<code>factory-bean</code>和<code>factory-method</code>属性的配置；</p>
+</li>
+<li>
+<p>掌握通过SET方式注入属性的值，掌握<code>value</code>和<code>ref</code>属性的选取原则；</p>
+</li>
+<li>
+<p>了解通过构造方法注入属性的值；</p>
+</li>
+<li>
+<p>了解注入各种集合类型的属性的值；</p>
+</li>
+<li>
+<p>掌握通过Spring读取**.properties**文件的方式；</p>
+</li>
+<li>
+<p>掌握通过Spring表达式读取其它bean中的属性；</p>
+</li>
+<li>
+<p>理解自动装配的<code>byName</code>和<code>byType</code>的特性；</p>
+</li>
+<li>
+<p>掌握<code>@Component</code>、<code>@Controller</code>、<code>@Service</code>、<code>@Repository</code>这4个注解的使用；</p>
+</li>
+<li>
+<p>掌握组件扫描的配置方式；</p>
+</li>
+<li>
+<p>了解<code>@Scope</code>、<code>@Lazy</code>、<code>@PostConstruct</code>、<code>@PreDestroy</code>注解的使用；</p>
+</li>
+<li>
+<p>掌握<code>@Autowired</code>或<code>@Resource</code>的使用，理解它们的装配方式。</p>
+</li>
+</ol>
+<h3 id="-">------------------------------------------</h3>
+<h3 id="附1内存溢出内存泄漏leak">附1：内存溢出/内存泄漏/Leak</h3>
+<p>内存溢出并不是“使用的内存超出了限制”，如果是使用的内存超出了限制，会直接出现<code>OutOfMemoryError</code>。</p>
+<p>内存溢出通常是因为程序意外崩溃，而某些资源并没有被释放！例如：尝试读取硬盘上的某个文件，假设使用了<code>FileInputStream fis</code>变量，在读取过程中，出现了<code>IOException</code>导致程序崩溃，则<code>fis</code>变量就不再可用，变量对应的流对象可能还处于与硬盘上的文件是连接的状态，所以就会出现“作为程序员来说，已经无法控制这个对象了，但是，由于对象仍然处于连接状态，JVM中的垃圾回收机制并不会把它当做垃圾进行回收”，这样的数据如果越来越多，就会无谓的浪费更多的内存，导致可用内存越来越少，最终，继续积累的话，就会导致“溢出”。</p>
+<p>所以，少量的内存溢出其实是没有明显的危害的！但是，仍然应该尽可能的处理掉所有可能存在的内存溢出问题！最简单的解决方案就是“随时用完随时关闭”。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/0u87PdSk8" class="tag">
+                    Spring
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/spring-2">
+                  <h3 class="post-title">
+                    Spring-2
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

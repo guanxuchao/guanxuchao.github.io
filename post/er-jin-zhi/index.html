@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>二进制 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566551502824">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566551502824" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">二进制</h2>
+            <div class="post-date">2019-07-09</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/er-jin-zhi.png')">
+              </div>
+            
+            <div class="post-content">
+              <h3 id="什么是2进制">什么是2进制</h3>
+<br>
+2进制：逢2进1的计数规则。
+<!-- more -->
+<p><img src="https://guanxuchao.com//post-images/1566542767856.png" alt=""></p>
+<p>int类型 0~10：</p>
+<pre><code>00000000 00000000 00000000 00000000
+00000000 00000000 00000000 00000001
+00000000 00000000 00000000 00000010
+00000000 00000000 00000000 00000011
+00000000 00000000 00000000 00000100
+00000000 00000000 00000000 00000101
+00000000 00000000 00000000 00000110
+00000000 00000000 00000000 00000111
+00000000 00000000 00000000 00001000
+00000000 00000000 00000000 00001001
+00000000 00000000 00000000 00001010
+</code></pre>
+<p>案例：</p>
+<pre><code>public static void main(String[] args) {
+	/**
+	 * 2进制演示
+	 */
+	int n = 50; //110010
+	//110010 Integer.toString() &quot;50&quot;
+	System.out.println(n); //&quot;50&quot;
+	//Integer.toBinaryString 将整数在内存中的2
+	// 进制存储情况转换为字符串，用于显示
+	System.out.println(Integer.toBinaryString(n));
+	for(int i=0; i&lt;=100; i++) {
+		System.out.println(
+				Integer.toBinaryString(i));
+	}
+}
+</code></pre>
+<h2 id="16进制">16进制</h2>
+<p>直接书写2进制，繁琐、冗长、易错</p>
+<p>利用16进制缩写2进制，可以达到简化书写的目的.</p>
+<p>缩写规则: 从2进制最低位开始，每4位2进制数缩写为1位16进制数。</p>
+<p>案例：</p>
+<pre><code>public static void main(String[] args) {
+	/*
+	 * Java 7 开始支持0b开头的2进制直接量
+	 * 
+	 */
+	int n = 0b1110110100111110100111111;
+	
+	/*
+	 * 可以利用16进制作为2进制的简写形式 
+	 */
+	n = 0x77d27d77;
+	System.out.println(
+			Integer.toBinaryString(n));
+	n = 0423;
+	
+	long l = 0x67abdf122122L;
+}
+</code></pre>
+<h2 id="补码一种处理负数的编码">补码(一种处理负数的编码)</h2>
+<p>什么是补码： 将固定位数2进制数字， 分一半作为负数使用的编码规则。</p>
+<p>以4位2进制数为例讲解补码编码规则</p>
+<ol>
+<li>计算时候保持4位不变，如果超过4位自动溢出。</li>
+<li>将最高位为0的作为正数，最高为1的作为负数，最高位称为符号位。</li>
+<li>由正数倒推设计负数的编码。</li>
+<li>补码是计算底层编码，编程语言将补码转换为10进制与人类沟通。</li>
+<li>补码是环形编码，最大值和最小值相邻。</li>
+<li>由于此编码互补对称（-n = ~n+1），顾称为补码。</li>
+</ol>
+<p><img src="https://guanxuchao.com//post-images/1566542847145.png" alt=""></p>
+<p>案例：补码的最大值和最小值</p>
+<pre><code>public static void main(String[] args) {
+	/**
+	 * 认识补码
+	 */
+	int max = Integer.MAX_VALUE;
+	int min = Integer.MIN_VALUE;
+	System.out.println(Integer.toBinaryString(max));
+	System.out.println(Integer.toBinaryString(min));
+	
+	long lmax=Long.MAX_VALUE;
+	long lmin=Long.MIN_VALUE;
+	System.out.println(Long.toBinaryString(lmax));
+	System.out.println(Long.toBinaryString(lmin));
+	
+	int n = -1;
+	long k = -1L;
+	System.out.println(Integer.toBinaryString(n));
+	System.out.println(Long.toBinaryString(k));
+}
+</code></pre>
+<p>负数的补码：</p>
+<pre><code>public static void main(String[] args) {
+	/**
+	 * 认识负数的补码
+	 */
+	int n = -1;
+	System.out.println(Integer.toBinaryString(n));
+	n = -3;
+	System.out.println(Integer.toBinaryString(n));
+	n = -7;
+	System.out.println(Integer.toBinaryString(n));
+	
+	for(int i=-100; i&lt;=0; i++) {
+		System.out.println(Integer.toBinaryString(i));
+	}
+	
+}
+</code></pre>
+<blockquote>
+<p>先记住-1的补码，然后通过计算一个负数编码比-1少多少个1来得到其10进制值</p>
+</blockquote>
+<p>补码的互补对称</p>
+<pre><code>00000000 00000000 00000000 01010000     80   原码
+11111111 11111111 11111111 10101111    -81   反码    
+11111111 11111111 11111111 10110000    -80   补码
+</code></pre>
+<p>案例：</p>
+<pre><code>public static void main(String[] args) {
+	/**
+	 * 补码的互补对称验证
+	 */
+	int n = 80;
+	int m = ~n+1;
+	System.out.println(m); 
+	System.out.println(Integer.toBinaryString(n));
+	System.out.println(Integer.toBinaryString(~n));
+	System.out.println(Integer.toBinaryString(~n+1));
+	
+	n = 0x80000000;
+	m = ~n+1;
+	System.out.println(m);
+	
+}
+</code></pre>
+<p>经典面试题目：</p>
+<pre><code>System.out.println(~70);
+如上代码输出结果：（ D ） A.-68 B.-69 C.-70 D.-71
+
+System.out.println(~-70);
+如上代码输出结果：（ B ） A.68 B.69 C.70 D.71
+</code></pre>
+<h2 id="二进制计算">二进制计算</h2>
+<p>运算符：</p>
+<pre><code>~ 取反
+&amp; 与计算机
+| 或
+&gt;&gt;&gt; 右移位
+&gt;&gt; 数学右移位
+&lt;&lt; 左移位
+</code></pre>
+<h3 id="与计算">与计算 &amp;</h3>
+<p>基本规则：(逻辑乘法, 有0则0)</p>
+<pre><code>0 &amp; 0 = 0
+0 &amp; 1 = 0
+1 &amp; 0 = 0
+1 &amp; 1 = 1
+</code></pre>
+<blockquote>
+<p>计算时候需要将两个2进制数字对齐位数，对应位置计算与</p>
+</blockquote>
+<p>栗子：</p>
+<pre><code>n=       01110100 11111101 01001011 10101111
+m=       00000000 00000000 00000000 11111111  8位掩码=Mask
+k=n&amp;m    00000000 00000000 00000000 10101111
+</code></pre>
+<blockquote>
+<p>如上计算结果k中存储的是数字n的最后8位数。 称为掩码计算。 其最终的结果是将 整数n的最后一个字节拆分出来。</p>
+</blockquote>
+<p>案例：</p>
+<pre><code>int n = 0x74fd4baf;
+int m = 0xff;
+int k = n&amp;m;
+</code></pre>
+<h3 id="右移位计算">&gt;&gt;&gt; 右移位计算</h3>
+<p>规则： 将2进制数整体向右移动，低位自动溢出舍弃，高位补0</p>
+<p>栗子：</p>
+<pre><code>n =       01110100 11111101 01001011 10101111 
+m=n&gt;&gt;&gt;1   001110100 11111101 01001011 1010111  
+k=n&gt;&gt;&gt;2   0001110100 11111101 01001011 101011
+g=n&gt;&gt;&gt;8   00000000 01110100 11111101 01001011 
+</code></pre>
+<p>代码：</p>
+<pre><code>int n = 0x74fd4baf;
+int m = n&gt;&gt;&gt;1;
+int k = n&gt;&gt;&gt;2;
+int g = n&gt;&gt;&gt;8;
+</code></pre>
+<h3 id="将一个int拆分为4个byte">将一个int拆分为4个byte</h3>
+<p>栗子：</p>
+<pre><code>                    b1       b2       b3       b4
+n =              01110100 11111101 01001011 10101111
+
+b1=(n&gt;&gt;&gt;24)&amp;0xff 00000000 00000000 00000000 01110100 	
+
+n&gt;&gt;&gt;16           00000000 00000000 01110100 11111101  
+b2=(n&gt;&gt;&gt;16)&amp;0xff 00000000 00000000 00000000 11111101
+
+n&gt;&gt;&gt;8            00000000 01110100 11111101 01001011
+b3=(n&gt;&gt;&gt;8)&amp;0xff  00000000 00000000 00000000 01001011 
+
+b4=n&amp;0xff        00000000 00000000 00000000 10101111
+</code></pre>
+<p>代码：</p>
+<pre><code>int n = 0x74fd4baf;
+int b1 = (n&gt;&gt;&gt;24) &amp; 0xff;
+int b2 = (n&gt;&gt;&gt;16) &amp; 0xff;
+int b3 = (n&gt;&gt;&gt;8) &amp; 0xff;
+int b4 = n &amp; 0xff;
+//验证
+</code></pre>
+<h3 id="或计算">| 或计算</h3>
+<p>基本规则：（逻辑加法 有1则1）</p>
+<pre><code>0 | 0 = 0
+0 | 1 = 1
+1 | 0 = 1
+1 | 1 = 1
+</code></pre>
+<blockquote>
+<p>计算时候需要将两个2进制数对齐位置，对应位置进行或计算</p>
+</blockquote>
+<p>栗子：</p>
+<pre><code>n =        00000000 00000000 00000000 10111010
+m =        00000000 00000000 10111101 00000000
+k=n|m      00000000 00000000 10111101 10111010
+</code></pre>
+<blockquote>
+<p>如上案例的意义：数字n和m拼接在一起</p>
+</blockquote>
+<p>代码：</p>
+<pre><code>int n = 0xba;
+int m = 0xbd00;
+int k = n|m;
+//按照2进制输出
+</code></pre>
+<h3 id="左移位">&lt;&lt; 左移位</h3>
+<p>将2进制数字整体向左移动，高位自动溢出，低位补0</p>
+<p>栗子：</p>
+<pre><code>n=         01110111 10101011 10100100 00011111 
+m=n&lt;&lt;1     1110111 10101011 10100100 000111110
+k=n&lt;&lt;2     110111 10101011 10100100 0001111100
+g=n&lt;&lt;8     10101011 10100100 00011111 00000000  
+</code></pre>
+<p>用途：将4个byte拼接为int</p>
+<pre><code>b1 =          00000000 00000000 00000000 10110101
+b2 =          00000000 00000000 00000000 01101111
+b3 =          00000000 00000000 00000000 11101101
+b4 =          00000000 00000000 00000000 10111011
+
+b1&lt;&lt;24        10110101 00000000 00000000 00000000
+b2&lt;&lt;16        00000000 01101111 00000000 00000000
+b3&lt;&lt;8         00000000 00000000 11101101 00000000
+b4            00000000 00000000 00000000 10111011
+n             10110101 01101111 11101101 10111011
+n=(b1&lt;&lt;24)|(b2&lt;&lt;16)|(b3&lt;&lt;8)|b4;	
+</code></pre>
+<p>代码：将4个byte合并为一个int</p>
+<pre><code>int b1 = 0xb5;
+int b2 = 0x6f;
+int b3 = 0xed;
+int b4 = 0xbb;
+int n = (b1&lt;&lt;24) | (b2&lt;&lt;16) | (b3&lt;&lt;8) | b4;
+//检查。。。
+</code></pre>
+<h2 id="移位计算的数学意义">移位计算的数学意义</h2>
+<p>10移动小数点计算：</p>
+<pre><code>十进制数            191321.    
+向右移动小数点     1913210.    扩大10倍
+向右移动小数点    19132100.    扩大100倍
+如果看作小数点不动, 数字向左移动
+</code></pre>
+<p>2进制移位计算，向左移动一次扩大2倍</p>
+<pre><code>n =     00000000 00000000 00000000 00110010    50
+m=n&lt;&lt;1  0000000 00000000 00000000 001100100   100
+k=n&lt;&lt;2  000000 00000000 00000000 0011001000   200 
+... 
+a=n&gt;&gt;1  000000000 00000000 00000000 0011001    25
+b=n&gt;&gt;2  0000000000 00000000 00000000 001100    12  除以2小方向取整数
+</code></pre>
+<p>案例：</p>
+<pre><code>int n = 50;
+int m = n&lt;&lt;1; //100
+int k = n&lt;&lt;2; //200
+int a = n&gt;&gt;1; //25
+int b = n&gt;&gt;2; //12
+</code></pre>
+<h2 id="与-的区别"><code>&gt;&gt;&gt;</code> 与 <code>&gt;&gt;</code>的区别</h2>
+<p><code>&gt;&gt;&gt;</code> 逻辑右移位，2进制数字整体向右移动，低位溢出，高位补0<br>
+<code>&gt;&gt;</code>  数学右移位，2进制数字整体向右移动，低位溢出，负数补1，正数补0，运算结果相当数学除法，除以2向小方向取整数。</p>
+<p>栗子：</p>
+<pre><code>n =      11111111 11111111 11111111 11001110    -50
+m =n&gt;&gt;1  111111111 11111111 11111111 1100111    -25
+s =n&gt;&gt;2  1111111111 11111111 11111111 110011    -13
+k =n&gt;&gt;&gt;1 011111111 11111111 11111111 1100111  比最大值少24
+</code></pre>
+<p>代码： 略</p>
+<p><code>&gt;&gt;&gt;</code> 与 <code>&gt;&gt;</code>的区别： <code>&gt;&gt;&gt;</code>就是将数字整体向右移动，不考虑数学结果，适用于单纯数据移位拆分等计算。 <code>&gt;&gt;</code>用于替代数学计算，达到提高运算性能的目的。</p>
+<p>如：</p>
+<pre><code>if(index &gt; size/2){
+	//...
+}
+
+替换为：
+
+if(index &gt; size&gt;&gt;1){
+	//...
+}
+</code></pre>
+<p>经典面试题目：</p>
+<pre><code>n * 32 可以替换为（  ？   ） 答案： n&lt;&lt;5</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/fCEWLb3AP" class="tag">
+                    二进制
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/about">
+                  <h3 class="post-title">
+                    关于
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>AJAX | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566551502824">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566551502824" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">AJAX</h2>
+            <div class="post-date">2019-07-28</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/ajax.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h3 id="1-服务器端如何响应请求">1. 服务器端如何响应请求</h3>
+<p>服务器端只响应客户端所需要的数据</p>
+<!-- more -->
+<p>传统的响应方式有转发和重定向，这样的做法有很多问题，比如：转发和重定向都决定了响应的具体页面，不适合多种客户端（浏览器、Android手机、Android平板电脑、iOS手机、iOS平板电脑……）的项目，因为不同的终端设备的性能特征是不一样的，把同样的一个页面都显示给不同的终端设备是极不合适的！正确的做法应该是“服务器端只响应客户端所需要的数据”，至于这些数据如何呈现在终端设备中，由各客户端的开发团队去解决！</p>
+<p>如果使用响应正文的方式，还存在“响应数据量小”的优势，则响应速度更快，产生的流量消耗小，用户体验好！</p>
+<h3 id="2-服务器端响应正文">2. 服务器端响应正文</h3>
+<p>假设客户端会提交<code>http://localhost:8080/AJAX/user/login.do</code>请求，如果需要响应方式是“响应正文”，则需要在处理请求的方法之前补充添加<code>@ResponseBody</code>注解：</p>
+<pre><code>@Controller
+@RequestMapping(&quot;user&quot;)
+public class UserController {
+	
+	@RequestMapping(&quot;login.do&quot;)
+	@ResponseBody
+	public String login() {
+		return &quot;LOGIN SUCCESS.&quot;;
+	}
+
+}
+</code></pre>
+<p>默认情况下，响应的内容使用了ISO-8859-1编码，所以，不支持中文。</p>
+<p>练习：用户在此次提交请求时，<strong>必须</strong>提交用户名和密码作为请求参数，仅当用户名为<code>root</code>且密码为<code>1234</code>时会登录成功(<code>LOGIN SUCCESS.</code>)，否则，响应用户名错误(<code>USERNAME ERROR.</code>)或者密码错误(<code>PASSWORD ERROR.</code>)。</p>
+<h3 id="3-服务器响应的正文格式-json格式">3. 服务器响应的正文格式--JSON格式</h3>
+<p>JSON(JavaScript Object Notation, JS 对象简谱) 是一种轻量级的数据交换格式。它基于 ECMAScript (欧洲计算机协会制定的js规范)的一个子集，采用完全独立于编程语言的文本格式来存储和表示数据。简洁和清晰的层次结构使得 JSON成为理想的数据交换语言。易于人阅读和编写，同时也易于机器解析和生成，并有效地提升网络传输效率。</p>
+<p>通常，服务器向客户端响应的数据可能不只是1个数据，以登录操作为例，也许可以响应为<code>1</code>表示登录成功，使用<code>2</code>表示登录失败且是因为用户名错误，使用<code>3</code>表示密码错误，则客户端就可以通过对这个值的判断，得知当前操作结果，但是，其它操作可能会需要更多的数据，例如“客户端尝试获取当前登录的用户信息”，需要响应的数据可能包括：用户名、手机号码、电子邮箱、年龄等一系列数据，由于响应结果只是1个字符串，要把这些数据很好的组织起来，才可以方便客户端从这1个字符串中获取其中某部分的数据，否则，如果只是响应为<code>&quot;root13800138001root@163.com26&quot;</code>这样，客户端就无法处理这个响应结果。</p>
+<p>早期通常使用XML语法来组织这些数据：</p>
+<pre><code>&lt;user&gt;
+	&lt;username&gt;root&lt;/username&gt;
+	&lt;age&gt;26&lt;/age&gt;
+	&lt;phone&gt;13800138001&lt;/phone&gt;
+	&lt;email&gt;root@163.com&lt;/email&gt;
+&lt;/user&gt;
+</code></pre>
+<p>使用XML存在的问题：</p>
+<ul>
+<li>
+<p>数据量略大，传输略慢，流量消耗略大，用户体验略差；</p>
+</li>
+<li>
+<p>解析难度大。</p>
+</li>
+</ul>
+<p>目前推荐使用的组织数据的格式是JSON格式，以上数据使用JSON组织后的表现为：</p>
+<pre><code>{
+	&quot;username&quot;:&quot;root&quot;,
+	&quot;age&quot;:26,
+	&quot;phone&quot;:&quot;13800138001&quot;,
+	&quot;email&quot;:&quot;root@163.com&quot;,
+	&quot;skill&quot;:[&quot;Java&quot;, &quot;Java OOP&quot;, &quot;Java SE&quot;, &quot;Java WEB&quot;, &quot;MySQL&quot;, &quot;Spring&quot;],
+	&quot;department&quot;:{
+		&quot;id&quot;:1,
+		&quot;name&quot;:&quot;RD&quot;
+	}
+}
+</code></pre>
+<p>JSON数据在Javascript中是默认即识别的对象，可以直接得到其中的属性值：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+	var json = {
+		&quot;username&quot;:&quot;root&quot;,
+		&quot;age&quot;:26,
+		&quot;phone&quot;:&quot;13800138001&quot;,
+		&quot;email&quot;:&quot;root@163.com&quot;
+	};
+
+	console.log(json.username);
+	console.log(json.age);
+&lt;/script&gt;
+</code></pre>
+<p>关于JSON数据格式：</p>
+<ul>
+<li>
+<p>使用<code>{}</code>表示对象，整个JSON数据就是1个对象；</p>
+</li>
+<li>
+<p>所有的属性名都是字符串类型的，在JavaScript中，可以使用单引号或者双引号框柱，因为JSON数据可能在多种不同的编程语言中都出现，一般推荐使用双引号，属性值如果是字符串，也需要使用双引号框柱，如果是数值或者布尔值，则可以不用双引号框柱，属性名和属性值使用冒号<code>:</code>分隔，多个属性的配置之间使用逗号<code>,</code>分隔；</p>
+</li>
+<li>
+<p>属性值的类型还可以是数组，使用中括号<code>[]</code>框柱数组的各元素，各元素之间使用逗号<code>,</code>分隔，在JavaScript中处理时，使用例如<code>json.skill</code>就可以获取到整个数组，使用<code>json.skill.length</code>就可以获取数组的长度，使用<code>json.skill[0]</code>就可以获取数组中下标为0的元素，也可以使用循环语法进行循环；</p>
+</li>
+<li>
+<p>属性值的类型还可以是另一个对象，使用<code>{}</code>表示对象。</p>
+</li>
+</ul>
+<p>如果在JavaScript中，得到是一个使用JSON语法组织的字符串，而不是JSON对象，可以调用<code>JSON.parse(str)</code>函数，将字符串转换为JSON对象。</p>
+<h3 id="4-服务器端实现响应json格式的数据">4. 服务器端实现响应JSON格式的数据</h3>
+<p>如果需要服务端响应JSON格式的数据，不可能自行拼接出JSON格式的字符串，可以通过工具来解决，首先，需要添加<code>jackson-databind</code>的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+	&lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+	&lt;version&gt;2.9.8&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>然后，在项目中自定义<code>cn.tedu.ajax.JsonResult</code>响应结果类型：</p>
+<pre><code>public class JsonResult {
+	
+	private Integer state;
+	private String message;
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+}
+</code></pre>
+<p>并修改处理请求的方法，返回值类型使用以上自定义的类型：</p>
+<pre><code>@RequestMapping(&quot;login.do&quot;)
+@ResponseBody
+public JsonResult login(
+	@RequestParam(&quot;username&quot;) String username,
+	@RequestParam(&quot;password&quot;) String password) {
+	Integer state;
+	String message = null;
+	
+	if (&quot;root&quot;.equals(username)) {
+		if (&quot;1234&quot;.equals(password)) {
+			state = 1;
+		} else {
+			state = 3;
+			message = &quot;密码错误！&quot;;
+		}
+	} else {
+		state = 2;
+		message = &quot;用户名不存在！&quot;;
+	}
+	
+	JsonResult jsonResult = new JsonResult();
+	jsonResult.setState(state);
+	jsonResult.setMessage(message);
+	return jsonResult;
+}
+</code></pre>
+<p>如果直接运行，会提示406错误：</p>
+<pre><code>HTTP Status 406 – Not Acceptable
+</code></pre>
+<p>需要在spring.xml中添加配置：</p>
+<pre><code>&lt;!-- 注解驱动 --&gt;
+&lt;mvc:annotation-driven /&gt;
+</code></pre>
+<p>然后，控制器中处理请求的方法响应的正文就是JSON格式的字符串了。</p>
+<p>在控制器中响应正文时，需要添加<code>@ResponseBody</code>注解，SpringMVC框架内置了一系列的转换器(Converter)，用于将方法的返回值转换为响应的正文，在这一系列的转换器中，SpringMVC设计了对应关系和优先级，例如，当方法的返回值类型是<code>String</code>时，就会自动调用<code>StringHttpMessageConverter</code>，当项目中添加了<code>jackson-databind</code>依赖时，如果方法的返回值类型是SpringMVC默认不识别的，就会自动使用<code>Jackson</code>依赖中的转换器！<code>Jackson</code>依赖还会将响应头(Response Headers)中的<code>Content-Type</code>设置为<code>application/json, charset=utf-8</code>。</p>
+<p><strong>小结：需要自定义数据类型，以决定响应的JSON数据格式(有哪些属性，分别是什么类型)，然后用自定义类型作为方法的返回值，并处理完成后返回该类型的对象，<code>Jackson</code>依赖就会自动的设置为支持中文，且把响应的对象转换成JSON字符串。</strong></p>
+<h3 id="5-ajax">5. AJAX</h3>
+<p>AJAX = Asynchronous JavaScript and XML（异步的JavaScript和XML）。</p>
+<p>AJAX不是新的编程语言，而是一种使用现有标准的新方法。</p>
+<p>AJAX是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。</p>
+<p>在实际实现时，通常是基于jQuery框架实现AJAX访问，主要是因为原生技术的代码比较繁琐，且存在浏览器的兼容性问题，在jQuery中，定义了<code>$.ajax()</code>函数，用于处理AJAX请求，调用该函数即可实现异步访问：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-3.4.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(&quot;#btn-login&quot;).click(function(){
+	// $.ajax()函数的参数是1个JSON对象
+	// url：请求提交到哪里
+	// data：需要提交的请求参数
+	// type：请求类型
+	// dataType：服务器端响应的数据类型，可以是text/xml/json，取值取决于Response Headers中的Content-Type
+	// success：服务器端HTTP响应码是2xx时的回调(callback)函数，函数的参数就是服务器端响应的正文结果
+	$.ajax({
+		&quot;url&quot;:&quot;user/login.do&quot;,
+		&quot;data&quot;:$(&quot;#form-login&quot;).serialize(),
+		&quot;type&quot;:&quot;post&quot;,
+		&quot;dataType&quot;:&quot;json&quot;,
+		&quot;success&quot;:function(result) {
+			if (result.state == 1) {
+				alert(&quot;登录成功！&quot;);
+			} else {
+				alert(result.message);
+			}
+		}
+	});
+});
+&lt;/script&gt;</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/TlkILzzss" class="tag">
+                    AJAX
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/mybatis-2">
+                  <h3 class="post-title">
+                    MyBatis-2
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

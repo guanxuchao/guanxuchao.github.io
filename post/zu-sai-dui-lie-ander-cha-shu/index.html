@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>阻塞队列&amp;二叉树 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566551502824">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566551502824" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">阻塞队列&amp;二叉树</h2>
+            <div class="post-date">2019-08-11</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/zu-sai-dui-lie-ander-cha-shu.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h1 id="1生产者-消息者模型与阻塞队列">1.生产者、消息者模型与阻塞队列</h1>
+<!-- more -->
+<h2 id="1什么是生产者">(1)什么是生产者?</h2>
+<pre><code>生产者负责产生数据。
+</code></pre>
+<h2 id="2什么是消费者">(2)什么是消费者?</h2>
+<pre><code>消费者负责消费数据。
+</code></pre>
+<h2 id="3生产者-消费者模型用来解决什么问题">(3)生产者、消费者模型用来解决什么问题?</h2>
+<pre><code>用来解决生产者生产数据与消费者消费数据
+不同步的问题。
+生产者产生数据之后，将这些数据存放到阻塞
+队列里面，消息者从阻塞队列当中取出数据。
+</code></pre>
+<h2 id="4什么是阻塞队列">(4)什么是阻塞队列?</h2>
+<pre><code>阻塞队列可以在多线程环境下使用，当阻塞队列满时，
+生产者线程会阻塞（即暂时挂起)。当阻塞队列为空时，
+消费者线程会阻塞。
+阻塞队列一般都解决了线程安全问题。
+</code></pre>
+<p><img src="https://guanxuchao.com//post-images/1566402565227.png" alt=""></p>
+<h2 id="5生产者-消费者模型的经典使用场合">(5)生产者、消费者模型的经典使用场合</h2>
+<pre><code>a.订单处理
+	订单信息先写入到阻塞队列，然后消息者
+	线程从阻塞队列中取出数据，写到数据库。
+b.应用服务器设计(用于任务的分派)
+</code></pre>
+<p><img src="https://guanxuchao.com//post-images/1566402579830.png" alt=""></p>
+<pre><code>c.日志
+	可以让生产者线程将日志信息先写入阻塞
+	队列，然后让消息者线程从阻塞队列当中取
+	出日志信息，然后写入数据库。　
+</code></pre>
+<h2 id="6经典案例日志处理">(6)经典案例(日志处理)</h2>
+<p><img src="https://guanxuchao.com//post-images/1566402586852.png" alt=""></p>
+<h2 id="7相关的接口与类">(7)相关的接口与类</h2>
+<pre><code>BlockingQueue接口
+	注：该接口继承Queue接口。
+LinkedBlockingQueue类
+	注：底层实现是一个链表，每添加一个消息(数据),
+	就需要创建一个新的结点，如果并发量很大，
+	可能会影响系统GC。
+	除此之外，LinkedBlockQueue的put方法和
+	take方法用的是不同的锁，并发性能比较好。
+ArrayBlockingQueue类
+	注：底层实现是一个数组。
+	ArrayBlockingQueue的take方法和put方法
+	用的是同一个锁，并发性能差一些。
+</code></pre>
+<h1 id="练习">练习</h1>
+<pre><code>Producer线程每隔5秒向阻塞队列当中添加一个
+随机数。Consumer线程每隔2秒从阻塞队列当中
+取出随机数然后输出。
+Producer类(Producer线程类)
+Consumer类(Consumer线程类)
+Test类(启动Producer线程和Consumer线程)
+</code></pre>
+<h1 id="2二叉树">2.二叉树</h1>
+<h2 id="1什么是二叉树">(1)什么是二叉树?</h2>
+<pre><code>任意一个节点，最多只有两棵子树的树结构。
+注：
+	这两棵子树一般称之为左子树和右子树。
+</code></pre>
+<p><img src="https://guanxuchao.com//post-images/1566402676075.png" alt=""></p>
+<h2 id="2排序二叉树搜索二叉树">(2)排序二叉树(搜索二叉树)</h2>
+<pre><code>任意一个节点，其左子树上的节点值比该节点的
+值小，其右子树上的节点值比该节点的值要大。
+左右子树也是一个排序二叉树。
+注：
+	排序二叉树不允许出现重复元素。
+</code></pre>
+<p><img src="https://guanxuchao.com//post-images/1566402603064.png" alt=""></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/DCGlz88Q4" class="tag">
+                    生产者、消费者模型
+                  </a>
+                
+                  <a href="https://guanxuchao.com//tag/I5UxfS-3U" class="tag">
+                    阻塞队列
+                  </a>
+                
+                  <a href="https://guanxuchao.com//tag/getUnlbGW" class="tag">
+                    二叉树
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/lian-biao">
+                  <h3 class="post-title">
+                    链表
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

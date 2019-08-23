@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>SpringMVC-1 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566551502824">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566551502824" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">SpringMVC-1</h2>
+            <div class="post-date">2019-07-19</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/springmvc-1.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h3 id="1-springmvc的作用">1. SpringMVC的作用</h3>
+<p>SpringMVC主要解决了View-Controller交互的问题。</p>
+<!-- more -->
+<p>传统的<code>Controller</code>具体表现为一个个的<code>Servlet</code>类，在一个普通的项目中，需要实现的功能至少有50个以上，假设是50个，则项目中就需要创建50个<code>Servlet</code>类去处理这50个功能对应的请求，在<strong>web.xml</strong>中每个<code>Servlet</code>类至少需要8行代码进行配置，则共计需要400行代码进行配置（当然，JavaEE允许通过注解的方式进行配置），如果是一个更加复杂的系统，就会导致：<code>Servlet</code>实例过多，类文件太多，配置文件太长，所导致的代码开发难度和维护难度大的问题。另外，还存在<code>Servlet</code>或其它Java EE中的API功能较弱的问题。</p>
+<h3 id="2-springmvc中的核心组件">2. SpringMVC中的核心组件</h3>
+<ul>
+<li>
+<p><code>DispatcherServlet</code>：前端控制器，用于接收所有请求，并进行分发；</p>
+</li>
+<li>
+<p><code>HandlerMapping</code>：记录了请求路径与实际处理请求的控制器之间的对应关系；</p>
+</li>
+<li>
+<p><code>Controller</code>：实际处理请求的控制器；</p>
+</li>
+<li>
+<p><code>ModelAndView</code>：控制器的处理结果，其中<code>Model</code>表示处理请求时得到的即将响应给客户端数据，<code>View</code>表示负责响应时显示的视图的名称；</p>
+</li>
+<li>
+<p><code>ViewResolver</code>：根据视图的名称，确定视图组件。</p>
+</li>
+</ul>
+<p><img src="01.png" alt=""></p>
+<h3 id="3-springmvc-helloworld">3. SpringMVC HelloWorld</h3>
+<h4 id="31-案例目标">3.1. 案例目标</h4>
+<p>在浏览器中，通过<code>http://localhost:8080/项目名称/hello.do</code>进行访问，页面中将显示“Hello, SpringMVC!!!”字样。</p>
+<h4 id="32-创建项目">3.2. 创建项目</h4>
+<p>创建<strong>Maven Project</strong>，勾选<strong>Create a simple project</strong>，<strong>Group Id</strong>为<code>cn.tedu.spring</code>，<strong>Artifact Id</strong>为<code>SPRINGMVC-01</code>，<strong>Packaging</strong>必须选择<code>war</code>。</p>
+<p>创建完成后，先生成<strong>web.xml</strong>；从前序项目中复制<strong>spring-webmvc</strong>依赖；复制Spring的配置文件到新项目中，删除原有配置；添加Tomcat运行环境。</p>
+<h4 id="33-通过dispatcherservlet接收所有请求">3.3. 通过DispatcherServlet接收所有请求</h4>
+<p>SpringMVC中已经定义好了<code>DispatcherSerlvet</code>类，如果需要该<code>Servlet</code>能够接收并处理请求，首先，就需要在<strong>web.xml</strong>中进行配置：</p>
+<pre><code>&lt;servlet&gt;
+	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+<blockquote>
+<p>在配置时，如果不明确<code>DispatcherServlet</code>的包名，可以随意创建某个Java类，在类中声明该<code>Servlet</code>，由Eclipse完成导包，则<code>import</code>语句中就有了该类的全名。</p>
+</blockquote>
+<p>至此，<code>DispatcherServlet</code>就可以接收所有以<code>.do</code>为后缀的请求。</p>
+<p>默认情况下，所有的<code>Servlet</code>都是第一次接收并处理请求时才完成的初始化操作，并且，SpringMVC框架是基于Spring框架基础之上的，在项目启动初期，就应该加载整个Spring环境，以保证SpringMVC框架能正常运行！所以，可以通过配置去实现：当启动Tomcat时，就直接初始化<code>DispatcherServlet</code>，在<code>DispatcherServlet</code>中，已经定义了某个属性，值是Spring配置文件的位置，当<code>DispatcherServlet</code>被初始化时，就会读取该配置文件！</p>
+<p>在配置时，可以通过<code>&lt;load-on-startup&gt;</code>使得<code>DispatcherServlet</code>是默认直接初始化的！</p>
+<p>在<code>DispatcherServlet</code>的父类<code>FrameworkServlet</code>中，有<code>contextConfigLocation</code>属性，其作用就是制定Spring配置文件的位置，一旦创建了<code>DispatcherServlet</code>对象，就会自动读取所配置的文件，以加载Spring的环境！则配置为：</p>
+<pre><code>&lt;init-param&gt;
+	&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+	&lt;param-value&gt;classpath:spring.xml&lt;/param-value&gt;
+&lt;/init-param&gt;
+</code></pre>
+<p>至此，关于<code>DispatcherServlet</code>的完整配置：</p>
+<pre><code>&lt;servlet&gt;
+	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;classpath:spring.xml&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+<p>以上配置实现的效果就是：当Tomcat启动时，就会创建<code>DispatcherServlet</code>的对象，并且，<code>DispatcherServlet</code>会读取所配置的<code>spring.xml</code>文件，以加载Spring环境，后续，<code>DispatcherServlet</code>将接收所有以<code>.do</code>为后缀的请求！</p>
+<p>如果需要验证现在的配置结果，可以自定义<code>cn.tedu.spring.User</code>类，然后，在类中显式的定义构造方法：</p>
+<pre><code>public class User {
+	public User() {
+		System.out.println(&quot;创建了User的对象！&quot;);
+	}
+}
+</code></pre>
+<p>然后在Spring的配置文件中进行配置：</p>
+<pre><code>&lt;bean class=&quot;cn.tedu.spring.User&quot; /&gt;
+</code></pre>
+<p>由于Tomcat启动时就会初始化<code>DispatcherServlet</code>，进而加载Spring配置文件，就会由Spring框架创建<code>User</code>对象，导致构造方法被执行，所以，当启动Tomcat时，就会看到构造方法中输出的内容！</p>
+<h4 id="34-使用控制器接收请求">3.4. 使用控制器接收请求</h4>
+<p>首先创建<code>cn.tedu.spring.HelloController</code>控制器类，在类之前添加<code>@Controller</code>注解：</p>
+<pre><code>package cn.tedu.spring;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class HelloController {
+
+}
+</code></pre>
+<p>然后，需要在Spring的配置文件设置组件扫描：</p>
+<pre><code>&lt;!-- 组件扫描 --&gt;
+&lt;context:component-scan base-package=&quot;cn.tedu.spring&quot; /&gt;
+</code></pre>
+<p>然后，在控制类中添加处理请求的方法，方法的设计原则是：</p>
+<ol>
+<li>
+<p>应该使用<code>public</code>权限；</p>
+</li>
+<li>
+<p>暂时使用<code>String</code>作为返回值类型；</p>
+</li>
+<li>
+<p>方法名称自由定义；</p>
+</li>
+<li>
+<p>方法中暂时不添加参数。</p>
+</li>
+</ol>
+<p>所以，可以将方法设计为：</p>
+<pre><code>public String showHello() {
+	return null;
+}
+</code></pre>
+<p>然后，在方法之前添加<code>@RequestMapping</code>注解，用于配置请求路径，以确定请求路径与处理请求的方法的对应关系：</p>
+<pre><code>@RequestMapping(&quot;hello.do&quot;)
+public String showHello() {
+	return null;
+}
+</code></pre>
+<p>所以，可以在方法中加入一段测试代码：</p>
+<pre><code>@RequestMapping(&quot;hello.do&quot;)
+public String showHello() {
+	System.out.println(&quot;HelloController.showHello()&quot;);
+	return null;
+}
+</code></pre>
+<p>然后，打开浏览器，输入<code>http://localhost:8080/SPRINGMVC-01/hello.do</code>，在浏览器中会提示404错误，因为目前尚未处理页面，在Eclipse的控制台应该可以看到以上输出的内容！每访问一次，就会出现1次输出语句！</p>
+<h4 id="35-响应页面">3.5. 响应页面</h4>
+<p>处理请求的方法的参数是<code>String</code>类型时，默认表示响应给客户端的视图的名称，后续，会经过<code>ViewResolver</code>进行处理，得到具体的视图。</p>
+<p>首先，应该创建jsp页面，例如在<strong>WEB-INF</strong>下创建<strong>index.jsp</strong>文件，页面内容随意，例如显示“Hello, SpringMVC!!!”字样。</p>
+<p>然后，需要设计处理请求的方法的返回值，并配置<code>ViewResolver</code>！<code>ViewResolver</code>是一个接口，具体使用的实现类是<code>InternalResourceViewResolver</code>，需要在Spring的配置文件中配置它的<code>prefix</code>和<code>suffix</code>属性，分别表示“前缀”和“后缀”，<code>InternalResourceViewResolver</code>的工作模式是以<strong>webapp</strong>文件夹为根路径，将“前缀 + 处理请求的方法的返回值 + 后缀”得到具体的JSP文件的位置，刚才创建的JSP文件在<strong>webapp/WEB-INF/index.jsp</strong>，则可以：</p>
+<pre><code>/WEB-INF/	+	index	+	.jsp
+
+&quot;&quot;	+	/WEB-INF/index.jsp	+	&quot;&quot;
+</code></pre>
+<p>还可以是其他组合方式，只要能组合出文件的路径都是正确的，可以在处理请求的方法中返回<code>&quot;index&quot;</code>，然后配置为：</p>
+<pre><code>&lt;!-- 视图解析器 --&gt;
+&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+	&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/&quot; /&gt;
+	&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>至此，开发完成，可以再次测试访问。</p>
+<h3 id="-">--------------------------</h3>
+<h3 id="附1tomcat启动失败的解决方案">附1：Tomcat启动失败的解决方案</h3>
+<p>首先，如果启动时，弹出对话框，对话框中提示了端口号，多是因为端口号冲突，例如此前已经启动了Tomcat却没有关闭，仍再次启动，就会出现冲突。如果要解决问题，可以先停止此前占用端口的程序，例如在Eclipse找到停止按钮，或者在Tomcat的bin目录下执行shutdown指令，如果不知道如何，可以重启电脑！</p>
+<p>如果启动过程中报告异常信息，提示<code>ClassNotFoundException</code>或者<code>FileNotFoundException</code>，就检查对应的类是否存在，如果提示的类是依赖的jar包中的类，可能是jar包文件已经损坏，需要重新下载(可以删除.m2中的jar包或者更换版本)。</p>
+<p>如果启动过程中报告的异常信息是<code>ZipException</code>，一定是某个jar包损坏，则检查最近添加的依赖的jar包并重新下载。</p>
+<p>如果启动过程中报告的异常信息是<code>LifeCycleException</code>，通常是由于缓存问题导致的，则需要Clean项目及Tomcat。</p>
+<p>如果把项目和Tomcat都Clean了仍错误，可以在<strong>Servers</strong>面板中删除现有的Tomcat，同时删除名为<strong>Servers</strong>的项目，然后重新添加Tomcat。</p>
+<p>如果问题依然存在，则继续删除Tomcat，添加时，添加其他Tomcat。</p>
+<h3 id="附2spring配置文件没有提示的解决方案">附2：Spring配置文件没有提示的解决方案</h3>
+<p>参考：http://doc.canglaoshi.org/schema.html</p>
+<p><img src="https://guanxuchao.com//post-images/1563894080926.png" alt=""></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/mr1w8BJoq" class="tag">
+                    SpringMVC
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/spring-3">
+                  <h3 class="post-title">
+                    Spring-3
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

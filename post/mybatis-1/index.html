@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>MyBatis-1 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566551502824">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566551502824" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">MyBatis-1</h2>
+            <div class="post-date">2019-07-26</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/mybatis-1.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h4 id="21-框架的作用">2.1. 框架的作用</h4>
+<p>简化数据库编程，开发者只要指定每项数据操作时的SQL语句及对应的抽象方法即可。</p>
+<!-- more -->
+<h4 id="22-创建springmybatis的项目">2.2. 创建Spring+MyBatis的项目</h4>
+<p>创建Maven Project，Group Id为cn.tedu.mybatis，Artifact Id为MyBatis，Packaing选择war。</p>
+<p>创建完成后，生成web.xml，添加依赖，添加Tomcat运行环境，复制web.xml中的配置，复制前序项目中的spring.xml(需要删除拦截器的配置)。</p>
+<p>然后，需要添加一些新的依赖，首先，添加mybatis的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+	&lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+	&lt;version&gt;3.5.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>MyBatis框架是可以独立使用的，但是配置相对繁琐，且没有实际价值，通常都是与Spring结合使用的，甚至结合了SpringMVC，所以，需要添加<code>mybatis-spring</code>的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+	&lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+	&lt;version&gt;2.0.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>MyBatis的底层是基于jdbc实现的，所以，结合Spring使用后，需要添加<code>spring-jdbc</code>依赖，该依赖的代码与<code>spring-webmvc</code>几乎一样，只是<code>artifact id</code>不同，通常，这2个依赖的版本应该完全相同：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+	&lt;version&gt;4.3.8.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>还需要添加<code>mysql-connector-java</code>的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;mysql&lt;/groupId&gt;
+	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+	&lt;version&gt;8.0.16&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>另外，还需要<code>commons-dbcp</code>数据库连接池的依赖：</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;commons-dbcp&lt;/groupId&gt;
+	&lt;artifactId&gt;commons-dbcp&lt;/artifactId&gt;
+	&lt;version&gt;1.4&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>最后，检查是否已经添加好了<code>junit</code>依赖，如果已经存在，则跳过，如果没有添加，则补充。</p>
+<h4 id="23-配置数据库连接">2.3. 配置数据库连接</h4>
+<p>在<strong>src/main/resources</strong>下创建<strong>db.properties</strong>文件，以确定数据库连接的相关配置：</p>
+<pre><code>url=jdbc:mysql://localhost:3306/tedu_ums?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai
+driver=com.mysql.cj.jdbc.Driver
+username=root
+password=root
+initialSize=2
+maxActive=5
+</code></pre>
+<p>然后，需要在Spring的配置文件中读取以上配置信息：</p>
+<pre><code>&lt;!-- 读取db.properties --&gt;
+&lt;util:properties id=&quot;dbConfig&quot;
+	location=&quot;classpath:db.properties&quot; /&gt;
+</code></pre>
+<p>最终，程序运行时，需要使用的数据源是<code>BasicDataSource</code>，框架会通过这个类的对象获取数据库连接对象，然后实现数据访问，所以，就需要为这个类的相关属性注入值，把数据库配置信息确定下来：</p>
+<pre><code>&lt;!-- 配置数据源 --&gt;
+&lt;bean id=&quot;dataSource&quot;
+	class=&quot;org.apache.commons.dbcp.BasicDataSource&quot;&gt;
+	&lt;property name=&quot;url&quot; 
+		value=&quot;#{dbConfig.url}&quot; /&gt;
+	&lt;property name=&quot;driverClassName&quot; 
+		value=&quot;#{dbConfig.driver}&quot; /&gt;
+	&lt;property name=&quot;username&quot; 
+		value=&quot;#{dbConfig.username}&quot; /&gt;
+	&lt;property name=&quot;password&quot; 
+		value=&quot;#{dbConfig.password}&quot; /&gt;
+	&lt;property name=&quot;initialSize&quot; 
+		value=&quot;#{dbConfig.initialSize}&quot; /&gt;
+	&lt;property name=&quot;maxActive&quot; 
+		value=&quot;#{dbConfig.maxActive}&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>接下来，可以检验一下以上完成的配置是否正确，则在<strong>src/test/java</strong>下创建<code>cn.tedu.mybatis.Tests</code>测试类，编写并执行测试方法：</p>
+<pre><code>@Test
+public void getConnection() throws SQLException {
+	ClassPathXmlApplicationContext ac
+		= new ClassPathXmlApplicationContext(
+			&quot;spring.xml&quot;);
+	
+	BasicDataSource ds = ac.getBean(&quot;dataSource&quot;, BasicDataSource.class);
+	
+	Connection conn = ds.getConnection();
+	System.out.println(conn);
+	
+	ac.close();
+}
+</code></pre>
+<h4 id="24-设计接口和抽象方法">2.4. 设计接口和抽象方法</h4>
+<p>创建<code>cn.tedu.mybatis.User</code>类，类的属性与<code>t_user</code>表保持一致：</p>
+<pre><code>public class User {
+
+	private Integer id;
+	private String username;
+	private String password;
+	private Integer age;
+	private String phone;
+	private String email;
+
+	// SET/GET/toString/hashCode/equals/Serializable
+
+}
+</code></pre>
+<p>在MyBatis中，要求抽象方法写在接口中，所以，需要先创建<code>cn.tedu.mybatis.UserMapper</code>接口：</p>
+<pre><code>public interface UserMapper {
+}
+</code></pre>
+<p>然后，在接口中添加抽象方法，设计原则：</p>
+<ul>
+<li>
+<p>如果要执行的操作是<code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>，返回值类型使用<code>Integer</code>，表示受影响的行数；</p>
+</li>
+<li>
+<p>方法的名称可以自定义，但是，不允许重载；</p>
+</li>
+<li>
+<p>参数列表根据执行SQL语句时的不确定数据来设计。</p>
+</li>
+</ul>
+<p>对于要执行的数据操作，先完成“增加”操作，则添加关于“增加”用户数据的抽象方法：</p>
+<pre><code>Integer insert(User user);
+</code></pre>
+<p>然后，需要通过配置，让MyBatis框架知道接口在哪里，所以，在Spring的配置文件中添加配置：</p>
+<pre><code>&lt;!-- 配置MapperScannerConfigurer --&gt;
+&lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+	&lt;!-- 指定MyBatis所需的接口在哪里 --&gt;
+	&lt;property name=&quot;basePackage&quot;
+		value=&quot;cn.tedu.mybatis&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<h4 id="25-配置sql语句">2.5. 配置SQL语句</h4>
+<p>下载<code>http://doc.canglaoshi.org/config/mybatis-mapper.zip</code>文件，得到压缩包，在项目的<strong>src/main/resources</strong>下创建名为<strong>mappers</strong>的文件夹，解压下载的压缩包，将得到的xml文件复制到<strong>mappers</strong>文件夹中，并重命名为<strong>UserMapper.xml</strong>。</p>
+<p>然后在该文件中配置SQL语句：</p>
+<pre><code>&lt;!-- namespace：当前XML文件用于配置哪个接口中抽象方法对应的SQL语句 --&gt;
+&lt;mapper namespace=&quot;cn.tedu.mybatis.UserMapper&quot;&gt;
+
+	&lt;!-- 使用insert节点配置插入数据的SQL语句 --&gt;
+	&lt;!-- id：抽象方法的方法名 --&gt;
+	&lt;!-- 在#{}中间的是方法的参数User类中的属性名称 --&gt;
+	&lt;insert id=&quot;insert&quot;&gt;
+		INSERT INTO t_user (
+			username, password,
+			age, phone,
+			email
+		) VALUES (
+			#{username}, #{password},
+			#{age}, #{phone},
+			#{email}
+		)
+	&lt;/insert&gt;
+	
+&lt;/mapper&gt;
+</code></pre>
+<p>最后，还是需要补充配置，使得MyBatis框架知道这些XML文件在哪里，且执行时使用的数据源是哪一个，则在Spring的配置文件中补充配置：</p>
+<pre><code>&lt;!-- SqlSessionFactoryBean --&gt;
+&lt;bean class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+	&lt;!-- XML文件在哪里 --&gt;
+	&lt;property name=&quot;mapperLocations&quot;
+		value=&quot;classpath:mappers/*.xml&quot; /&gt;
+	&lt;!-- 使用哪个数据源 --&gt;
+	&lt;property name=&quot;dataSource&quot;
+		ref=&quot;dataSource&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>完成之后，在<code>Tests</code>中编写并执行单元测试：</p>
+<pre><code>@Test
+public void insert() {
+	ClassPathXmlApplicationContext ac
+		= new ClassPathXmlApplicationContext(
+			&quot;spring.xml&quot;);
+	
+	UserMapper userMapper
+		= ac.getBean(&quot;userMapper&quot;, UserMapper.class);
+	System.out.println(userMapper.getClass());
+	
+	User user = new User();
+	user.setUsername(&quot;admin&quot;);
+	user.setPassword(&quot;1234&quot;);
+	Integer rows = userMapper.insert(user);
+	System.out.println(&quot;rows=&quot; + rows);
+	
+	ac.close();
+}
+</code></pre>
+<h4 id="26-实时获取新插入的数据的id">2.6. 实时获取新插入的数据的id</h4>
+<p>在配置<code>&lt;insert&gt;</code>节点时，添加<code>useGeneratedKeys=&quot;true&quot;</code>和<code>keyProperty=&quot;id&quot;</code>的配置：</p>
+<pre><code>&lt;insert id=&quot;insert&quot;
+	useGeneratedKeys=&quot;true&quot;
+	keyProperty=&quot;id&quot;&gt;
+</code></pre>
+<p>然后，执行数据操作后，方法的参数对象中就会被封装自动编号的id值！</p>
+<p>以上配置的2个属性，<code>useGeneratedKeys</code>表示“要不要获取自动生成的字段的值，即自动编号的值”，<code>keyProperty</code>表示“获取到的自动编号的值封装在参数对象的哪个属性中”，所以，在本例中，指的是<code>User</code>类中的<code>id</code>属性，并不是<code>t_user</code>表中的<code>id</code>字段。</p>
+<blockquote>
+<p>通常，Property单词表示“属性”，类才有属性，数据表没有属性，Field表示“字段”，仅当描述数据表结构时才称之为字段，Column表示“列”，仅当描述查询结果时才称之为列。</p>
+</blockquote>
+<h3 id="-">----------------------------------</h3>
+<h3 id="附1如果快速的向数据表中插入已知的1000万条数据">附1：如果快速的向数据表中插入已知的1000万条数据</h3>
+<p>假设这1000万条数据在1个<code>List</code>集合中，将这个集合进行遍历，循环1000万次，结合数据库编程技术，就可以将这些数据插入到数据库中。</p>
+<p>这样做的缺陷：</p>
+<ol>
+<li>
+<p>在实际工作环境中，应用服务器(程序运行所在的Tomcat服务器)与MySQL数据库服务器并不是同一台服务器，当需要执行数据操作时，会由应用服务器将SQL语句发送到MySQL数据库服务器，发送过程中就需要建立网络连接，才可以发送SQL语句，如果使用以上原始做法，就需要连接1000万次，每次发送1条SQL语句，效率非常低下！</p>
+</li>
+<li>
+<p>每次执行1条SQL语句之前，MySQL服务器还会对SQL语句进行词法分析、语义分析、编译等过程，才可以执行，假设有1000万条SQL语句，则这些词法分析、语义分析、编译等过程就需要经历1000万次！</p>
+</li>
+</ol>
+<p>针对问题1，可以使用批处理来解决，批处理可以一次性发送多条SQL语句到数据库服务器，减少传递SQL语句的次数，从而提高运行效率；</p>
+<p>针对问题2，可以把<code>INSERT INTO xx () VALUES ();</code>这种语法调整为<code>INSERT INTO xx () VALUES (值列表1), (值列表2), ..., (值列表N)</code>，这种做法可以使得1条SQL语句插入多条数据，假设每条SQL语句插入了1000条数据，则只需要1万条SQL语句即可！</p>
+<p>所以，总的来说，可以使用每条SQL语句插入100条数据，批处理时每次发送1000条这样的SQL语句，整体循环100次，就可以完成所有数据的插入！</p>
+<blockquote>
+<p>理论上来说，批处理时，不建议一次性处理超过5000条SQL语句。另外，每条SQL语句也不是插入越多数据就越快，拼接这样的SQL语句也是需要耗时的。</p>
+</blockquote>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/rr143Ntja" class="tag">
+                    MyBatis
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/springmvc-3">
+                  <h3 class="post-title">
+                    SpringMVC-3
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Spring-2 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566551502824">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566551502824" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Spring-2</h2>
+            <div class="post-date">2019-07-13</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/spring-2.png')">
+              </div>
+            
+            <div class="post-content">
+              <h4 id="11-通过set方式注入属性的值">1.1. 通过SET方式注入属性的值</h4>
+<!-- more -->
+<p>假设存在：</p>
+<pre><code>public class UserDao {
+	
+	public String driver; // com.mysql.jdbc.Driver
+
+}
+</code></pre>
+<p>如果需要为<code>driver</code>注入值，首先需要为该属性添加SET方法（强烈建议使用开发工具生成SET方法，不要手动编写）：</p>
+<pre><code>public void setDriver(String driver) {
+	this.driver = driver;
+}
+</code></pre>
+<p>然后，在Spring的配置文件中，添加<code>&lt;property&gt;</code>节点以进行配置：</p>
+<pre><code>&lt;bean id=&quot;userDao&quot; class=&quot;cn.tedu.spring.UserDao&quot;&gt;
+	&lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>另外，如果某个属性的值并不是基本值（在Spring中，把基本数据类型的值和字符串统一称为基本值），例如：</p>
+<pre><code>public class UserServlet {
+	public UserDao userDao;
+}
+</code></pre>
+<p>以上属性的值应该是前序创建的<code>UserDao</code>类的对象，则，在配置时，可以通过<code>&lt;property&gt;</code>节点的<code>ref</code>属性引用那个<code>&lt;bean&gt;</code>的<code>id</code>：</p>
+<pre><code>&lt;bean id=&quot;userServlet&quot; class=&quot;cn.tedu.spring.UserServlet&quot;&gt;
+	&lt;property name=&quot;userDao&quot; ref=&quot;userDao&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>综合来看，无论属性的值是什么类型，只要是通过SET方式注入属性值，首先都必须为属性添加SET方法，然后在<code>&lt;bean&gt;</code>节点下级通过<code>&lt;property&gt;</code>节点进行配置，如果属性的值是基本值，则使用<code>value</code>属性直接编写对应的值，如果属性的值不是基本值，则使用<code>ref</code>属性引用另一个<code>&lt;bean&gt;</code>的<code>id</code>（如果没有所说的另一个<code>&lt;bean&gt;</code>，就想办法配出这样一个<code>&lt;bean&gt;</code>）。</p>
+<h4 id="12-通过构造方法注入属性的值">1.2. 通过构造方法注入属性的值</h4>
+<p>假设存在：</p>
+<pre><code>public class AdminDao {
+	
+	public String url;
+
+	public AdminDao(String url) {
+		super();
+		this.url = url;
+	}
+
+}
+</code></pre>
+<p>在配置时：</p>
+<pre><code>&lt;!-- 通过构造方法注入属性值 --&gt;
+&lt;bean id=&quot;adminDao&quot; class=&quot;cn.tedu.spring.AdminDao&quot;&gt;
+	&lt;!-- index：参数的序号，即第几个参数 --&gt;
+	&lt;constructor-arg index=&quot;0&quot; 
+		value=&quot;jdbc:mysql://...&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>练习：创建<code>AdminServlet</code>类，在类中声明<code>public String name;</code>和<code>public AdminDao adminDao;</code>这2个属性，通过1个构造方法为这2个属性注入值，其中，<code>name</code>的值是<code>&quot;处理管理员请求的类&quot;</code>，<code>adminDao</code>的值就是此前创建的<code>AdminDao</code>的对象。</p>
+<p>练习答案-Java类：</p>
+<pre><code>public class AdminServlet {
+	
+	public String name;
+	public AdminDao adminDao;
+	
+	public AdminServlet(String name, AdminDao adminDao) {
+		super();
+		this.name = name;
+		this.adminDao = adminDao;
+	}
+
+}
+</code></pre>
+<p>练习答案-配置：</p>
+<pre><code>&lt;!-- 通过构造方法注入多个属性值 --&gt;
+&lt;bean id=&quot;adminServlet&quot; class=&quot;cn.tedu.spring.AdminServlet&quot;&gt;
+	&lt;constructor-arg index=&quot;0&quot;
+		value=&quot;处理管理员请求的类&quot; /&gt;
+	&lt;constructor-arg index=&quot;1&quot;
+		ref=&quot;adminDao&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<h4 id="13-小结">1.3. 小结</h4>
+<p>通过SET方式注入必须为属性添加规范的SET方法，在配置时，使用<code>&lt;property&gt;</code>节点注入属性的值，该节点中，<code>name</code>属性可以理解为就是属性名称；</p>
+<p>通过构造方法注入必须自定义带参数的构造方法，且构造方法会基于参数为属性赋值；</p>
+<p>无论通过哪种方式，如果注入的值是基本值，通过<code>value</code>属性配置，如果注入的值是引用其他Bean，通过<code>ref</code>引用那个<code>&lt;bean&gt;</code>的<code>id</code>。</p>
+<p>通常推荐为绝大部分类提供无参数的构造方法，所以，通过SET方式注入是比较实用的做法，而通过构造方法注入的使用频率就非常低。</p>
+<h3 id="2-注入集合类型的属性值">2. 注入集合类型的属性值</h3>
+<h4 id="21-list">2.1. List</h4>
+<p>假设存在：</p>
+<pre><code>// Frank, Andy, Lucy, Kate
+public List&lt;String&gt; names;
+</code></pre>
+<p>如果希望通过SET方式注入属性的值，需要先生成SET方法，然后，配置为：</p>
+<pre><code>&lt;!-- 注入List类型的值：Frank, Andy, Lucy, Kate --&gt;
+&lt;property name=&quot;names&quot;&gt;
+	&lt;list&gt;
+		&lt;value&gt;Frank&lt;/value&gt;
+		&lt;value&gt;Andy&lt;/value&gt;
+		&lt;value&gt;Lucy&lt;/value&gt;
+		&lt;value&gt;Kate&lt;/value&gt;
+	&lt;/list&gt;
+&lt;/property&gt;
+</code></pre>
+<p>Spring框架在处理时，会使用<code>ArrayList</code>封装<code>List</code>类型的属性的值。</p>
+<h4 id="22-set">2.2. Set</h4>
+<p>假设存在：</p>
+<pre><code>// Beijing, Shanghai, Guangzhou, Shenzhen
+public Set&lt;String&gt; cities;
+</code></pre>
+<p>则配置为：</p>
+<pre><code>&lt;!-- 注入Set类型的值：Beijing, Shanghai, Guangzhou, Shenzhen --&gt;
+&lt;property name=&quot;cities&quot;&gt;
+	&lt;set&gt;
+		&lt;value&gt;Beijing&lt;/value&gt;
+		&lt;value&gt;Shanghai&lt;/value&gt;
+		&lt;value&gt;Guangzhou&lt;/value&gt;
+		&lt;value&gt;Shenzhen&lt;/value&gt;
+	&lt;/set&gt;
+&lt;/property&gt;
+</code></pre>
+<p>Spring框架在处理时，会使用<code>LinkedHashSet</code>封装<code>Set</code>类型的属性的值。</p>
+<h4 id="23-数组">2.3. 数组</h4>
+<p>假设存在：</p>
+<pre><code>// { 9, 5, 2, 7 } 
+public int[] numbers;
+</code></pre>
+<p>则配置为：</p>
+<pre><code>&lt;!-- 注入数组类型的值：{ 9, 5, 2, 7 } --&gt;
+&lt;property name=&quot;numbers&quot;&gt;
+	&lt;array&gt;
+		&lt;value&gt;9&lt;/value&gt;
+		&lt;value&gt;5&lt;/value&gt;
+		&lt;value&gt;2&lt;/value&gt;
+		&lt;value&gt;7&lt;/value&gt;
+	&lt;/array&gt;
+&lt;/property&gt;
+</code></pre>
+<p>其实，在Spring框架中，注入<code>List</code>集合类型的值和数组类型的值时，使用<code>&lt;list&gt;</code>节点或者<code>&lt;array&gt;</code>节点都是可以的，即：数据是<code>List</code>类型的，使用<code>&lt;array&gt;</code>来配置，或者数据是数组类型的，使用<code>&lt;list&gt;</code>来配置，都是正确的。但是，在实际应用时，还是应该注意区分。</p>
+<h4 id="24-map">2.4. Map</h4>
+<p>假设存在：</p>
+<pre><code>// username=root, password=1234, from=Hangzhou, age=26
+public Map&lt;String, String&gt; session;
+</code></pre>
+<p>则配置为：</p>
+<pre><code>&lt;!-- 注入Map类型的值：username=root, password=1234, from=Hangzhou, age=26 --&gt;
+&lt;property name=&quot;session&quot;&gt;
+	&lt;map&gt;
+		&lt;entry key=&quot;username&quot; value=&quot;root&quot; /&gt;
+		&lt;entry key=&quot;password&quot; value=&quot;1234&quot; /&gt;
+		&lt;entry key=&quot;from&quot; value=&quot;Hangzhou&quot; /&gt;
+		&lt;entry key=&quot;age&quot; value=&quot;26&quot; /&gt;
+	&lt;/map&gt;
+&lt;/property&gt;
+</code></pre>
+<h4 id="25-properties">2.5. Properties</h4>
+<p>在配置<code>Properties</code>类型的属性值时，其配置的节点结构是：</p>
+<pre><code>&lt;!-- 注入Properties类型的值 --&gt;
+&lt;property name=&quot;config&quot;&gt;
+	&lt;props&gt;
+		&lt;prop key=&quot;username&quot;&gt;root&lt;/prop&gt;
+		&lt;prop key=&quot;password&quot;&gt;1234&lt;/prop&gt;
+	&lt;/props&gt;
+&lt;/property&gt;
+</code></pre>
+<p>另外，也可以准备专门的**.properties<strong>文件，例如在</strong>src/main/resources<strong>下创建</strong>db.properties**文件：</p>
+<pre><code>url=jdbc:mysql://localhost:3306/db_name?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai
+driver=com.mysql.jdbc.Driver
+username=root
+password=1234
+</code></pre>
+<p>然后，在Spring的配置文件中，使用<code>&lt;util:properties&gt;</code>节点就可以直接读取**.properties**文件：</p>
+<pre><code>&lt;util:properties id=&quot;config&quot; 
+	location=&quot;classpath:db.properties&quot; /&gt;
+</code></pre>
+<p>以上<code>&lt;util:properties&gt;</code>节点也是一种<code>&lt;bean&gt;</code>节点，所以，注入值时，可以通过<code>ref</code>引用这个节点：</p>
+<pre><code>&lt;!-- 注入Properties类型的值 --&gt;
+&lt;property name=&quot;config&quot; ref=&quot;config&quot; /&gt;
+</code></pre>
+<h3 id="3-spring表达式">3. Spring表达式</h3>
+<p>Spring表达式是使用占位符的方式定义在Spring的配置文件中的，作用是用于获取其他<code>&lt;bean&gt;</code>中的属性的值！</p>
+<p>假设存在：</p>
+<pre><code>public class ValueBean {
+	
+	// 值是SampleBean中的names中的第2个
+	public String name;
+	
+}
+</code></pre>
+<p>首先，需要确定注入值的方式，可以是通过SET方式注入，也可以通过构造方法注入，如果选择通过SET方式注入，需要先生成SET方法：</p>
+<pre><code>public void setName(String name) {
+	this.name = name;
+}
+</code></pre>
+<p>然后，在Spring的配置文件中进行配置：</p>
+<pre><code>&lt;!-- 使用Spring表达式 --&gt;
+&lt;bean id=&quot;valueBean&quot; class=&quot;cn.tedu.spring.ValueBean&quot;&gt;
+	&lt;!-- 值是SampleBean中的names中的第2个 --&gt;
+	&lt;property name=&quot;name&quot;
+		value=&quot;#{sampleBean.names[1]}&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>可以发现，Spring表达式的基本格式是使用<code>#{}</code>进行占位，其内部语法是：</p>
+<pre><code>#{bean的id.属性}
+</code></pre>
+<p>如果属性的类型是<code>List</code>集合、<code>Set</code>集合或者数组，则在属性右侧使用<code>[]</code>写出索引或者下标：</p>
+<pre><code>#{bean的id.属性[索引或者下标]}
+</code></pre>
+<p>如果属性的类型是<code>Map</code>集合或者<code>Properties</code>，可以使用的语法：</p>
+<pre><code>#{bean的id.属性.key}
+
+#{bean的id.属性['key']}
+</code></pre>
+<h3 id="4-自动装配autowire">4. 自动装配(autowire)</h3>
+<p>自动装配：不需要在Spring的配置文件中进行属性值的注入，只需要配置允许自动装配，Spring就会自动的完成属性值的注入。</p>
+<p>假设存在<code>StudentServlet</code>依赖于<code>StudentDao</code>：</p>
+<pre><code>public class StudentServlet {
+	
+	public StudentDao studentDao;
+	
+	public void setStudentDao(StudentDao studentDao) {
+		this.studentDao = studentDao;
+	}
+
+	public void reg() {
+		System.out.println(&quot;StudentServlet.reg()&quot;);
+		studentDao.reg();
+	}
+
+}
+
+public class StudentDao {
+	
+	public void reg() {
+		System.out.println(&quot;StudentDao.reg()&quot;);
+	}
+
+}
+</code></pre>
+<p>就可以配置为：</p>
+<pre><code>&lt;bean id=&quot;studentDao&quot;
+	class=&quot;cn.tedu.spring.StudentDao&quot; /&gt;
+&lt;bean id=&quot;studentServlet&quot; 
+	class=&quot;cn.tedu.spring.StudentServlet&quot;
+	autowire=&quot;byName&quot;&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>以上配置中，<code>autowire</code>属性就是用于配置自动装配的。</p>
+<p>当取值是<code>byName</code>时，表示“按照名称自动装配”，在这个过程中，Spring会先检测到在<code>StudentServlet</code>中有名为<code>studentDao</code>的属性，会根据该属性得到<code>setStudentDao</code>这个方法名称，然后，尝试找到与SET方法名称对应的bean的id，即查找某个id为<code>studentDao</code>的<code>&lt;bean&gt;</code>，如果找到，则自动调用<code>setStudentDao</code>方法来完成自动装配，如果没有找到匹配的bean-id，则不会尝试自动装配。简单的来说，就是<strong>SET方法的名称需要与bean-id相对应</strong>，属性的名称可以和bean-id不对应。自动装配是一种“尝试性”的操作，能装就装，装不上也不会报错！</p>
+<p>另外，还可以取值为<code>byType</code>，表示“按照类型自动装配”，在这个过程，Spring会检测<code>StudentServlet</code>中以<code>set</code>作为前缀的方法，并尝试调用这些方法，调用时，<strong>会在Spring容器中查找与参数类型相符合的bean，如果没有匹配的对象，则不自动装配，如果找到1个，则执行该方法，以完成自动装配，如果找到2个或者更多，则直接报错错误</strong>。</p>
+<p>还有其它装配模式，一般不必了解。</p>
+<p><strong>在实际开发时，并不会使用这种方式来实现自动装配</strong>，因为这种做法存在的问题：属性是否被装配了，表现的不明显，如果不详细的阅读完整的源代码，根本无法确定类中的哪些属性被装配了值，而哪些属性没有被装配值！</p>
+<p>目前，主要理解自动装配的思想，及<code>byName</code>和<code>byType</code>这2种装配模式的特性即可。</p>
+<h3 id="-">--------------------------</h3>
+<h3 id="附1list与set">附1：List与Set</h3>
+<p>List中的元素是可以重复的，例如在同一个List中存储2个<code>string-1</code>，而Set中的元素是不可以重复的，例如在同一个Set中添加2个<code>string-1</code>，实际只会存储第1次添加的<code>string-1</code>，第2次添加的是相同的数据，则不会被存储下来！判断“元素是否相同”的标准是：调用<code>equals()</code>对比的结果是<code>true</code>，并且2个元素的<code>hashCode()</code>返回值相同。</p>
+<p>List是序列的集合，典型的实现类有<code>ArrayList</code>和<code>LinkedList</code>，其中，<code>ArrayList</code>查询效率高，但是修改效率低，而<code>LinkedList</code>查询效率低，但是修改效率高。</p>
+<p>Set是散列的集合，从实际表现来看，并不能说Set是无序的，例如<code>TreeSet</code>会把元素按照字典排序法进行排序，如果元素是自定义的数据类型，需要该类型实现<code>Comparable</code>接口，重写其中的<code>int compareTo(T other)</code>方法，实际上<code>TreeSet</code>会调用各元素的<code>compareTo()</code>方法实现排序，这个排序过程是运行时执行的，从数据存储的角度来看，数据在内存中依然是散列的，另外，还有<code>LinkedHashSet</code>是通过链表的形式将各个元素“链”起来的，所以，输出显示这种Set时，输出结果与添加元素的顺序是保持一致的！</p>
+<p>所有Set都是只有key没有value的Map。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/0u87PdSk8" class="tag">
+                    Spring
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/spring-1">
+                  <h3 class="post-title">
+                    Spring-1
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

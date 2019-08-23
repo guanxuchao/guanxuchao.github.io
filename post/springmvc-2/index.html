@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>SpringMVC-2 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566551502824">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566551502824" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">SpringMVC-2</h2>
+            <div class="post-date">2019-07-20</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/springmvc-2.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <h3 id="1-接收请求参数">1. 接收请求参数</h3>
+<!-- more -->
+<h4 id="11-不推荐通过httpservletrequest获取请求参数">1.1. 【不推荐】通过HttpServletRequest获取请求参数</h4>
+<p>可以在处理请求的方法中，添加<code>HttpServletRequest</code>类型的参数，在处理过程中，调用该参数对象的<code>String getParameter(String name)</code>就可以获取请求参数，例如：</p>
+<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
+public String handleReg(HttpServletRequest request) {
+	System.out.println(&quot;UserController.handleReg()&quot;);
+	String username = request.getParameter(&quot;username&quot;);
+	String password = request.getParameter(&quot;password&quot;);
+	Integer age = Integer.valueOf(request.getParameter(&quot;age&quot;));
+	String phone = request.getParameter(&quot;phone&quot;);
+	String email = request.getParameter(&quot;email&quot;);
+	
+	System.out.println(&quot;\tusenrame=&quot; + username);
+	System.out.println(&quot;\tpassword=&quot; + password);
+	System.out.println(&quot;\tage=&quot; + age);
+	System.out.println(&quot;\tphone=&quot; + phone);
+	System.out.println(&quot;\temail=&quot; + email);
+	return null;
+}
+</code></pre>
+<p>通常，并不推荐使用这种做法！主要原因有：</p>
+<ul>
+<li>
+<p>使用比较繁琐，代码量较多；</p>
+</li>
+<li>
+<p>需要手动实现数据类型的转换；</p>
+</li>
+<li>
+<p>不便于实现单元测试。</p>
+</li>
+</ul>
+<h4 id="12-推荐将请求参数设计为处理请求的方法的参数">1.2. 【推荐】将请求参数设计为处理请求的方法的参数</h4>
+<p>假设客户端将提交名为<code>username</code>的参数，则在控制器的方法中添加同名参数即可，参数的类型可以是期望的数据类型，例如期望<code>age</code>是<code>Integer</code>类型的，则声明为<code>Integer age</code>即可：</p>
+<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
+public String handleReg(String username, String password, 
+		Integer age, String phone, String email) {
+	System.out.println(&quot;UserController.handleReg()&quot;);
+	System.out.println(&quot;\t[2]username=&quot; + username);
+	System.out.println(&quot;\t[2]password=&quot; + password);
+	System.out.println(&quot;\t[2]age=&quot; + age);
+	System.out.println(&quot;\t[2]phone=&quot; + phone);
+	System.out.println(&quot;\t[2]email=&quot; + email);
+	return null;
+}
+</code></pre>
+<p>使用这种做法时，需要保证参数的名称与客户端提交的请求参数名称保持一致，否则，在控制器中的参数将是<code>null</code>值。</p>
+<p>使用这种做法的优点很多，基本上解决了使用<code>HttpServletRequest</code>获取参数时的所有问题！</p>
+<p>使用这种做法并不适用于请求参数的数量较多的应用场景！</p>
+<h4 id="13-推荐使用封装的类型接收较多的请求参数">1.3. 【推荐】使用封装的类型接收较多的请求参数</h4>
+<p>当客户端提交的请求参数较多时，可以将这些参数全部封装为1个自定义的数据类型，例如：</p>
+<pre><code>public class User {
+
+	private String username;
+	private String password;
+	private Integer age;
+	private String phone;
+	private String email;
+	
+	// SET/GET
+}
+</code></pre>
+<p>然后，将该类型作为处理请求的方法的参数即可：</p>
+<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
+public String handleReg(User user) {
+	System.out.println(&quot;UserController.handleReg()&quot;);
+	System.out.println(&quot;\t&quot; + user);
+	return null;
+}
+</code></pre>
+<p>在使用这种做法时，需要保证客户端提交的请求参数，与自定义的数据类型中的属性名称是保持一致的！</p>
+<h4 id="14-小结">1.4. 小结</h4>
+<p>第1种使用<code>HttpServletRequest</code>的方式是不会再使用的。</p>
+<p>如果请求参数的数量较少，且从业务功能来说参数的数量基本固定，推荐使用第2种方式，即直接将请求参数逐一的设计在处理请求的方法中，否则，就使用第3种方式，将多个参数封装成1个自定义的数据类型。</p>
+<p>另外，第2种方式和第3种方式是可以组合使用的，即出现在同一个处理请求的方法中！</p>
+<h3 id="2-重定向">2. 重定向</h3>
+<p>当处理请求的方法的返回值是<code>String</code>类型的，则返回的字符串使用<code>redirect:</code>作为前缀，加上重定向的目标路径，就可以实现重定向的效果。</p>
+<p>假设注册一定成功，且注册成功后需要跳转到登录页面，则：</p>
+<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
+public String handleReg(User user) {
+	System.out.println(&quot;UserController.handleReg()&quot;);
+	System.out.println(&quot;\t&quot; + user);
+	
+	// 注册成功，重定向到登录页
+	// 当前位置：handle_reg.do
+	// 目标位置：login.do
+	return &quot;redirect:login.do&quot;;
+}
+</code></pre>
+<p>练习：希望通过<code>http://localhost:8080/项目名/index.do</code>访问主页，主页的页面显示内容可以自由定制，当用户尝试登录时，假设一定登录成功，且登录成功后到主页。</p>
+<h3 id="3-转发">3. 转发</h3>
+<h4 id="31-执行转发">3.1. 执行转发</h4>
+<p>当处理请求的方法的返回值是<code>String</code>类型，默认情况下，返回值就表示转发的意思，返回值将经过视图解析器，确定转发到的目标页面。</p>
+<p>转发时，处理请求的方法的返回值也可以使用<code>forward:</code>作为前缀，由于默认就是转发，所以不必显式的添加前缀。</p>
+<h4 id="32-不推荐通过httpservletrequest封装需要转发的数据">3.2. 【不推荐】通过HttpServletRequest封装需要转发的数据</h4>
+<p>假设在登录过程中，仅当用户名为<code>root</code>且密码是<code>1234</code>时允许登录，否则，在错误提示页面中提示错误的原因。</p>
+<p>由于错误信息可能有2种，分别是用户名错误和密码错误，使用JSP页面结合EL表达式可以显示转发的数据，在控制器转发之前，就需要将错误信息封装到<code>HttpServletRequest</code>对象中，则后续JSP页面才可以通过EL表达式读取<code>HttpServletRequest</code>对象中的数据。</p>
+<p>可以在处理请求的方法的参数列表中添加<code>HttpServletRequest</code>类型的参数，当添加多项参数时（既有用户名、密码，又有HttpServletRequest），各参数不必区分先后顺序，当添加了参数后，调用<code>HttpServletRequest</code>参数对象的<code>setAttribute(String name, String value)</code>方法封装需要转发的数据即可，无需获取转发器对象执行转发，只要最后返回字符串就表示转发：</p>
+<pre><code>@RequestMapping(&quot;handle_login.do&quot;)
+public String handleLogin(String username, String password,
+		HttpServletRequest request) {
+	// 日志
+	System.out.println(&quot;UserController.handleLogin()&quot;);
+	
+	// 判断用户名是否正确
+	if (&quot;root&quot;.equals(username)) {
+		// 是：判断密码是否正确
+		if (&quot;1234&quot;.equals(password)) {
+			// 是：登录成功，重定向到主页
+			return &quot;redirect:index.do&quot;;
+		} else {
+			// 否：密码错误
+			request.setAttribute(&quot;errorMessage&quot;, &quot;密码错误&quot;);
+			return &quot;error&quot;;
+		}
+	} else {
+		// 否：用户名错误
+		request.setAttribute(&quot;errorMessage&quot;, &quot;用户名错误&quot;);
+		return &quot;error&quot;;
+	}
+}
+</code></pre>
+<p>当然，这种做法依然是不推荐的，使用了<code>HttpServletRequest</code>作为参数后不便于执行单元测试。</p>
+<h4 id="33-更不推荐使用modelandview">3.3. 【更不推荐】使用ModelAndView</h4>
+<p>使用<code>ModelAndView</code>作为处理请求的方法的返回值类型，在返回结果之前，调用<code>ModelAndView</code>对象的<code>setViewName(String viewName)</code>方法确定转发的视图名称，调用<code>addObject(String name, Object value)</code>方法封装需要转发的数据，然后返回结果即可：</p>
+<pre><code>@RequestMapping(&quot;handle_login.do&quot;)
+public ModelAndView handleLogin(String username, String password) {
+	// 创建返回值对象
+	ModelAndView mav = new ModelAndView();
+	
+	// 判断用户名是否正确
+	if (&quot;root&quot;.equals(username)) {
+		// 是：判断密码是否正确
+		if (&quot;1234&quot;.equals(password)) {
+			// 是：登录成功，重定向到主页
+			return null;
+		} else {
+			// 否：密码错误
+			mav.addObject(&quot;errorMessage&quot;, &quot;ModelAndView：密码错误&quot;);
+			mav.setViewName(&quot;error&quot;);
+			return mav;
+		}
+	} else {
+		// 否：用户名错误
+		mav.addObject(&quot;errorMessage&quot;, &quot;ModelAndView：用户名错误&quot;);
+		mav.setViewName(&quot;error&quot;);
+		return mav;
+	}
+	
+}
+</code></pre>
+<p>因为对于初学SpringMVC的人来说，<code>ModelAndView</code>是一个新的、比较麻烦的数据类型，并且SpringMVC提供了更简单的操作方式，所以不推荐使用<code>ModelAndView</code>。</p>
+<h4 id="34-推荐使用modelmap封装需要转发的数据">3.4. 【推荐】使用ModelMap封装需要转发的数据</h4>
+<p>使用<code>ModelMap</code>的方式与使用<code>HttpServletRequest</code>几乎完全相同：</p>
+<pre><code>@RequestMapping(&quot;handle_login.do&quot;)
+public String handleLogin(String username, String password,
+		ModelMap modelMap) {
+	// 日志
+	System.out.println(&quot;UserController.handleLogin()&quot;);
+	
+	// 判断用户名是否正确
+	if (&quot;root&quot;.equals(username)) {
+		// 是：判断密码是否正确
+		if (&quot;1234&quot;.equals(password)) {
+			// 是：登录成功，重定向到主页
+			return &quot;redirect:index.do&quot;;
+		} else {
+			// 否：密码错误
+			modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：密码错误&quot;);
+			return &quot;error&quot;;
+		}
+	} else {
+		// 否：用户名错误
+		modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：用户名错误&quot;);
+		return &quot;error&quot;;
+	}
+}
+</code></pre>
+<p>相比<code>HttpServletRequest</code>而言，使用<code>ModelMap</code>更加易于实现单元测试，并且更加轻量级，所以，推荐使用这种方式来封装需要转发的数据。</p>
+<p>练习：假设<code>root</code>是已经被注册的用户名，在处理注册时，如果用户提交的用户名是<code>root</code>，则提示错误，否则，视为注册成功，重定向到登录页。</p>
+<h3 id="4-关于requestmapping注解">4. 关于@RequestMapping注解</h3>
+<h4 id="41-基本使用">4.1. 基本使用</h4>
+<p>在处理请求的方法之前添加<code>@RequestMapping</code>，可以配置请求路径与处理请求的方法的映射关系。</p>
+<p>除此以外，还可以在控制器类之前添加该注解，表示增加了访问路径中的层级，例如：</p>
+<pre><code>@Controller 
+@RequestMapping(&quot;user&quot;)
+public class UserController {
+}
+</code></pre>
+<p>添加该注解以后，原本通过<code>login.do</code>访问的请求路径就需要调整为<code>user/login.do</code>才可以访问。</p>
+<p>通常，推荐为每一个控制器类都添加该注解！</p>
+<p>同时在类和方法之前都添加了注解后，最终的访问路径就是类与方法的注解中的路径组合出来的URL。</p>
+<p>在配置路径时，会无视两端的<code>/</code>符号，以下各种配置方式是等效的：</p>
+<pre><code>user	login.do
+/user	/login.do
+user/	login.do
+user	/login.do
+/user/	/login.do
+</code></pre>
+<p>在实际使用时，只要保持语法风格的统一，就是对的，例如整个项目开发过程中，始终使用以上第1种，或者始终使用以上第2种，都是正确的做法。</p>
+<h4 id="42-注解配置">4.2. 注解配置</h4>
+<p>在配置<code>@RequestMapping</code>时，可以显式的配置为：</p>
+<pre><code>@RequestMapping(value=&quot;reg.do&quot;)
+</code></pre>
+<p>关于<code>value</code>属性在注解中的声明是：</p>
+<pre><code>@AliasFor(&quot;path&quot;)
+String[] value() default {};
+</code></pre>
+<p>可以看到，该属性的数据类型是<code>String[]</code>，所以，也可以配置为：</p>
+<pre><code>@RequestMapping(value= {&quot;reg.do&quot;, &quot;register.do&quot;})
+</code></pre>
+<p>则后续无论通过这里的哪个URL都会导致映射的方法被执行。</p>
+<p>在<code>value</code>属性的声明上方还使用了<code>@AliasFor</code>注解，表示<code>value</code>和<code>path</code>是完全等效的！从SpringMVC 4.2版本开始支持使用<code>path</code>属性，并推荐使用<code>path</code>属性取代<code>value</code>属性。</p>
+<p>在使用时，还可以指定<code>method</code>属性，其声明是：</p>
+<pre><code>RequestMethod[] method() default {};
+</code></pre>
+<p>该属性的作用是用于限制请求方式，例如：</p>
+<pre><code>@RequestMapping(path= {&quot;reg.do&quot;, &quot;register.do&quot;}, method=RequestMethod.POST) 
+</code></pre>
+<p>以上代码表示提交的请求必须是POST请求，如果不是，会导致405错误：</p>
+<pre><code>HTTP Status 405 – Method Not Allowed
+</code></pre>
+<p>在没有配置<code>method</code>之前，是不限定请求方式的，如果配置了，则必须使用配置的请求方式中的某一种！</p>
+<p>当为注解配置多个属性时，每一个属性都必须显式的指定属性名称！</p>
+<h3 id="5-关于requestparam注解">5. 关于@RequestParam注解</h3>
+<p>可以在处理请求的方法的参数之前添加<code>@RequestParam</code>注解，首先，使用该注解可以解决名称不一致的问题，即客户端提交的请求参数名称与服务器端处理请求的方法的参数名称不一致的问题，例如：</p>
+<pre><code>@RequestParam(&quot;uname&quot;) String username
+</code></pre>
+<p>如果添加了该注解，仍然存在名称不一致的问题，会导致400错误（如果没有添加该注解，即使名称不一致，服务器端的参数只是null值，并不会报错）：</p>
+<pre><code>HTTP Status 400 – Bad Request
+</code></pre>
+<p>原因在于在该注解的源代码中：</p>
+<pre><code>boolean required() default true;
+</code></pre>
+<p>所以，添加了该注解，默认是必须提交指定名称的参数的！如果希望该请求参数不是必须提交的，可以：</p>
+<pre><code>@RequestParam(name=&quot;uname&quot;, required=false) String username 
+</code></pre>
+<p>另外，该注解中还有：</p>
+<pre><code>String defaultValue() default ValueConstants.DEFAULT_NONE;
+</code></pre>
+<p>该属性用于指定默认值，即客户端没有提交指定名称的参数时，默认为某个值，例如：</p>
+<pre><code>@RequestParam(name=&quot;uname&quot;, required=false, defaultValue=&quot;admin&quot;) String username
+</code></pre>
+<p>注意：在设置默认值时，必须显式的将<code>required</code>属性设置为<code>false</code>。</p>
+<p><strong>小结：在什么时候需要使用该注解？</strong></p>
+<ul>
+<li>
+<p>前后端使用的名称不统一时；</p>
+</li>
+<li>
+<p>强制要求客户端必须提交某参数时；</p>
+</li>
+<li>
+<p>允许客户端不提交某参数，且视为提交了某默认值时；</p>
+</li>
+<li>
+<p>其他固定使用场景。</p>
+</li>
+</ul>
+<h3 id="-">--------------------------</h3>
+<h3 id="附1关于get和post的区别">附1：关于GET和POST的区别</h3>
+<p>GET请求会将请求参数体现在URL中，POST请求会将请求参数封装在请求体中，并不会体现在URL中。</p>
+<p>GET请求不适用于涉及隐私、安全方面的数据，也不适用于传输数据量较大的数据，通常限制值是2K，该值既取决于客户端的浏览器，也取决于服务器端。</p>
+<p>所以，在涉及隐私、安全的数据提交，或者较大数据的提交（特别是上传文件），都应该优先考虑POST方式提交请求。</p>
+<p>由于POST方法将请求参数封装在请求体中，没有体现在URL中，所以，如果涉及URL分享等操作，必须使用GET方式提交请求。</p>
+<p>在发生请求时，如果使用GET请求，将一次性将请求的URL提交到服务器，所以，请求参数也就直接提交到了服务器，如果使用POST请求，会先向服务器提交第1次请求，此次请求并不携带请求参数，当服务器响应100后，客户端发出第2次请求，再将请求参数提交到服务器。所以，GET请求的访问速度比POST请求更快。</p>
+<h3 id="附2关于转发和重定向">附2：关于转发和重定向</h3>
+<p>无论是转发还是重定向，都是客户端请求的第1个目标无法实现请求的响应，需要配合服务器端的其它组件来完成响应！</p>
+<p>转发的原因是因为使用控制器可以处理用户请求，但是，当得到数据结果后，存在不便于显示的问题，毕竟控制器是Java类，不便于组织HTML代码，所以，会将数据结果转发给JSP页面，由JSP页面来完成数据的呈现，当然，JSP也存在不便于处理数据逻辑的问题，即与HTML高度相似的代码结构中不便于编写Java代码，所以，推荐的做法就是控制器负责处理数据，得到数据结果后把这些数据结果转发给JSP，由JSP呈现，整个过程是发生在服务器内部的，对于客户端来说是不可见的，所以，在转发时，客户端只发出了1次请求，请求的URL就是控制器的URL，并且，即使WEB-INF文件夹的内容是不可以被客户端直接访问的，也不影响把JSP放在这个文件夹下。</p>
+<p>重定向是客户端发出第1次请求后，服务器端无法完成最终的响应，所以，只能给出302(通常是302)响应码，让客户端请求另一个URL来完成最终响应，在整个过程中，客户端是发出了2次请求的，同时，客户端也明确第2次的请求目标，所以，在客户端的浏览器中，会显示第2次请求的URL，由于客户端共发出2次请求，所以，在没有经过特殊的处理方式时，第1次请求的数据不可以直接应用到第2次请求中。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/mr1w8BJoq" class="tag">
+                    SpringMVC
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/springmvc-1">
+                  <h3 class="post-title">
+                    SpringMVC-1
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
