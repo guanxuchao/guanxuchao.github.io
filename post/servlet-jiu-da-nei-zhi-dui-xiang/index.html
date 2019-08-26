@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Servlet九大内置对象 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1566833413529">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1566833413529" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Servlet九大内置对象</h2>
+            <div class="post-date">2019-08-17</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/servlet-jiu-da-nei-zhi-dui-xiang.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <table>
+<thead>
+<tr>
+<th style="text-align:left">隐式对象</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">request</td>
+<td style="text-align:left">转译后对应HttpServletRequest/ServletRequest对象</td>
+</tr>
+<tr>
+<td style="text-align:left">response</td>
+<td style="text-align:left">转译后对应HttpServletRespons/ServletResponse对象</td>
+</tr>
+<tr>
+<td style="text-align:left">session</td>
+<td style="text-align:left">转译后对应HttpSession对象</td>
+</tr>
+<tr>
+<td style="text-align:left">application</td>
+<td style="text-align:left">转译后对应ServletContext对象</td>
+</tr>
+<tr>
+<td style="text-align:left">out</td>
+<td style="text-align:left">转译后对应JspWriter对象，其内部关联一个PringWriter对象</td>
+</tr>
+<tr>
+<td style="text-align:left">page</td>
+<td style="text-align:left">转译后对应this</td>
+</tr>
+<tr>
+<td style="text-align:left">config</td>
+<td style="text-align:left">转译后对应ServletConfig对象</td>
+</tr>
+<tr>
+<td style="text-align:left">pageContext</td>
+<td style="text-align:left">转译后对应PageContext对象，它提供了JSP页面资源的封装，并可设置页面范围属性</td>
+</tr>
+<tr>
+<td style="text-align:left">exception</td>
+<td style="text-align:left">转译后对应Throwable对象，代表由其他JSP页面抛出的异常对象，只会出现于JSP错误页面(isErrorPage设置为true的JSP页面)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="jsp隐含变量">Jsp隐含变量</h2>
+<p>1、out 来源于Java.io.Writer类，它用于发送输出流到客户端。<br>
+2、request 来源于javax.servlet.http.HttpServletRequest接口。它被关联到每一个HTTP请求。<br>
+3、response 来源于javax.servlet.http.HttpServletResponse。response对象用于把取得的数据返回到客户端。<br>
+4、pageContext 提供访问JSP页面的命名空间。它也提供用来访问其他的JSP隐含对象。<br>
+5、session 来源于javax.servlet.http.HttpSession。它用于存储客户端请求的信息，因此它是有状态交互式的。<br>
+6、application 来源于javax.servlet.ServletContext。<br>
+7、config 来源于ServletConfig，它包含了当前JSP/Servlet所在的WEB应用的配置信息。<br>
+8、page 来源于当前被访问JSP页面的实例化。它实际使用的是JSP转换成的Servlet。<br>
+9、exception 用于捕获JSP抛出的异常。它只有在JSP页面属性isErrorPage=true时才可用。</p>
+<h2 id="jsp九种内置对象">JSP九种内置对象：</h2>
+<h4 id="一-request对象">一  request对象：</h4>
+<p>该对象封装了用户提交的信息，通过调用该对象相应的方法可以获取封装的信息， 即使用该对象可以获取用户提交信息。 客户端的请求参数都被封装到这个对象里面</p>
+<h4 id="二-response对象">二  response对象：</h4>
+<p>对客户的请求做出动态的响应，向客户端发送数据。</p>
+<h4 id="三-session对象">三  session对象</h4>
+<p>1.什么是session：session对象是一个JSP内置对象，它在第一个JSP页面被装载时自动创建，完成会话期管理。<br>
+从一个客户打开浏览器并连接到服务器开始，到客户关闭浏览器离开这个服务器结束，被称为一个会话。当一个客户访问一个服务器时，可能会在这个服务器的几个页面之间反复连接，反复刷新一个页面，服务器应当通过某种办法知道这是同一个客户，这就需要session对象。<br>
+2．session对象的ID：当一个客户首次访问服务器上的一个JSP页面时，JSP引擎产生一个session对象，同时分配一个String类型的ID号，JSP引擎同时将这个ID号发送到客户端，存放在Cookie中，这样session对象和客户之间就建立了一一对应的关系。当客户再访问连接该服务器的其他页面时，不再分配给客户新的session对象，直到客户关闭浏览器后，服务器端该客户的session对象才取消，并且和客户的会话对应关系消失。当客户重新打开浏览器再连接到该服务器时，服务器为该客户再创建一个新的session对象。</p>
+<h4 id="四-aplication对象">四  aplication对象</h4>
+<p>1．什么是application:<br>
+服务器启动后就产生了这个application对象，当客户在所访问的网站的各个页面之间浏览时，这个application对象都是同一个，直到服务器关闭。但是与session不同的是，所有客户的application对象都是同一个，即所有客户共享这个内置的application对象。<br>
+2．application对象常用方法:<br>
+(1)public void setAttribute(String key,Object obj): 将参数Object指定的对象obj添加到application对象中，并为添加的对象指定一个索引关键字。<br>
+(2)public Object getAttribute(String key): 获取application对象中含有关键字的对象。</p>
+<h4 id="五-out对象">五 out对象</h4>
+<p>out 对象是一个输出流，用来向客户端输出数据。out对象用于各种数据的输出。</p>
+<h4 id="六-page-javalangobject">六  page java.lang.Object</h4>
+<p>对应this关键字。JSP网页本身<br>
+page对象是当前页面转换后的Servlet类的实例。从转换后的Servlet类的代码中，可以看到这种关系：<br>
+Object page = this;<br>
+在JSP页面中，很少使用page对象。</p>
+<h4 id="七-config">七  config</h4>
+<p>javax.servlet. ServletConfig 的实例，该实例代表该JSP 的配置信息。常用的方法有getInitPararneter(String paramNarne) 及getInitPararneternarnes() 等方法。事实上， JSP 页面通常无须配置，也就不存在配置信息。因此，该对象更多地在Servlet 中有效。</p>
+<h4 id="八-exception-javalangthrowable-的实例">八  exception java.lang.Throwable 的实例</h4>
+<p>该实例代表其他页面中的异常和错误。只有当页面是错误处理页面，即编译指令page 的isErrorPage 属性为true 时，该对象才可以使用。常用的方法有getMessageO和printStackTraceO等。</p>
+<h4 id="九-pagecontext">九  pageContext</h4>
+<p>javax.servlet.jsp.PageContext 的实例，对象直译时可以称作“页面上下文”对象，代表的是当前页面运行的一些属性，通过此对象可以拿到其他8大对象，使用该对象可以访问页面中的共享数据。常用的方法有getServletContextO和getServletConfigO等。</p>
+<h2 id="四个作用域request域-session域-application域-page域">四个作用域：request域  session域  application域  page域</h2>
+<h5 id="application">application：</h5>
+<p>全局作用范围，整个应用程序共享，就是在部署文件中的同一个webApp共享，生命周期为：应用程序启动到停止。</p>
+<h5 id="session">session：</h5>
+<p>会话作用域，当用户首次访问时，产生一个新的会话，以后服务器就可以记住这个会话状态。生命周期：会话超时，或者服务器端强制使会话失效。</p>
+<h5 id="request">request：</h5>
+<p>请求作用域，就是客户端的一次请求。</p>
+<h5 id="page">page：</h5>
+<p>一个JSP页面。</p>
+<p>以上作用范围使越来越小， request和page的生命周期都是短暂的，他们之间的区别就是：一个request可以包含多个page页(include，forward以及filter)。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/Pk8bziueb" class="tag">
+                    JSP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/spring-boot-yu-spring-mvc-de-qu-bie">
+                  <h3 class="post-title">
+                    Spring Boot与Spring MVC的区别[转]
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guanxuchao.com/</id>
     <title>Chao&apos;s Blog</title>
-    <updated>2019-08-23T09:26:36.223Z</updated>
+    <updated>2019-08-26T15:31:11.746Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guanxuchao.com/"/>
     <link rel="self" href="https://guanxuchao.com//atom.xml"/>
@@ -11,44 +11,11 @@
     <icon>https://guanxuchao.com//favicon.ico</icon>
     <rights>All rights reserved 2019, Chao&apos;s Blog</rights>
     <entry>
-        <title type="html"><![CDATA[Spring Boot与Spring MVC的区别[转]]]></title>
-        <id>https://guanxuchao.com//post/spring-boot-yu-spring-mvc-de-qu-bie</id>
-        <link href="https://guanxuchao.com//post/spring-boot-yu-spring-mvc-de-qu-bie">
-        </link>
-        <updated>2019-08-11T08:56:30.000Z</updated>
-        <summary type="html"><![CDATA[<p>Spring 框架就像一个家族，有众多衍生产品例如 boot、security、jpa等等。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>Spring 框架就像一个家族，有众多衍生产品例如 boot、security、jpa等等。</p>
-<!-- more -->
-<p>但他们的基础都是Spring 的 ioc和 aop ioc 提供了依赖注入的容器 aop ，解决了面向横切面的编程，然后在此两者的基础上实现了其他延伸产品的高级功能。Spring MVC是基于 Servlet 的一个 MVC 框架 主要解决 WEB 开发的问题，因为 Spring 的配置非常复杂，各种XML、 JavaConfig、hin处理起来比较繁琐。于是为了简化开发者的使用，从而创造性地推出了Spring boot，约定优于配置，简化了spring的配置流程。</p>
-<p>说得更简便一些：Spring 最初利用“工厂模式”（DI）和“代理模式”（AOP）解耦应用组件。大家觉得挺好用，于是按照这种模式搞了一个 MVC框架（一些用Spring 解耦的组件），用开发 web 应用（ SpringMVC ）。然后有发现每次开发都写很多样板代码，为了简化工作流程，于是开发出了一些“懒人整合包”（starter），这套就是 Spring Boot。</p>
-<h3 id="spring-mvc的功能">Spring MVC的功能</h3>
-<pre><code>Spring MVC提供了一种轻度耦合的方式来开发web应用。
-</code></pre>
-<p>Spring MVC是Spring的一个模块，式一个web框架。通过Dispatcher Servlet, ModelAndView 和 View Resolver，开发web应用变得很容易。解决的问题领域是网站应用程序或者服务开发——URL路由、Session、模板引擎、静态Web资源等等。</p>
-<h3 id="spring-boot的功能">Spring Boot的功能</h3>
-<pre><code>Spring Boot实现了自动配置，降低了项目搭建的复杂度。
-</code></pre>
-<p>众所周知Spring框架需要进行大量的配置，Spring Boot引入自动配置的概念，让项目设置变得很容易。Spring Boot本身并不提供Spring框架的核心特性以及扩展功能，只是用于快速、敏捷地开发新一代基于Spring框架的应用程序。也就是说，它并不是用来替代Spring的解决方案，而是和Spring框架紧密结合用于提升Spring开发者体验的工具。同时它集成了大量常用的第三方库配置(例如Jackson, JDBC, Mongo, Redis, Mail等等)，Spring Boot应用中这些第三方库几乎可以零配置的开箱即用(out-of-the-box)，大部分的Spring Boot应用都只需要非常少量的配置代码，开发者能够更加专注于业务逻辑。</p>
-<p>Spring Boot只是承载者，辅助你简化项目搭建过程的。如果承载的是WEB项目，使用Spring MVC作为MVC框架，那么工作流程和你上面描述的是完全一样的，因为这部分工作是Spring MVC做的而不是Spring Boot。</p>
-<p>对使用者来说，换用Spring Boot以后，项目初始化方法变了，配置文件变了，另外就是不需要单独安装Tomcat这类容器服务器了，maven打出jar包直接跑起来就是个网站，但你最核心的业务逻辑实现与业务流程实现没有任何变化。</p>
-<pre><code>所以，用最简练的语言概括就是： 	
-
-Spring 是一个“引擎”； 
-
-Spring MVC 是基于Spring的一个 MVC 框架 ；
-
-Spring Boot 是基于Spring4的条件注册的一套快速开发整合包。
-</code></pre>
-<p><br>链接：https://www.zhihu.com/question/64671972/answer/223383505</p>
-]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[阻塞队列&二叉树]]></title>
         <id>https://guanxuchao.com//post/zu-sai-dui-lie-ander-cha-shu</id>
         <link href="https://guanxuchao.com//post/zu-sai-dui-lie-ander-cha-shu">
         </link>
-        <updated>2019-08-11T07:47:45.000Z</updated>
+        <updated>2019-08-18T07:47:45.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="1生产者-消息者模型与阻塞队列">1.生产者、消息者模型与阻塞队列</h1>
 ]]></summary>
         <content type="html"><![CDATA[<h1 id="1生产者-消息者模型与阻塞队列">1.生产者、消息者模型与阻塞队列</h1>
@@ -123,6 +90,141 @@ Test类(启动Producer线程和Consumer线程)
 	排序二叉树不允许出现重复元素。
 </code></pre>
 <p><img src="https://guanxuchao.com//post-images/1566402603064.png" alt=""></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Servlet九大内置对象]]></title>
+        <id>https://guanxuchao.com//post/servlet-jiu-da-nei-zhi-dui-xiang</id>
+        <link href="https://guanxuchao.com//post/servlet-jiu-da-nei-zhi-dui-xiang">
+        </link>
+        <updated>2019-08-17T15:15:20.000Z</updated>
+        <content type="html"><![CDATA[<table>
+<thead>
+<tr>
+<th style="text-align:left">隐式对象</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">request</td>
+<td style="text-align:left">转译后对应HttpServletRequest/ServletRequest对象</td>
+</tr>
+<tr>
+<td style="text-align:left">response</td>
+<td style="text-align:left">转译后对应HttpServletRespons/ServletResponse对象</td>
+</tr>
+<tr>
+<td style="text-align:left">session</td>
+<td style="text-align:left">转译后对应HttpSession对象</td>
+</tr>
+<tr>
+<td style="text-align:left">application</td>
+<td style="text-align:left">转译后对应ServletContext对象</td>
+</tr>
+<tr>
+<td style="text-align:left">out</td>
+<td style="text-align:left">转译后对应JspWriter对象，其内部关联一个PringWriter对象</td>
+</tr>
+<tr>
+<td style="text-align:left">page</td>
+<td style="text-align:left">转译后对应this</td>
+</tr>
+<tr>
+<td style="text-align:left">config</td>
+<td style="text-align:left">转译后对应ServletConfig对象</td>
+</tr>
+<tr>
+<td style="text-align:left">pageContext</td>
+<td style="text-align:left">转译后对应PageContext对象，它提供了JSP页面资源的封装，并可设置页面范围属性</td>
+</tr>
+<tr>
+<td style="text-align:left">exception</td>
+<td style="text-align:left">转译后对应Throwable对象，代表由其他JSP页面抛出的异常对象，只会出现于JSP错误页面(isErrorPage设置为true的JSP页面)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="jsp隐含变量">Jsp隐含变量</h2>
+<p>1、out 来源于Java.io.Writer类，它用于发送输出流到客户端。<br>
+2、request 来源于javax.servlet.http.HttpServletRequest接口。它被关联到每一个HTTP请求。<br>
+3、response 来源于javax.servlet.http.HttpServletResponse。response对象用于把取得的数据返回到客户端。<br>
+4、pageContext 提供访问JSP页面的命名空间。它也提供用来访问其他的JSP隐含对象。<br>
+5、session 来源于javax.servlet.http.HttpSession。它用于存储客户端请求的信息，因此它是有状态交互式的。<br>
+6、application 来源于javax.servlet.ServletContext。<br>
+7、config 来源于ServletConfig，它包含了当前JSP/Servlet所在的WEB应用的配置信息。<br>
+8、page 来源于当前被访问JSP页面的实例化。它实际使用的是JSP转换成的Servlet。<br>
+9、exception 用于捕获JSP抛出的异常。它只有在JSP页面属性isErrorPage=true时才可用。</p>
+<h2 id="jsp九种内置对象">JSP九种内置对象：</h2>
+<h4 id="一-request对象">一  request对象：</h4>
+<p>该对象封装了用户提交的信息，通过调用该对象相应的方法可以获取封装的信息， 即使用该对象可以获取用户提交信息。 客户端的请求参数都被封装到这个对象里面</p>
+<h4 id="二-response对象">二  response对象：</h4>
+<p>对客户的请求做出动态的响应，向客户端发送数据。</p>
+<h4 id="三-session对象">三  session对象</h4>
+<p>1.什么是session：session对象是一个JSP内置对象，它在第一个JSP页面被装载时自动创建，完成会话期管理。<br>
+从一个客户打开浏览器并连接到服务器开始，到客户关闭浏览器离开这个服务器结束，被称为一个会话。当一个客户访问一个服务器时，可能会在这个服务器的几个页面之间反复连接，反复刷新一个页面，服务器应当通过某种办法知道这是同一个客户，这就需要session对象。<br>
+2．session对象的ID：当一个客户首次访问服务器上的一个JSP页面时，JSP引擎产生一个session对象，同时分配一个String类型的ID号，JSP引擎同时将这个ID号发送到客户端，存放在Cookie中，这样session对象和客户之间就建立了一一对应的关系。当客户再访问连接该服务器的其他页面时，不再分配给客户新的session对象，直到客户关闭浏览器后，服务器端该客户的session对象才取消，并且和客户的会话对应关系消失。当客户重新打开浏览器再连接到该服务器时，服务器为该客户再创建一个新的session对象。</p>
+<h4 id="四-aplication对象">四  aplication对象</h4>
+<p>1．什么是application:<br>
+服务器启动后就产生了这个application对象，当客户在所访问的网站的各个页面之间浏览时，这个application对象都是同一个，直到服务器关闭。但是与session不同的是，所有客户的application对象都是同一个，即所有客户共享这个内置的application对象。<br>
+2．application对象常用方法:<br>
+(1)public void setAttribute(String key,Object obj): 将参数Object指定的对象obj添加到application对象中，并为添加的对象指定一个索引关键字。<br>
+(2)public Object getAttribute(String key): 获取application对象中含有关键字的对象。</p>
+<h4 id="五-out对象">五 out对象</h4>
+<p>out 对象是一个输出流，用来向客户端输出数据。out对象用于各种数据的输出。</p>
+<h4 id="六-page-javalangobject">六  page java.lang.Object</h4>
+<p>对应this关键字。JSP网页本身<br>
+page对象是当前页面转换后的Servlet类的实例。从转换后的Servlet类的代码中，可以看到这种关系：<br>
+Object page = this;<br>
+在JSP页面中，很少使用page对象。</p>
+<h4 id="七-config">七  config</h4>
+<p>javax.servlet. ServletConfig 的实例，该实例代表该JSP 的配置信息。常用的方法有getInitPararneter(String paramNarne) 及getInitPararneternarnes() 等方法。事实上， JSP 页面通常无须配置，也就不存在配置信息。因此，该对象更多地在Servlet 中有效。</p>
+<h4 id="八-exception-javalangthrowable-的实例">八  exception java.lang.Throwable 的实例</h4>
+<p>该实例代表其他页面中的异常和错误。只有当页面是错误处理页面，即编译指令page 的isErrorPage 属性为true 时，该对象才可以使用。常用的方法有getMessageO和printStackTraceO等。</p>
+<h4 id="九-pagecontext">九  pageContext</h4>
+<p>javax.servlet.jsp.PageContext 的实例，对象直译时可以称作“页面上下文”对象，代表的是当前页面运行的一些属性，通过此对象可以拿到其他8大对象，使用该对象可以访问页面中的共享数据。常用的方法有getServletContextO和getServletConfigO等。</p>
+<h2 id="四个作用域request域-session域-application域-page域">四个作用域：request域  session域  application域  page域</h2>
+<h5 id="application">application：</h5>
+<p>全局作用范围，整个应用程序共享，就是在部署文件中的同一个webApp共享，生命周期为：应用程序启动到停止。</p>
+<h5 id="session">session：</h5>
+<p>会话作用域，当用户首次访问时，产生一个新的会话，以后服务器就可以记住这个会话状态。生命周期：会话超时，或者服务器端强制使会话失效。</p>
+<h5 id="request">request：</h5>
+<p>请求作用域，就是客户端的一次请求。</p>
+<h5 id="page">page：</h5>
+<p>一个JSP页面。</p>
+<p>以上作用范围使越来越小， request和page的生命周期都是短暂的，他们之间的区别就是：一个request可以包含多个page页(include，forward以及filter)。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Spring Boot与Spring MVC的区别[转]]]></title>
+        <id>https://guanxuchao.com//post/spring-boot-yu-spring-mvc-de-qu-bie</id>
+        <link href="https://guanxuchao.com//post/spring-boot-yu-spring-mvc-de-qu-bie">
+        </link>
+        <updated>2019-08-11T08:56:30.000Z</updated>
+        <summary type="html"><![CDATA[<p>Spring 框架就像一个家族，有众多衍生产品例如 boot、security、jpa等等。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Spring 框架就像一个家族，有众多衍生产品例如 boot、security、jpa等等。</p>
+<!-- more -->
+<p>但他们的基础都是Spring 的 ioc和 aop ioc 提供了依赖注入的容器 aop ，解决了面向横切面的编程，然后在此两者的基础上实现了其他延伸产品的高级功能。Spring MVC是基于 Servlet 的一个 MVC 框架 主要解决 WEB 开发的问题，因为 Spring 的配置非常复杂，各种XML、 JavaConfig、hin处理起来比较繁琐。于是为了简化开发者的使用，从而创造性地推出了Spring boot，约定优于配置，简化了spring的配置流程。</p>
+<p>说得更简便一些：Spring 最初利用“工厂模式”（DI）和“代理模式”（AOP）解耦应用组件。大家觉得挺好用，于是按照这种模式搞了一个 MVC框架（一些用Spring 解耦的组件），用开发 web 应用（ SpringMVC ）。然后有发现每次开发都写很多样板代码，为了简化工作流程，于是开发出了一些“懒人整合包”（starter），这套就是 Spring Boot。</p>
+<h3 id="spring-mvc的功能">Spring MVC的功能</h3>
+<pre><code>Spring MVC提供了一种轻度耦合的方式来开发web应用。
+</code></pre>
+<p>Spring MVC是Spring的一个模块，式一个web框架。通过Dispatcher Servlet, ModelAndView 和 View Resolver，开发web应用变得很容易。解决的问题领域是网站应用程序或者服务开发——URL路由、Session、模板引擎、静态Web资源等等。</p>
+<h3 id="spring-boot的功能">Spring Boot的功能</h3>
+<pre><code>Spring Boot实现了自动配置，降低了项目搭建的复杂度。
+</code></pre>
+<p>众所周知Spring框架需要进行大量的配置，Spring Boot引入自动配置的概念，让项目设置变得很容易。Spring Boot本身并不提供Spring框架的核心特性以及扩展功能，只是用于快速、敏捷地开发新一代基于Spring框架的应用程序。也就是说，它并不是用来替代Spring的解决方案，而是和Spring框架紧密结合用于提升Spring开发者体验的工具。同时它集成了大量常用的第三方库配置(例如Jackson, JDBC, Mongo, Redis, Mail等等)，Spring Boot应用中这些第三方库几乎可以零配置的开箱即用(out-of-the-box)，大部分的Spring Boot应用都只需要非常少量的配置代码，开发者能够更加专注于业务逻辑。</p>
+<p>Spring Boot只是承载者，辅助你简化项目搭建过程的。如果承载的是WEB项目，使用Spring MVC作为MVC框架，那么工作流程和你上面描述的是完全一样的，因为这部分工作是Spring MVC做的而不是Spring Boot。</p>
+<p>对使用者来说，换用Spring Boot以后，项目初始化方法变了，配置文件变了，另外就是不需要单独安装Tomcat这类容器服务器了，maven打出jar包直接跑起来就是个网站，但你最核心的业务逻辑实现与业务流程实现没有任何变化。</p>
+<pre><code>所以，用最简练的语言概括就是： 	
+
+Spring 是一个“引擎”； 
+
+Spring MVC 是基于Spring的一个 MVC 框架 ；
+
+Spring Boot 是基于Spring4的条件注册的一套快速开发整合包。
+</code></pre>
+<p><br>链接：https://www.zhihu.com/question/64671972/answer/223383505</p>
 ]]></content>
     </entry>
     <entry>
@@ -1810,174 +1912,6 @@ String[] value() default {};
 <p>无论是转发还是重定向，都是客户端请求的第1个目标无法实现请求的响应，需要配合服务器端的其它组件来完成响应！</p>
 <p>转发的原因是因为使用控制器可以处理用户请求，但是，当得到数据结果后，存在不便于显示的问题，毕竟控制器是Java类，不便于组织HTML代码，所以，会将数据结果转发给JSP页面，由JSP页面来完成数据的呈现，当然，JSP也存在不便于处理数据逻辑的问题，即与HTML高度相似的代码结构中不便于编写Java代码，所以，推荐的做法就是控制器负责处理数据，得到数据结果后把这些数据结果转发给JSP，由JSP呈现，整个过程是发生在服务器内部的，对于客户端来说是不可见的，所以，在转发时，客户端只发出了1次请求，请求的URL就是控制器的URL，并且，即使WEB-INF文件夹的内容是不可以被客户端直接访问的，也不影响把JSP放在这个文件夹下。</p>
 <p>重定向是客户端发出第1次请求后，服务器端无法完成最终的响应，所以，只能给出302(通常是302)响应码，让客户端请求另一个URL来完成最终响应，在整个过程中，客户端是发出了2次请求的，同时，客户端也明确第2次的请求目标，所以，在客户端的浏览器中，会显示第2次请求的URL，由于客户端共发出2次请求，所以，在没有经过特殊的处理方式时，第1次请求的数据不可以直接应用到第2次请求中。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringMVC-1]]></title>
-        <id>https://guanxuchao.com//post/springmvc-1</id>
-        <link href="https://guanxuchao.com//post/springmvc-1">
-        </link>
-        <updated>2019-07-19T06:56:02.000Z</updated>
-        <summary type="html"><![CDATA[<h3 id="1-springmvc的作用">1. SpringMVC的作用</h3>
-<p>SpringMVC主要解决了View-Controller交互的问题。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h3 id="1-springmvc的作用">1. SpringMVC的作用</h3>
-<p>SpringMVC主要解决了View-Controller交互的问题。</p>
-<!-- more -->
-<p>传统的<code>Controller</code>具体表现为一个个的<code>Servlet</code>类，在一个普通的项目中，需要实现的功能至少有50个以上，假设是50个，则项目中就需要创建50个<code>Servlet</code>类去处理这50个功能对应的请求，在<strong>web.xml</strong>中每个<code>Servlet</code>类至少需要8行代码进行配置，则共计需要400行代码进行配置（当然，JavaEE允许通过注解的方式进行配置），如果是一个更加复杂的系统，就会导致：<code>Servlet</code>实例过多，类文件太多，配置文件太长，所导致的代码开发难度和维护难度大的问题。另外，还存在<code>Servlet</code>或其它Java EE中的API功能较弱的问题。</p>
-<h3 id="2-springmvc中的核心组件">2. SpringMVC中的核心组件</h3>
-<ul>
-<li>
-<p><code>DispatcherServlet</code>：前端控制器，用于接收所有请求，并进行分发；</p>
-</li>
-<li>
-<p><code>HandlerMapping</code>：记录了请求路径与实际处理请求的控制器之间的对应关系；</p>
-</li>
-<li>
-<p><code>Controller</code>：实际处理请求的控制器；</p>
-</li>
-<li>
-<p><code>ModelAndView</code>：控制器的处理结果，其中<code>Model</code>表示处理请求时得到的即将响应给客户端数据，<code>View</code>表示负责响应时显示的视图的名称；</p>
-</li>
-<li>
-<p><code>ViewResolver</code>：根据视图的名称，确定视图组件。</p>
-</li>
-</ul>
-<p><img src="01.png" alt=""></p>
-<h3 id="3-springmvc-helloworld">3. SpringMVC HelloWorld</h3>
-<h4 id="31-案例目标">3.1. 案例目标</h4>
-<p>在浏览器中，通过<code>http://localhost:8080/项目名称/hello.do</code>进行访问，页面中将显示“Hello, SpringMVC!!!”字样。</p>
-<h4 id="32-创建项目">3.2. 创建项目</h4>
-<p>创建<strong>Maven Project</strong>，勾选<strong>Create a simple project</strong>，<strong>Group Id</strong>为<code>cn.tedu.spring</code>，<strong>Artifact Id</strong>为<code>SPRINGMVC-01</code>，<strong>Packaging</strong>必须选择<code>war</code>。</p>
-<p>创建完成后，先生成<strong>web.xml</strong>；从前序项目中复制<strong>spring-webmvc</strong>依赖；复制Spring的配置文件到新项目中，删除原有配置；添加Tomcat运行环境。</p>
-<h4 id="33-通过dispatcherservlet接收所有请求">3.3. 通过DispatcherServlet接收所有请求</h4>
-<p>SpringMVC中已经定义好了<code>DispatcherSerlvet</code>类，如果需要该<code>Servlet</code>能够接收并处理请求，首先，就需要在<strong>web.xml</strong>中进行配置：</p>
-<pre><code>&lt;servlet&gt;
-	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
-	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
-&lt;/servlet&gt;
-
-&lt;servlet-mapping&gt;
-	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
-	&lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;
-</code></pre>
-<blockquote>
-<p>在配置时，如果不明确<code>DispatcherServlet</code>的包名，可以随意创建某个Java类，在类中声明该<code>Servlet</code>，由Eclipse完成导包，则<code>import</code>语句中就有了该类的全名。</p>
-</blockquote>
-<p>至此，<code>DispatcherServlet</code>就可以接收所有以<code>.do</code>为后缀的请求。</p>
-<p>默认情况下，所有的<code>Servlet</code>都是第一次接收并处理请求时才完成的初始化操作，并且，SpringMVC框架是基于Spring框架基础之上的，在项目启动初期，就应该加载整个Spring环境，以保证SpringMVC框架能正常运行！所以，可以通过配置去实现：当启动Tomcat时，就直接初始化<code>DispatcherServlet</code>，在<code>DispatcherServlet</code>中，已经定义了某个属性，值是Spring配置文件的位置，当<code>DispatcherServlet</code>被初始化时，就会读取该配置文件！</p>
-<p>在配置时，可以通过<code>&lt;load-on-startup&gt;</code>使得<code>DispatcherServlet</code>是默认直接初始化的！</p>
-<p>在<code>DispatcherServlet</code>的父类<code>FrameworkServlet</code>中，有<code>contextConfigLocation</code>属性，其作用就是制定Spring配置文件的位置，一旦创建了<code>DispatcherServlet</code>对象，就会自动读取所配置的文件，以加载Spring的环境！则配置为：</p>
-<pre><code>&lt;init-param&gt;
-	&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-	&lt;param-value&gt;classpath:spring.xml&lt;/param-value&gt;
-&lt;/init-param&gt;
-</code></pre>
-<p>至此，关于<code>DispatcherServlet</code>的完整配置：</p>
-<pre><code>&lt;servlet&gt;
-	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
-	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
-	&lt;init-param&gt;
-		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-		&lt;param-value&gt;classpath:spring.xml&lt;/param-value&gt;
-	&lt;/init-param&gt;
-	&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
-&lt;/servlet&gt;
-
-&lt;servlet-mapping&gt;
-	&lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;
-	&lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;
-</code></pre>
-<p>以上配置实现的效果就是：当Tomcat启动时，就会创建<code>DispatcherServlet</code>的对象，并且，<code>DispatcherServlet</code>会读取所配置的<code>spring.xml</code>文件，以加载Spring环境，后续，<code>DispatcherServlet</code>将接收所有以<code>.do</code>为后缀的请求！</p>
-<p>如果需要验证现在的配置结果，可以自定义<code>cn.tedu.spring.User</code>类，然后，在类中显式的定义构造方法：</p>
-<pre><code>public class User {
-	public User() {
-		System.out.println(&quot;创建了User的对象！&quot;);
-	}
-}
-</code></pre>
-<p>然后在Spring的配置文件中进行配置：</p>
-<pre><code>&lt;bean class=&quot;cn.tedu.spring.User&quot; /&gt;
-</code></pre>
-<p>由于Tomcat启动时就会初始化<code>DispatcherServlet</code>，进而加载Spring配置文件，就会由Spring框架创建<code>User</code>对象，导致构造方法被执行，所以，当启动Tomcat时，就会看到构造方法中输出的内容！</p>
-<h4 id="34-使用控制器接收请求">3.4. 使用控制器接收请求</h4>
-<p>首先创建<code>cn.tedu.spring.HelloController</code>控制器类，在类之前添加<code>@Controller</code>注解：</p>
-<pre><code>package cn.tedu.spring;
-
-import org.springframework.stereotype.Controller;
-
-@Controller
-public class HelloController {
-
-}
-</code></pre>
-<p>然后，需要在Spring的配置文件设置组件扫描：</p>
-<pre><code>&lt;!-- 组件扫描 --&gt;
-&lt;context:component-scan base-package=&quot;cn.tedu.spring&quot; /&gt;
-</code></pre>
-<p>然后，在控制类中添加处理请求的方法，方法的设计原则是：</p>
-<ol>
-<li>
-<p>应该使用<code>public</code>权限；</p>
-</li>
-<li>
-<p>暂时使用<code>String</code>作为返回值类型；</p>
-</li>
-<li>
-<p>方法名称自由定义；</p>
-</li>
-<li>
-<p>方法中暂时不添加参数。</p>
-</li>
-</ol>
-<p>所以，可以将方法设计为：</p>
-<pre><code>public String showHello() {
-	return null;
-}
-</code></pre>
-<p>然后，在方法之前添加<code>@RequestMapping</code>注解，用于配置请求路径，以确定请求路径与处理请求的方法的对应关系：</p>
-<pre><code>@RequestMapping(&quot;hello.do&quot;)
-public String showHello() {
-	return null;
-}
-</code></pre>
-<p>所以，可以在方法中加入一段测试代码：</p>
-<pre><code>@RequestMapping(&quot;hello.do&quot;)
-public String showHello() {
-	System.out.println(&quot;HelloController.showHello()&quot;);
-	return null;
-}
-</code></pre>
-<p>然后，打开浏览器，输入<code>http://localhost:8080/SPRINGMVC-01/hello.do</code>，在浏览器中会提示404错误，因为目前尚未处理页面，在Eclipse的控制台应该可以看到以上输出的内容！每访问一次，就会出现1次输出语句！</p>
-<h4 id="35-响应页面">3.5. 响应页面</h4>
-<p>处理请求的方法的参数是<code>String</code>类型时，默认表示响应给客户端的视图的名称，后续，会经过<code>ViewResolver</code>进行处理，得到具体的视图。</p>
-<p>首先，应该创建jsp页面，例如在<strong>WEB-INF</strong>下创建<strong>index.jsp</strong>文件，页面内容随意，例如显示“Hello, SpringMVC!!!”字样。</p>
-<p>然后，需要设计处理请求的方法的返回值，并配置<code>ViewResolver</code>！<code>ViewResolver</code>是一个接口，具体使用的实现类是<code>InternalResourceViewResolver</code>，需要在Spring的配置文件中配置它的<code>prefix</code>和<code>suffix</code>属性，分别表示“前缀”和“后缀”，<code>InternalResourceViewResolver</code>的工作模式是以<strong>webapp</strong>文件夹为根路径，将“前缀 + 处理请求的方法的返回值 + 后缀”得到具体的JSP文件的位置，刚才创建的JSP文件在<strong>webapp/WEB-INF/index.jsp</strong>，则可以：</p>
-<pre><code>/WEB-INF/	+	index	+	.jsp
-
-&quot;&quot;	+	/WEB-INF/index.jsp	+	&quot;&quot;
-</code></pre>
-<p>还可以是其他组合方式，只要能组合出文件的路径都是正确的，可以在处理请求的方法中返回<code>&quot;index&quot;</code>，然后配置为：</p>
-<pre><code>&lt;!-- 视图解析器 --&gt;
-&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
-	&lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/&quot; /&gt;
-	&lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;
-&lt;/bean&gt;
-</code></pre>
-<p>至此，开发完成，可以再次测试访问。</p>
-<h3 id="-">--------------------------</h3>
-<h3 id="附1tomcat启动失败的解决方案">附1：Tomcat启动失败的解决方案</h3>
-<p>首先，如果启动时，弹出对话框，对话框中提示了端口号，多是因为端口号冲突，例如此前已经启动了Tomcat却没有关闭，仍再次启动，就会出现冲突。如果要解决问题，可以先停止此前占用端口的程序，例如在Eclipse找到停止按钮，或者在Tomcat的bin目录下执行shutdown指令，如果不知道如何，可以重启电脑！</p>
-<p>如果启动过程中报告异常信息，提示<code>ClassNotFoundException</code>或者<code>FileNotFoundException</code>，就检查对应的类是否存在，如果提示的类是依赖的jar包中的类，可能是jar包文件已经损坏，需要重新下载(可以删除.m2中的jar包或者更换版本)。</p>
-<p>如果启动过程中报告的异常信息是<code>ZipException</code>，一定是某个jar包损坏，则检查最近添加的依赖的jar包并重新下载。</p>
-<p>如果启动过程中报告的异常信息是<code>LifeCycleException</code>，通常是由于缓存问题导致的，则需要Clean项目及Tomcat。</p>
-<p>如果把项目和Tomcat都Clean了仍错误，可以在<strong>Servers</strong>面板中删除现有的Tomcat，同时删除名为<strong>Servers</strong>的项目，然后重新添加Tomcat。</p>
-<p>如果问题依然存在，则继续删除Tomcat，添加时，添加其他Tomcat。</p>
-<h3 id="附2spring配置文件没有提示的解决方案">附2：Spring配置文件没有提示的解决方案</h3>
-<p>参考：http://doc.canglaoshi.org/schema.html</p>
-<p><img src="https://guanxuchao.com//post-images/1563894080926.png" alt=""></p>
 ]]></content>
     </entry>
 </feed>
