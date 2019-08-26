@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guanxuchao.com/</id>
     <title>Chao&apos;s Blog</title>
-    <updated>2019-08-26T15:31:11.746Z</updated>
+    <updated>2019-08-26T15:52:19.719Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guanxuchao.com/"/>
     <link rel="self" href="https://guanxuchao.com//atom.xml"/>
@@ -183,13 +183,13 @@ Object page = this;<br>
 <h4 id="九-pagecontext">九  pageContext</h4>
 <p>javax.servlet.jsp.PageContext 的实例，对象直译时可以称作“页面上下文”对象，代表的是当前页面运行的一些属性，通过此对象可以拿到其他8大对象，使用该对象可以访问页面中的共享数据。常用的方法有getServletContextO和getServletConfigO等。</p>
 <h2 id="四个作用域request域-session域-application域-page域">四个作用域：request域  session域  application域  page域</h2>
-<h5 id="application">application：</h5>
+<h4 id="application">application：</h4>
 <p>全局作用范围，整个应用程序共享，就是在部署文件中的同一个webApp共享，生命周期为：应用程序启动到停止。</p>
-<h5 id="session">session：</h5>
+<h4 id="session">session：</h4>
 <p>会话作用域，当用户首次访问时，产生一个新的会话，以后服务器就可以记住这个会话状态。生命周期：会话超时，或者服务器端强制使会话失效。</p>
-<h5 id="request">request：</h5>
+<h4 id="request">request：</h4>
 <p>请求作用域，就是客户端的一次请求。</p>
-<h5 id="page">page：</h5>
+<h4 id="page">page：</h4>
 <p>一个JSP页面。</p>
 <p>以上作用范围使越来越小， request和page的生命周期都是短暂的，他们之间的区别就是：一个request可以包含多个page页(include，forward以及filter)。</p>
 ]]></content>
