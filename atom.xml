@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guanxuchao.com/</id>
     <title>Chao&apos;s Blog</title>
-    <updated>2019-10-16T02:30:53.119Z</updated>
+    <updated>2019-10-16T03:12:17.707Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guanxuchao.com/"/>
     <link rel="self" href="https://guanxuchao.com//atom.xml"/>
@@ -184,19 +184,19 @@
 <h4 id="运算符">运算符</h4>
 <ol>
 <li><strong>算数运算符:</strong><br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<img src="https://guanxuchao.com//post-images/1571195274275.jpg" alt=""></li>
 <li><strong>赋值运算符:</strong><br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<img src="https://guanxuchao.com//post-images/1571195313239.jpg" alt=""></li>
 <li><strong>字符串运算符:</strong><br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<img src="https://guanxuchao.com//post-images/1571195322387.jpg" alt=""></li>
 <li><strong>递增/递减运算符:</strong><br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E9%80%92%E5%A2%9E%E9%80%92%E5%87%8F%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<img src="https://guanxuchao.com//post-images/1571195331668.jpg" alt=""></li>
 <li><strong>比较运算符:</strong><br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<img src="https://guanxuchao.com//post-images/1571195344246.jpg" alt=""></li>
 <li><strong>逻辑运算符:</strong><br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<img src="https://guanxuchao.com//post-images/1571195355838.jpg" alt=""></li>
 <li><strong>数组运算符:</strong><br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E6%95%B0%E7%BB%84%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<img src="https://guanxuchao.com//post-images/1571195362828.jpg" alt=""></li>
 </ol>
 </li>
 <li>
@@ -314,7 +314,7 @@
 <li><strong>索引数组</strong> - 带有数字索引的数组
 <ol>
 <li>有两种创建索引数组的方法：
-<ol start="2">
+<ol>
 <li>索引自动分配（索引从0开始）
 <ol>
 <li><code>$cars=array(&quot;porsche&quot;,&quot;BMW&quot;,&quot;Volvo&quot;);</code></li>
@@ -415,9 +415,8 @@
 </li>
 <li><strong>$_SERVER：</strong>
 <ol>
-<li><span class='katex-error' title='ParseError: KaTeX parse error: Undefined control sequence: \Java at position 51: …r&gt;
-![avatar](D:\̲J̲a̲v̲a̲\Blog\图片\PHP\ph…'>_SERVER 这种超全局变量保存关于报头、路径和脚本位置的信息。&lt;br&gt;
-![avatar](D:\Java\Blog\图片\PHP\php</span>_SERVER函数.jpg)</li>
+<li>$_SERVER 这种超全局变量保存关于报头、路径和脚本位置的信息。<br><br>
+<img src="https://guanxuchao.com//post-images/1571195392541.jpg" alt=""></li>
 </ol>
 </li>
 <li><strong>$_REQUEST：</strong>
@@ -451,16 +450,16 @@
 <p><strong>一个简单的 HTML 表单:</strong></p>
 <ol>
 <li>下面的例子显示了一个简单的 HTML 表单，它包含两个输入字段和一个提交按钮：<br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E8%A1%A8%E5%8D%95post.jpg" alt="avatar"><br><br>
+<img src="https://guanxuchao.com//post-images/1571195429149.jpg" alt=""><br><br>
 当用户填写此表单并点击提交按钮后，表单数据会发送到名为 &quot;welcome.php&quot; 的 PHP 文件供处理。表单数据是通过 HTTP POST 方法发送的。<br><br>
 如需显示出被提交的数据，您可以简单地输出（echo）所有变量。&quot;welcome.php&quot; 文件是这样的：<br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphppost%E8%A1%A8%E5%8D%95.jpg" alt="avatar"><br><br>
+<img src="https://guanxuchao.com//post-images/1571195459828.jpg" alt=""><br><br>
 输出：<br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E8%A1%A8%E5%8D%95%E8%BE%93%E5%87%BA.jpg" alt="avatar"><br><br>
+<img src="https://guanxuchao.com//post-images/1571195481676.jpg" alt=""><br><br>
 使用 HTTP GET 方法也能得到相同的结果：<br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E8%A1%A8%E5%8D%95get.jpg" alt="avatar"><br><br>
+<img src="https://guanxuchao.com//post-images/1571195497976.jpg" alt=""><br><br>
 &quot;welcome_get.php&quot; 是这样的：<br><br>
-<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphpget%E8%A1%A8%E5%8D%95.jpg" alt="avatar"><br></li>
+<img src="https://guanxuchao.com//post-images/1571195506897.jpg" alt=""><br></li>
 <li><strong>上面的代码很简单。不过，最重要的内容被漏掉了。需要对表单数据进行验证，以防止脚本出现漏洞。</strong></li>
 </ol>
 </li>
@@ -522,21 +521,21 @@
 消费者线程会阻塞。
 阻塞队列一般都解决了线程安全问题。
 </code></pre>
-<p><img src="https://guanxuchao.com//post-images/1566402565227.png" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://guanxuchao.com//post-images/1566402565227.png" alt=""></figure>
 <h2 id="5生产者-消费者模型的经典使用场合">(5)生产者、消费者模型的经典使用场合</h2>
 <pre><code>a.订单处理
 	订单信息先写入到阻塞队列，然后消息者
 	线程从阻塞队列中取出数据，写到数据库。
 b.应用服务器设计(用于任务的分派)
 </code></pre>
-<p><img src="https://guanxuchao.com//post-images/1566402579830.png" alt=""></p>
+<figure data-type="image" tabindex="2"><img src="https://guanxuchao.com//post-images/1566402579830.png" alt=""></figure>
 <pre><code>c.日志
 	可以让生产者线程将日志信息先写入阻塞
 	队列，然后让消息者线程从阻塞队列当中取
 	出日志信息，然后写入数据库。　
 </code></pre>
 <h2 id="6经典案例日志处理">(6)经典案例(日志处理)</h2>
-<p><img src="https://guanxuchao.com//post-images/1566402586852.png" alt=""></p>
+<figure data-type="image" tabindex="3"><img src="https://guanxuchao.com//post-images/1566402586852.png" alt=""></figure>
 <h2 id="7相关的接口与类">(7)相关的接口与类</h2>
 <pre><code>BlockingQueue接口
 	注：该接口继承Queue接口。
@@ -565,7 +564,7 @@ Test类(启动Producer线程和Consumer线程)
 注：
 	这两棵子树一般称之为左子树和右子树。
 </code></pre>
-<p><img src="https://guanxuchao.com//post-images/1566402676075.png" alt=""></p>
+<figure data-type="image" tabindex="4"><img src="https://guanxuchao.com//post-images/1566402676075.png" alt=""></figure>
 <h2 id="2排序二叉树搜索二叉树">(2)排序二叉树(搜索二叉树)</h2>
 <pre><code>任意一个节点，其左子树上的节点值比该节点的
 值小，其右子树上的节点值比该节点的值要大。
@@ -573,7 +572,7 @@ Test类(启动Producer线程和Consumer线程)
 注：
 	排序二叉树不允许出现重复元素。
 </code></pre>
-<p><img src="https://guanxuchao.com//post-images/1566402603064.png" alt=""></p>
+<figure data-type="image" tabindex="5"><img src="https://guanxuchao.com//post-images/1566402603064.png" alt=""></figure>
 ]]></content>
     </entry>
     <entry>
@@ -734,7 +733,7 @@ Spring Boot 是基于Spring4的条件注册的一套快速开发整合包。
 	如果最后一个节点与第一个节点也通过指针
 连接起来，称之为双向循环链表。
 </code></pre>
-<p><img src="https://guanxuchao.com//post-images/1565882087342.png" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://guanxuchao.com//post-images/1565882087342.png" alt=""></figure>
 <h1 id="2链表跟数组相比优缺点是什么">2.链表跟数组相比，优缺点是什么?</h1>
 <pre><code>数组的优点:
 	依据下标可以非常快速的找到某个元素。

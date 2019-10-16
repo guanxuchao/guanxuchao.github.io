@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1571193050347">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1571195525195">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
 
@@ -39,7 +39,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://guanxuchao.com/">
-        <img src="https://guanxuchao.com//images/avatar.png?v=1571193050347" class="site-logo">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1571195525195" class="site-logo">
         <h1 class="site-title">Chao&#39;s Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -128,21 +128,21 @@
 消费者线程会阻塞。
 阻塞队列一般都解决了线程安全问题。
 </code></pre>
-<p><img src="https://guanxuchao.com//post-images/1566402565227.png" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://guanxuchao.com//post-images/1566402565227.png" alt=""></figure>
 <h2 id="5生产者-消费者模型的经典使用场合">(5)生产者、消费者模型的经典使用场合</h2>
 <pre><code>a.订单处理
 	订单信息先写入到阻塞队列，然后消息者
 	线程从阻塞队列中取出数据，写到数据库。
 b.应用服务器设计(用于任务的分派)
 </code></pre>
-<p><img src="https://guanxuchao.com//post-images/1566402579830.png" alt=""></p>
+<figure data-type="image" tabindex="2"><img src="https://guanxuchao.com//post-images/1566402579830.png" alt=""></figure>
 <pre><code>c.日志
 	可以让生产者线程将日志信息先写入阻塞
 	队列，然后让消息者线程从阻塞队列当中取
 	出日志信息，然后写入数据库。　
 </code></pre>
 <h2 id="6经典案例日志处理">(6)经典案例(日志处理)</h2>
-<p><img src="https://guanxuchao.com//post-images/1566402586852.png" alt=""></p>
+<figure data-type="image" tabindex="3"><img src="https://guanxuchao.com//post-images/1566402586852.png" alt=""></figure>
 <h2 id="7相关的接口与类">(7)相关的接口与类</h2>
 <pre><code>BlockingQueue接口
 	注：该接口继承Queue接口。
@@ -171,7 +171,7 @@ Test类(启动Producer线程和Consumer线程)
 注：
 	这两棵子树一般称之为左子树和右子树。
 </code></pre>
-<p><img src="https://guanxuchao.com//post-images/1566402676075.png" alt=""></p>
+<figure data-type="image" tabindex="4"><img src="https://guanxuchao.com//post-images/1566402676075.png" alt=""></figure>
 <h2 id="2排序二叉树搜索二叉树">(2)排序二叉树(搜索二叉树)</h2>
 <pre><code>任意一个节点，其左子树上的节点值比该节点的
 值小，其右子树上的节点值比该节点的值要大。
@@ -179,7 +179,7 @@ Test类(启动Producer线程和Consumer线程)
 注：
 	排序二叉树不允许出现重复元素。
 </code></pre>
-<p><img src="https://guanxuchao.com//post-images/1566402603064.png" alt=""></p>
+<figure data-type="image" tabindex="5"><img src="https://guanxuchao.com//post-images/1566402603064.png" alt=""></figure>
 
             </div>
             
