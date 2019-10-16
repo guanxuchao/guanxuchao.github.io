@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guanxuchao.com/</id>
     <title>Chao&apos;s Blog</title>
-    <updated>2019-10-11T07:02:02.326Z</updated>
+    <updated>2019-10-16T02:29:13.237Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guanxuchao.com/"/>
     <link rel="self" href="https://guanxuchao.com//atom.xml"/>
@@ -10,6 +10,271 @@
     <logo>https://guanxuchao.com//images/avatar.png</logo>
     <icon>https://guanxuchao.com//favicon.ico</icon>
     <rights>All rights reserved 2019, Chao&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[PHP学习]]></title>
+        <id>https://guanxuchao.com//post/php-xue-xi</id>
+        <link href="https://guanxuchao.com//post/php-xue-xi">
+        </link>
+        <updated>2019-10-16T02:24:29.000Z</updated>
+        <summary type="html"><![CDATA[<ol>
+<li>
+<h2 id="php基础">PHP基础</h2>
+<ol>
+<li>
+<h4 id="变量规则">变量规则</h4>
+<ol>
+<li>变量以 $ 符号开头，其后是变量的名称</li>
+<li>变量名称必须以字母或下划线开头</li>
+<li>变量名称不能以数字开头</li>
+<li>变量名称只能包含字母数字字符和下划线（A-z、0-9 以及 _）</li>
+<li>变量名称对大小写敏感（$y 与 $Y 是两个不同的变量）</li>
+<li>PHP 没有创建变量的命令，变量会在首次为其赋值时被创建
+<ol>
+<li>PHP 是一门类型松散的语言，我们不必告知 PHP 变量的数据类型；PHP 根据它的值，自动把变量转换为正确的数据类型；在诸如 C 和 C++ 以及 Java 之类的语言中，程序员必须在使用变量之前声明它的名称和类型。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+]]></summary>
+        <content type="html"><![CDATA[<ol>
+<li>
+<h2 id="php基础">PHP基础</h2>
+<ol>
+<li>
+<h4 id="变量规则">变量规则</h4>
+<ol>
+<li>变量以 $ 符号开头，其后是变量的名称</li>
+<li>变量名称必须以字母或下划线开头</li>
+<li>变量名称不能以数字开头</li>
+<li>变量名称只能包含字母数字字符和下划线（A-z、0-9 以及 _）</li>
+<li>变量名称对大小写敏感（$y 与 $Y 是两个不同的变量）</li>
+<li>PHP 没有创建变量的命令，变量会在首次为其赋值时被创建
+<ol>
+<li>PHP 是一门类型松散的语言，我们不必告知 PHP 变量的数据类型；PHP 根据它的值，自动把变量转换为正确的数据类型；在诸如 C 和 C++ 以及 Java 之类的语言中，程序员必须在使用变量之前声明它的名称和类型。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<!-- more -->
+<pre><code>1. #### 变量作用域
+	1. 在 PHP 中，可以在脚本的任意位置对变量进行声明，变量的作用域指的是变量能够被引用/使用的那部分脚本。
+	2. PHP 有三种不同的变量作用域：
+		1. **local（局部）**
+			1. 函数内部声明的变量拥有 LOCAL 作用域，只能在函数内部进行访问
+		2. **global（全局）**
+			1. 函数之外声明的变量拥有 Global 作用域，只能在函数以外进行访问
+		3. **static（静态）**
+			1. 通常，当函数完成/执行后，会删除所有变量。不过，有时我需要不删除某个局部变量。实现这一点需要更进一步的工作；要完成这一点，请在您首次声明变量时使用 static 关键词
+
+1. #### echo 和 print 语句
+	1. **echo 和 print 之间的差异**
+		1. echo - 能够输出一个以上的字符串。
+		2. print - 只能输出一个字符串，并始终返回 1。
+		3. echo 比 print 稍快，因为它不返回任何值。
+	1. **echo 语句:**
+		1.  echo 是一个语言结构，有无括号均可使用：echo 或 echo()。
+	1. **print 语句:**
+		1. print 也是语言结构，有无括号均可使用：print 或 print()。	
+
+1. #### 数据类型
+	1. **字符串:**
+		1. 字符串是字符序列，比如 &quot;Hello world!&quot;;字符串可以是引号内的任何文本。您可以使用单引号或双引号
+	1. **整数:**
+		1. 整数是没有小数的数字。
+		1. 整数必须有至少一个数字（0-9）
+		2. 整数不能包含逗号或空格
+		3. 整数不能有小数点
+		4. 整数正负均可
+		5. 可以用三种格式规定整数：十进制、十六进制（前缀是 0x）或八进制（前缀是 0）
+		6. **var_dump()** 会返回变量的数据类型和值
+	1. **浮点数：**
+		1. 浮点数是有小数点或指数形式的数字。
+	1. **逻辑：**
+		1. 逻辑是 true 或 false。
+	1. **数组：**
+		1. 数组在一个变量中存储多个值。
+	1. **NULL 值：**
+		1. 特殊的 NULL 值表示变量无值。NULL 是数据类型 NULL 唯一可能的值。
+		2. NULL 值标示变量是否为空。也用于区分空字符串与空值数据库。
+		3. 可以通过把值设置为 NULL，将变量清空。
+1. #### 字符串函数：
+	1. **strlen() 函数：**
+		1. strlen() 函数返回字符串的长度，以字符计。	
+		1. strlen() 常用于循环和其他函数，在确定字符串何时结束很重要时。（例如，在循环中，我们也许需要在字符串的最后一个字符之后停止循环）。
+	1. **对字符串中的单词计数：**
+		1. str_word_count() 函数对字符串中的单词进行计数（空格相隔）
+	1. **反转字符串：**
+		1. strrev() 函数反转字符串
+	1. **strpos() 函数：**
+		1. strpos() 函数用于检索字符串内指定的字符或文本。
+		2. 如果找到匹配，则会返回首个匹配的字符位置。如果未找到匹配，则将返回 FALSE。
+	3. **替换字符串中的文本：**
+		1. str_replace() 函数用一些字符串替换字符串中的另一些字符。
+1. #### 常量
+	1. **常量：**
+		1. 常量是单个值的标识符（名称）。在脚本中无法改变该值。
+		2. 有效的常量名以字符或下划线开头（常量名称前面没有 $ 符号）。
+		3. 与变量不同，**常量贯穿整个脚本**是**自动全局**的。
+	4. **设置常量：**
+		1. 如需设置常量，请使用 define() 函数 - 它使用三个参数：
+			1. 首个参数定义常量的名称
+			2. 第二个参数定义常量的值
+			3. 可选的第三个参数规定常量名是否对大小写不敏感。默认是 false。
+1. #### 运算符
+	1. **算数运算符:**&lt;br&gt;
+		![avatar](D:\Java\Blog\图片\PHP\php算数运算符.jpg)
+	1. **赋值运算符:**&lt;br&gt;
+		![avatar](D:\Java\Blog\图片\PHP\php赋值运算符.jpg)
+	1. **字符串运算符:**&lt;br&gt;
+	 	![avatar](D:\Java\Blog\图片\PHP\php字符串运算符.jpg)
+	1. **递增/递减运算符:**&lt;br&gt;
+		![avatar](D:\Java\Blog\图片\PHP\php递增递减运算符.jpg)
+	1. **比较运算符:**&lt;br&gt;
+		![avatar](D:\Java\Blog\图片\PHP\php比较运算符.jpg)
+	1. **逻辑运算符:**&lt;br&gt;
+		![avatar](D:\Java\Blog\图片\PHP\php逻辑运算符.jpg)
+	1. **数组运算符:**&lt;br&gt;
+		![avatar](D:\Java\Blog\图片\PHP\php数组运算符.jpg)
+
+1. #### 条件语句
+	1. **if 语句** - 如果指定条件为真，则执行代码
+		1. if 语句用于**在指定条件为 true 时**执行代码。
+	2. **if...else 语句** - 如果条件为 true，则执行代码；如果条件为 false，则执行另一端代码
+		1. if....else 语句**在条件为 true 时执行代码，在条件为 false 时执行另一段代码**。
+	3. **if...elseif....else 语句** - 根据两个以上的条件执行不同的代码块
+		1. if....elseif...else 语句来**根据两个以上的条件执行不同的代码**。
+	4. **switch 语句** - 选择多个代码块之一来执行
+		1. 当希望**有选择地执行若干代码块之一**，请使用 Switch 语句。
+		2. 使用 Switch 语句可以避免冗长的 if..elseif..else 代码块。
+1. #### 循环	
+	1. **while:**- 只要指定条件为真，则循环代码块
+		1. `while (条件为真) {要执行的代码;}`
+	2. **do...while:** - 先执行一次代码块，然后只要指定条件为真则重复循环
+		1. `do {要执行的代码;} while (条件为真);`
+	3. **for:** - 循环代码块指定次数
+		1. `for (init counter; test counter; increment counter) {code to be executed;}`
+			1. init counter：初始化循环计数器的值
+			2. test counter：: 评估每个循环迭代。如果值为 TRUE，继续循环。如果它的值为 FALSE，循环结束。
+			3. increment counter：增加循环计数器的值
+	4. **for each:**- 遍历数组中的每个元素并循环代码块
+		1. foreach 循环只适用于**数组**，并用于遍历数组中的每个键/值对。
+		2. `foreach ($array as $value) {code to be executed;}`
+1. ### 函数
+	1.  PHP 的真正力量来自它的函数：它拥有超过 1000 个内建的函数。
+	2.  **用户定义函数**
+		1.  除了内建的 PHP 函数，我们可以创建我们自己的函数。
+		2.  函数是可以在程序中重复使用的语句块。
+		3.  页面加载时函数不会立即执行。
+		4.  函数只有在被调用时才会执行。
+	5.  **创建用户定义函数：**
+		1.  用户定义的函数声明以单词 &quot;function&quot; 开头：
+			1.  `function functionName() {被执行的代码;}`
+		2.  函数名能够以字母或下划线开头（而非数字）。
+		3.  函数名对大小写不敏感。
+		4.  函数名应该能够反映函数所执行的任务。
+		5.  如需调用该函数，只要使用函数名即可
+	6.  **函数参数：**
+		1.  可以通过参数向函数传递信息。参数类似变量。
+		2.  参数被定义在函数名之后，括号内部。您可以添加任意多参数，只要用逗号隔开即可。
+	3.  **默认参数值：**
+		1.  可以给参数设置默认值，当调用没有参数的函数时，它的参数会取默认值
+	2.  **函数 - 返回值：**
+		1.  如需使函数返回值，可以使用 return 语句
+2. ### 数组
+	1. 数组能够在单独的变量名中存储一个或多个值。数组是特殊的变量，它可以同时保存一个以上的值。
+	2. **创建数组:**
+		1. 在 PHP 中， array() 函数用于创建数组：
+	2. **数组类型：**
+		1. **索引数组** - 带有数字索引的数组
+			1. 有两种创建索引数组的方法：
+				2. 索引自动分配（索引从0开始）
+					1. `$cars=array(&quot;porsche&quot;,&quot;BMW&quot;,&quot;Volvo&quot;);`
+				3. 手动分配索引
+					1. `$cars[0]=&quot;porsche&quot;;$cars[1]=&quot;BMW&quot;;$cars[2]=&quot;Volvo&quot;;`
+			2. 获得数组的长度 - count() 函数
+				1. count(数组名) 函数用于返回数组的长度（元素数）
+			2. 遍历索引数组
+				1. 利用for循环和 count()函数 遍历数组
+		2. **关联数组** - 带有指定键的数组
+			1. 关联数组是使用您分配给数组的指定键的数组。(类似于key value)
+			2. 有两种创建关联数组的方法：
+				1. `$age=array(&quot;Bill&quot;=&gt;&quot;35&quot;,&quot;Steve&quot;=&gt;&quot;37&quot;,&quot;Elon&quot;=&gt;&quot;43&quot;);`	
+				2. `$age['Bill']=&quot;63&quot;;$age['Steve']=&quot;56&quot;;$age['Elon']=&quot;47&quot;;`
+			3. 遍历关联数组
+				1. 利用 foreach 循环：
+				2. `$age=array(&quot;Bill&quot;=&gt;&quot;63&quot;,&quot;Steve&quot;=&gt;&quot;56&quot;,&quot;Elon&quot;=&gt;&quot;47&quot;);`&lt;br&gt;`foreach($age as $x=&gt;$x_value) {echo &quot;Key=&quot; . $x . &quot;, Value=&quot; . $x_value;echo &quot;&lt;br&gt;&quot;;}`
+		3. **多维数组** - 包含一个或多个数组的数组
+4.  #### 数组排序
+	1.  **数组的排序函数：**
+		1.  **对数组进行升序排序 - sort()：**
+			1.  **sort(数组名)：**可按照字母和数字进行升序(A-Z,0-9)
+		2.  **对数组进行降序排序 - rsort()：**
+			1.  **rsort(数组名)：**可按照字母和数字进行升序(Z-A,9-0)
+		3.  **根据值对数组进行升序排序 - asort()：**
+			1.  **asort(数组名)：**根据值的大小对关联数组进行升序排序
+		4.  **根据键对数组进行升序排序 - ksort()：**
+			1.  **ksort(数组名)：**根据键的字母顺序对关联数组进行升序排序
+		5.  **根据值对数组进行降序排序 - arsort()：**
+			1.  **arsort(数组名)：**根据值的大小对关联数组进行降序排序
+		6.  **根据键对数组进行降序排序 - krsort()：**
+			1.  **krsort(数组名)：**根据键的字母顺序对关联数组进行降序排序
+
+2.  #### 全局变量 - 超全局变量 
+	1.  超全局变量在 PHP 4.1.0 中引入，是在全部作用域中始终可用的内置变量。
+	1.  **全局变量 - 超全局变量：**
+		1.  PHP 中的许多预定义变量都是“超全局的”，这意味着它们在一个脚本的全部作用域中都可用。在函数或方法中无需执行 global $variable; 就可以访问它们。
+		2.  **$GLOBALS — 引用全局作用域中可用的全部变量：**
+			1.  $GLOBALS 这种全局变量用于在 PHP 脚本中的任意位置访问全局变量（从函数或方法中均可）。
+			2.  PHP 在名为 $GLOBALS[index] 的数组中存储了所有全局变量。变量的名字就是数组的键。
+		3.  **$_SERVER：**
+			1.  $_SERVER 这种超全局变量保存关于报头、路径和脚本位置的信息。&lt;br&gt;
+				![avatar](D:\Java\Blog\图片\PHP\php$_SERVER函数.jpg)
+		4.  **$_REQUEST：**
+			1.  $_REQUEST 用于收集 HTML 表单提交的数据。
+		5.  **$_POST：**
+			1.  $_POST 广泛用于收集提交 method=&quot;post&quot; 的 HTML 表单后的表单数据。$_POST 也常用于传递变量。
+		6.  **$_GET：**
+			1.  $_GET 也可用于收集提交 HTML 表单 (method=&quot;get&quot;) 之后的表单数据。
+			2.  $_GET 也可以收集 URL 中的发送的数据。
+		7.  **：**
+		8.  **：**
+		9.  **：**
+		10.  **：**
+11.  #### 表单处理
+	1.  **一个简单的 HTML 表单:**
+		1.  下面的例子显示了一个简单的 HTML 表单，它包含两个输入字段和一个提交按钮：&lt;br&gt;
+			![avatar](D:\Java\Blog\图片\PHP\php表单post.jpg)&lt;br&gt;
+		当用户填写此表单并点击提交按钮后，表单数据会发送到名为 &quot;welcome.php&quot; 的 PHP 文件供处理。表单数据是通过 HTTP POST 方法发送的。&lt;br&gt;
+		如需显示出被提交的数据，您可以简单地输出（echo）所有变量。&quot;welcome.php&quot; 文件是这样的：&lt;br&gt;
+			![avatar](D:\Java\Blog\图片\PHP\phppost表单.jpg)&lt;br&gt;
+		输出：&lt;br&gt;
+			![avatar](D:\Java\Blog\图片\PHP\php表单输出.jpg)&lt;br&gt;
+		使用 HTTP GET 方法也能得到相同的结果：&lt;br&gt;
+			![avatar](D:\Java\Blog\图片\PHP\php表单get.jpg)&lt;br&gt;
+		&quot;welcome_get.php&quot; 是这样的：&lt;br&gt;
+			![avatar](D:\Java\Blog\图片\PHP\phpget表单.jpg)&lt;br&gt;
+		1. **上面的代码很简单。不过，最重要的内容被漏掉了。需要对表单数据进行验证，以防止脚本出现漏洞。**
+	2.  **GET vs. POST:**
+		1.  GET 和 POST 都创建数组（例如，array( key =&gt; value, key2 =&gt; value2, key3 =&gt; value3, ...)）。此数组包含键/值对，其中的键是表单控件的名称，而值是来自用户的输入数据。
+		2.  GET 和 POST 被视作 $_GET 和 $_POST。它们是超全局变量，这意味着对它们的访问无需考虑作用域 - 无需任何特殊代码，您能够从任何函数、类或文件访问它们。
+		3.  $_GET 是通过 URL 参数传递到当前脚本的变量数组。
+		4.  $_POST 是通过 HTTP POST 传递到当前脚本的变量数组。
+	3.  **何时使用 GET？:**
+		1.  通过 GET 方法从表单发送的信息**对任何人都是可见的**（所有变量名和值都显示在 URL 中）。GET 对所发送信息的数量也有限制。限制在大约 2000 个字符。不过，由于变量显示在 URL 中，把页面添加到书签中也更为方便。
+		2.  GET 可用于发送非敏感的数据。
+		3.  **绝不能使用 GET 来发送密码或其他敏感信息！**
+	4.  **何时使用 POST？:**
+		1.  通过 POST 方法从表单发送的信息**对其他人是不可见的**（所有名称/值会被嵌入 HTTP 请求的主体中），并且对所发送信息的数量也**无限制**。
+		2.  此外 POST 支持高阶功能，比如在向服务器上传文件时进行 multi-part 二进制输入。
+		3.  不过，由于变量未显示在 URL 中，也就无法将页面添加到书签。</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[阻塞队列&二叉树]]></title>
         <id>https://guanxuchao.com//post/zu-sai-dui-lie-ander-cha-shu</id>
@@ -1631,287 +1896,6 @@ public String handleException(Throwable ex, HttpServletRequest request) {
 <p>通常，UTF-8分为常用版本(utf8mb3)和包括了不常用字符的版本(utf8mb4)，一般默认指的是常用版本。</p>
 <p>当然，除了UTF-8以外，还有其它的编码格式，例如GBK、GB2312、ISO-8859-1、latin1等，不同的编码格式的编码规范是不相同的，甚至有些编码格式并不支持中文！所以，如果发出和接收使用的是不同的编码，甚至使用了不支持中文的编码，就会导致无法解读，进而出现乱码！</p>
 <p>所以，乱码问题都是由于“使用的编码不统一”所导致的，而解决方案就是“使用统一的编码”，在项目中，常见的需要指定编码的位置有：项目的源代码、网络传输和接收的编码、界面、其它网络连接、数据库等存储位置……可以简单的理解为：只要能够指定编码的位置，统统指定同一种编码，就不会出现乱码，如果没有指定，就可能出现乱码。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringMVC-2]]></title>
-        <id>https://guanxuchao.com//post/springmvc-2</id>
-        <link href="https://guanxuchao.com//post/springmvc-2">
-        </link>
-        <updated>2019-07-20T07:01:07.000Z</updated>
-        <summary type="html"><![CDATA[<h3 id="1-接收请求参数">1. 接收请求参数</h3>
-]]></summary>
-        <content type="html"><![CDATA[<h3 id="1-接收请求参数">1. 接收请求参数</h3>
-<!-- more -->
-<h4 id="11-不推荐通过httpservletrequest获取请求参数">1.1. 【不推荐】通过HttpServletRequest获取请求参数</h4>
-<p>可以在处理请求的方法中，添加<code>HttpServletRequest</code>类型的参数，在处理过程中，调用该参数对象的<code>String getParameter(String name)</code>就可以获取请求参数，例如：</p>
-<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
-public String handleReg(HttpServletRequest request) {
-	System.out.println(&quot;UserController.handleReg()&quot;);
-	String username = request.getParameter(&quot;username&quot;);
-	String password = request.getParameter(&quot;password&quot;);
-	Integer age = Integer.valueOf(request.getParameter(&quot;age&quot;));
-	String phone = request.getParameter(&quot;phone&quot;);
-	String email = request.getParameter(&quot;email&quot;);
-	
-	System.out.println(&quot;\tusenrame=&quot; + username);
-	System.out.println(&quot;\tpassword=&quot; + password);
-	System.out.println(&quot;\tage=&quot; + age);
-	System.out.println(&quot;\tphone=&quot; + phone);
-	System.out.println(&quot;\temail=&quot; + email);
-	return null;
-}
-</code></pre>
-<p>通常，并不推荐使用这种做法！主要原因有：</p>
-<ul>
-<li>
-<p>使用比较繁琐，代码量较多；</p>
-</li>
-<li>
-<p>需要手动实现数据类型的转换；</p>
-</li>
-<li>
-<p>不便于实现单元测试。</p>
-</li>
-</ul>
-<h4 id="12-推荐将请求参数设计为处理请求的方法的参数">1.2. 【推荐】将请求参数设计为处理请求的方法的参数</h4>
-<p>假设客户端将提交名为<code>username</code>的参数，则在控制器的方法中添加同名参数即可，参数的类型可以是期望的数据类型，例如期望<code>age</code>是<code>Integer</code>类型的，则声明为<code>Integer age</code>即可：</p>
-<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
-public String handleReg(String username, String password, 
-		Integer age, String phone, String email) {
-	System.out.println(&quot;UserController.handleReg()&quot;);
-	System.out.println(&quot;\t[2]username=&quot; + username);
-	System.out.println(&quot;\t[2]password=&quot; + password);
-	System.out.println(&quot;\t[2]age=&quot; + age);
-	System.out.println(&quot;\t[2]phone=&quot; + phone);
-	System.out.println(&quot;\t[2]email=&quot; + email);
-	return null;
-}
-</code></pre>
-<p>使用这种做法时，需要保证参数的名称与客户端提交的请求参数名称保持一致，否则，在控制器中的参数将是<code>null</code>值。</p>
-<p>使用这种做法的优点很多，基本上解决了使用<code>HttpServletRequest</code>获取参数时的所有问题！</p>
-<p>使用这种做法并不适用于请求参数的数量较多的应用场景！</p>
-<h4 id="13-推荐使用封装的类型接收较多的请求参数">1.3. 【推荐】使用封装的类型接收较多的请求参数</h4>
-<p>当客户端提交的请求参数较多时，可以将这些参数全部封装为1个自定义的数据类型，例如：</p>
-<pre><code>public class User {
-
-	private String username;
-	private String password;
-	private Integer age;
-	private String phone;
-	private String email;
-	
-	// SET/GET
-}
-</code></pre>
-<p>然后，将该类型作为处理请求的方法的参数即可：</p>
-<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
-public String handleReg(User user) {
-	System.out.println(&quot;UserController.handleReg()&quot;);
-	System.out.println(&quot;\t&quot; + user);
-	return null;
-}
-</code></pre>
-<p>在使用这种做法时，需要保证客户端提交的请求参数，与自定义的数据类型中的属性名称是保持一致的！</p>
-<h4 id="14-小结">1.4. 小结</h4>
-<p>第1种使用<code>HttpServletRequest</code>的方式是不会再使用的。</p>
-<p>如果请求参数的数量较少，且从业务功能来说参数的数量基本固定，推荐使用第2种方式，即直接将请求参数逐一的设计在处理请求的方法中，否则，就使用第3种方式，将多个参数封装成1个自定义的数据类型。</p>
-<p>另外，第2种方式和第3种方式是可以组合使用的，即出现在同一个处理请求的方法中！</p>
-<h3 id="2-重定向">2. 重定向</h3>
-<p>当处理请求的方法的返回值是<code>String</code>类型的，则返回的字符串使用<code>redirect:</code>作为前缀，加上重定向的目标路径，就可以实现重定向的效果。</p>
-<p>假设注册一定成功，且注册成功后需要跳转到登录页面，则：</p>
-<pre><code>@RequestMapping(&quot;handle_reg.do&quot;)
-public String handleReg(User user) {
-	System.out.println(&quot;UserController.handleReg()&quot;);
-	System.out.println(&quot;\t&quot; + user);
-	
-	// 注册成功，重定向到登录页
-	// 当前位置：handle_reg.do
-	// 目标位置：login.do
-	return &quot;redirect:login.do&quot;;
-}
-</code></pre>
-<p>练习：希望通过<code>http://localhost:8080/项目名/index.do</code>访问主页，主页的页面显示内容可以自由定制，当用户尝试登录时，假设一定登录成功，且登录成功后到主页。</p>
-<h3 id="3-转发">3. 转发</h3>
-<h4 id="31-执行转发">3.1. 执行转发</h4>
-<p>当处理请求的方法的返回值是<code>String</code>类型，默认情况下，返回值就表示转发的意思，返回值将经过视图解析器，确定转发到的目标页面。</p>
-<p>转发时，处理请求的方法的返回值也可以使用<code>forward:</code>作为前缀，由于默认就是转发，所以不必显式的添加前缀。</p>
-<h4 id="32-不推荐通过httpservletrequest封装需要转发的数据">3.2. 【不推荐】通过HttpServletRequest封装需要转发的数据</h4>
-<p>假设在登录过程中，仅当用户名为<code>root</code>且密码是<code>1234</code>时允许登录，否则，在错误提示页面中提示错误的原因。</p>
-<p>由于错误信息可能有2种，分别是用户名错误和密码错误，使用JSP页面结合EL表达式可以显示转发的数据，在控制器转发之前，就需要将错误信息封装到<code>HttpServletRequest</code>对象中，则后续JSP页面才可以通过EL表达式读取<code>HttpServletRequest</code>对象中的数据。</p>
-<p>可以在处理请求的方法的参数列表中添加<code>HttpServletRequest</code>类型的参数，当添加多项参数时（既有用户名、密码，又有HttpServletRequest），各参数不必区分先后顺序，当添加了参数后，调用<code>HttpServletRequest</code>参数对象的<code>setAttribute(String name, String value)</code>方法封装需要转发的数据即可，无需获取转发器对象执行转发，只要最后返回字符串就表示转发：</p>
-<pre><code>@RequestMapping(&quot;handle_login.do&quot;)
-public String handleLogin(String username, String password,
-		HttpServletRequest request) {
-	// 日志
-	System.out.println(&quot;UserController.handleLogin()&quot;);
-	
-	// 判断用户名是否正确
-	if (&quot;root&quot;.equals(username)) {
-		// 是：判断密码是否正确
-		if (&quot;1234&quot;.equals(password)) {
-			// 是：登录成功，重定向到主页
-			return &quot;redirect:index.do&quot;;
-		} else {
-			// 否：密码错误
-			request.setAttribute(&quot;errorMessage&quot;, &quot;密码错误&quot;);
-			return &quot;error&quot;;
-		}
-	} else {
-		// 否：用户名错误
-		request.setAttribute(&quot;errorMessage&quot;, &quot;用户名错误&quot;);
-		return &quot;error&quot;;
-	}
-}
-</code></pre>
-<p>当然，这种做法依然是不推荐的，使用了<code>HttpServletRequest</code>作为参数后不便于执行单元测试。</p>
-<h4 id="33-更不推荐使用modelandview">3.3. 【更不推荐】使用ModelAndView</h4>
-<p>使用<code>ModelAndView</code>作为处理请求的方法的返回值类型，在返回结果之前，调用<code>ModelAndView</code>对象的<code>setViewName(String viewName)</code>方法确定转发的视图名称，调用<code>addObject(String name, Object value)</code>方法封装需要转发的数据，然后返回结果即可：</p>
-<pre><code>@RequestMapping(&quot;handle_login.do&quot;)
-public ModelAndView handleLogin(String username, String password) {
-	// 创建返回值对象
-	ModelAndView mav = new ModelAndView();
-	
-	// 判断用户名是否正确
-	if (&quot;root&quot;.equals(username)) {
-		// 是：判断密码是否正确
-		if (&quot;1234&quot;.equals(password)) {
-			// 是：登录成功，重定向到主页
-			return null;
-		} else {
-			// 否：密码错误
-			mav.addObject(&quot;errorMessage&quot;, &quot;ModelAndView：密码错误&quot;);
-			mav.setViewName(&quot;error&quot;);
-			return mav;
-		}
-	} else {
-		// 否：用户名错误
-		mav.addObject(&quot;errorMessage&quot;, &quot;ModelAndView：用户名错误&quot;);
-		mav.setViewName(&quot;error&quot;);
-		return mav;
-	}
-	
-}
-</code></pre>
-<p>因为对于初学SpringMVC的人来说，<code>ModelAndView</code>是一个新的、比较麻烦的数据类型，并且SpringMVC提供了更简单的操作方式，所以不推荐使用<code>ModelAndView</code>。</p>
-<h4 id="34-推荐使用modelmap封装需要转发的数据">3.4. 【推荐】使用ModelMap封装需要转发的数据</h4>
-<p>使用<code>ModelMap</code>的方式与使用<code>HttpServletRequest</code>几乎完全相同：</p>
-<pre><code>@RequestMapping(&quot;handle_login.do&quot;)
-public String handleLogin(String username, String password,
-		ModelMap modelMap) {
-	// 日志
-	System.out.println(&quot;UserController.handleLogin()&quot;);
-	
-	// 判断用户名是否正确
-	if (&quot;root&quot;.equals(username)) {
-		// 是：判断密码是否正确
-		if (&quot;1234&quot;.equals(password)) {
-			// 是：登录成功，重定向到主页
-			return &quot;redirect:index.do&quot;;
-		} else {
-			// 否：密码错误
-			modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：密码错误&quot;);
-			return &quot;error&quot;;
-		}
-	} else {
-		// 否：用户名错误
-		modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：用户名错误&quot;);
-		return &quot;error&quot;;
-	}
-}
-</code></pre>
-<p>相比<code>HttpServletRequest</code>而言，使用<code>ModelMap</code>更加易于实现单元测试，并且更加轻量级，所以，推荐使用这种方式来封装需要转发的数据。</p>
-<p>练习：假设<code>root</code>是已经被注册的用户名，在处理注册时，如果用户提交的用户名是<code>root</code>，则提示错误，否则，视为注册成功，重定向到登录页。</p>
-<h3 id="4-关于requestmapping注解">4. 关于@RequestMapping注解</h3>
-<h4 id="41-基本使用">4.1. 基本使用</h4>
-<p>在处理请求的方法之前添加<code>@RequestMapping</code>，可以配置请求路径与处理请求的方法的映射关系。</p>
-<p>除此以外，还可以在控制器类之前添加该注解，表示增加了访问路径中的层级，例如：</p>
-<pre><code>@Controller 
-@RequestMapping(&quot;user&quot;)
-public class UserController {
-}
-</code></pre>
-<p>添加该注解以后，原本通过<code>login.do</code>访问的请求路径就需要调整为<code>user/login.do</code>才可以访问。</p>
-<p>通常，推荐为每一个控制器类都添加该注解！</p>
-<p>同时在类和方法之前都添加了注解后，最终的访问路径就是类与方法的注解中的路径组合出来的URL。</p>
-<p>在配置路径时，会无视两端的<code>/</code>符号，以下各种配置方式是等效的：</p>
-<pre><code>user	login.do
-/user	/login.do
-user/	login.do
-user	/login.do
-/user/	/login.do
-</code></pre>
-<p>在实际使用时，只要保持语法风格的统一，就是对的，例如整个项目开发过程中，始终使用以上第1种，或者始终使用以上第2种，都是正确的做法。</p>
-<h4 id="42-注解配置">4.2. 注解配置</h4>
-<p>在配置<code>@RequestMapping</code>时，可以显式的配置为：</p>
-<pre><code>@RequestMapping(value=&quot;reg.do&quot;)
-</code></pre>
-<p>关于<code>value</code>属性在注解中的声明是：</p>
-<pre><code>@AliasFor(&quot;path&quot;)
-String[] value() default {};
-</code></pre>
-<p>可以看到，该属性的数据类型是<code>String[]</code>，所以，也可以配置为：</p>
-<pre><code>@RequestMapping(value= {&quot;reg.do&quot;, &quot;register.do&quot;})
-</code></pre>
-<p>则后续无论通过这里的哪个URL都会导致映射的方法被执行。</p>
-<p>在<code>value</code>属性的声明上方还使用了<code>@AliasFor</code>注解，表示<code>value</code>和<code>path</code>是完全等效的！从SpringMVC 4.2版本开始支持使用<code>path</code>属性，并推荐使用<code>path</code>属性取代<code>value</code>属性。</p>
-<p>在使用时，还可以指定<code>method</code>属性，其声明是：</p>
-<pre><code>RequestMethod[] method() default {};
-</code></pre>
-<p>该属性的作用是用于限制请求方式，例如：</p>
-<pre><code>@RequestMapping(path= {&quot;reg.do&quot;, &quot;register.do&quot;}, method=RequestMethod.POST) 
-</code></pre>
-<p>以上代码表示提交的请求必须是POST请求，如果不是，会导致405错误：</p>
-<pre><code>HTTP Status 405 – Method Not Allowed
-</code></pre>
-<p>在没有配置<code>method</code>之前，是不限定请求方式的，如果配置了，则必须使用配置的请求方式中的某一种！</p>
-<p>当为注解配置多个属性时，每一个属性都必须显式的指定属性名称！</p>
-<h3 id="5-关于requestparam注解">5. 关于@RequestParam注解</h3>
-<p>可以在处理请求的方法的参数之前添加<code>@RequestParam</code>注解，首先，使用该注解可以解决名称不一致的问题，即客户端提交的请求参数名称与服务器端处理请求的方法的参数名称不一致的问题，例如：</p>
-<pre><code>@RequestParam(&quot;uname&quot;) String username
-</code></pre>
-<p>如果添加了该注解，仍然存在名称不一致的问题，会导致400错误（如果没有添加该注解，即使名称不一致，服务器端的参数只是null值，并不会报错）：</p>
-<pre><code>HTTP Status 400 – Bad Request
-</code></pre>
-<p>原因在于在该注解的源代码中：</p>
-<pre><code>boolean required() default true;
-</code></pre>
-<p>所以，添加了该注解，默认是必须提交指定名称的参数的！如果希望该请求参数不是必须提交的，可以：</p>
-<pre><code>@RequestParam(name=&quot;uname&quot;, required=false) String username 
-</code></pre>
-<p>另外，该注解中还有：</p>
-<pre><code>String defaultValue() default ValueConstants.DEFAULT_NONE;
-</code></pre>
-<p>该属性用于指定默认值，即客户端没有提交指定名称的参数时，默认为某个值，例如：</p>
-<pre><code>@RequestParam(name=&quot;uname&quot;, required=false, defaultValue=&quot;admin&quot;) String username
-</code></pre>
-<p>注意：在设置默认值时，必须显式的将<code>required</code>属性设置为<code>false</code>。</p>
-<p><strong>小结：在什么时候需要使用该注解？</strong></p>
-<ul>
-<li>
-<p>前后端使用的名称不统一时；</p>
-</li>
-<li>
-<p>强制要求客户端必须提交某参数时；</p>
-</li>
-<li>
-<p>允许客户端不提交某参数，且视为提交了某默认值时；</p>
-</li>
-<li>
-<p>其他固定使用场景。</p>
-</li>
-</ul>
-<h3 id="-">--------------------------</h3>
-<h3 id="附1关于get和post的区别">附1：关于GET和POST的区别</h3>
-<p>GET请求会将请求参数体现在URL中，POST请求会将请求参数封装在请求体中，并不会体现在URL中。</p>
-<p>GET请求不适用于涉及隐私、安全方面的数据，也不适用于传输数据量较大的数据，通常限制值是2K，该值既取决于客户端的浏览器，也取决于服务器端。</p>
-<p>所以，在涉及隐私、安全的数据提交，或者较大数据的提交（特别是上传文件），都应该优先考虑POST方式提交请求。</p>
-<p>由于POST方法将请求参数封装在请求体中，没有体现在URL中，所以，如果涉及URL分享等操作，必须使用GET方式提交请求。</p>
-<p>在发生请求时，如果使用GET请求，将一次性将请求的URL提交到服务器，所以，请求参数也就直接提交到了服务器，如果使用POST请求，会先向服务器提交第1次请求，此次请求并不携带请求参数，当服务器响应100后，客户端发出第2次请求，再将请求参数提交到服务器。所以，GET请求的访问速度比POST请求更快。</p>
-<h3 id="附2关于转发和重定向">附2：关于转发和重定向</h3>
-<p>无论是转发还是重定向，都是客户端请求的第1个目标无法实现请求的响应，需要配合服务器端的其它组件来完成响应！</p>
-<p>转发的原因是因为使用控制器可以处理用户请求，但是，当得到数据结果后，存在不便于显示的问题，毕竟控制器是Java类，不便于组织HTML代码，所以，会将数据结果转发给JSP页面，由JSP页面来完成数据的呈现，当然，JSP也存在不便于处理数据逻辑的问题，即与HTML高度相似的代码结构中不便于编写Java代码，所以，推荐的做法就是控制器负责处理数据，得到数据结果后把这些数据结果转发给JSP，由JSP呈现，整个过程是发生在服务器内部的，对于客户端来说是不可见的，所以，在转发时，客户端只发出了1次请求，请求的URL就是控制器的URL，并且，即使WEB-INF文件夹的内容是不可以被客户端直接访问的，也不影响把JSP放在这个文件夹下。</p>
-<p>重定向是客户端发出第1次请求后，服务器端无法完成最终的响应，所以，只能给出302(通常是302)响应码，让客户端请求另一个URL来完成最终响应，在整个过程中，客户端是发出了2次请求的，同时，客户端也明确第2次的请求目标，所以，在客户端的浏览器中，会显示第2次请求的URL，由于客户端共发出2次请求，所以，在没有经过特殊的处理方式时，第1次请求的数据不可以直接应用到第2次请求中。</p>
 ]]></content>
     </entry>
 </feed>
