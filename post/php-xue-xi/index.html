@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1571192949573">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1571193036058">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
 
@@ -39,7 +39,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://guanxuchao.com/">
-        <img src="https://guanxuchao.com//images/avatar.png?v=1571192949573" class="site-logo">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1571193036058" class="site-logo">
         <h1 class="site-title">Chao&#39;s Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -127,221 +127,463 @@
 </li>
 </ol>
 </li>
+<li>
+<h4 id="变量作用域">变量作用域</h4>
+<ol>
+<li>在 PHP 中，可以在脚本的任意位置对变量进行声明，变量的作用域指的是变量能够被引用/使用的那部分脚本。</li>
+<li>PHP 有三种不同的变量作用域：
+<ol>
+<li><strong>local（局部）</strong>
+<ol>
+<li>函数内部声明的变量拥有 LOCAL 作用域，只能在函数内部进行访问</li>
+</ol>
+</li>
+<li><strong>global（全局）</strong>
+<ol>
+<li>函数之外声明的变量拥有 Global 作用域，只能在函数以外进行访问</li>
+</ol>
+</li>
+<li><strong>static（静态）</strong>
+<ol>
+<li>通常，当函数完成/执行后，会删除所有变量。不过，有时我需要不删除某个局部变量。实现这一点需要更进一步的工作；要完成这一点，请在您首次声明变量时使用 static 关键词</li>
 </ol>
 </li>
 </ol>
-<!-- more -->
-<pre><code>1. #### 变量作用域
-	1. 在 PHP 中，可以在脚本的任意位置对变量进行声明，变量的作用域指的是变量能够被引用/使用的那部分脚本。
-	2. PHP 有三种不同的变量作用域：
-		1. **local（局部）**
-			1. 函数内部声明的变量拥有 LOCAL 作用域，只能在函数内部进行访问
-		2. **global（全局）**
-			1. 函数之外声明的变量拥有 Global 作用域，只能在函数以外进行访问
-		3. **static（静态）**
-			1. 通常，当函数完成/执行后，会删除所有变量。不过，有时我需要不删除某个局部变量。实现这一点需要更进一步的工作；要完成这一点，请在您首次声明变量时使用 static 关键词
-
-1. #### echo 和 print 语句
-	1. **echo 和 print 之间的差异**
-		1. echo - 能够输出一个以上的字符串。
-		2. print - 只能输出一个字符串，并始终返回 1。
-		3. echo 比 print 稍快，因为它不返回任何值。
-	1. **echo 语句:**
-		1.  echo 是一个语言结构，有无括号均可使用：echo 或 echo()。
-	1. **print 语句:**
-		1. print 也是语言结构，有无括号均可使用：print 或 print()。	
-
-1. #### 数据类型
-	1. **字符串:**
-		1. 字符串是字符序列，比如 &quot;Hello world!&quot;;字符串可以是引号内的任何文本。您可以使用单引号或双引号
-	1. **整数:**
-		1. 整数是没有小数的数字。
-		1. 整数必须有至少一个数字（0-9）
-		2. 整数不能包含逗号或空格
-		3. 整数不能有小数点
-		4. 整数正负均可
-		5. 可以用三种格式规定整数：十进制、十六进制（前缀是 0x）或八进制（前缀是 0）
-		6. **var_dump()** 会返回变量的数据类型和值
-	1. **浮点数：**
-		1. 浮点数是有小数点或指数形式的数字。
-	1. **逻辑：**
-		1. 逻辑是 true 或 false。
-	1. **数组：**
-		1. 数组在一个变量中存储多个值。
-	1. **NULL 值：**
-		1. 特殊的 NULL 值表示变量无值。NULL 是数据类型 NULL 唯一可能的值。
-		2. NULL 值标示变量是否为空。也用于区分空字符串与空值数据库。
-		3. 可以通过把值设置为 NULL，将变量清空。
-1. #### 字符串函数：
-	1. **strlen() 函数：**
-		1. strlen() 函数返回字符串的长度，以字符计。	
-		1. strlen() 常用于循环和其他函数，在确定字符串何时结束很重要时。（例如，在循环中，我们也许需要在字符串的最后一个字符之后停止循环）。
-	1. **对字符串中的单词计数：**
-		1. str_word_count() 函数对字符串中的单词进行计数（空格相隔）
-	1. **反转字符串：**
-		1. strrev() 函数反转字符串
-	1. **strpos() 函数：**
-		1. strpos() 函数用于检索字符串内指定的字符或文本。
-		2. 如果找到匹配，则会返回首个匹配的字符位置。如果未找到匹配，则将返回 FALSE。
-	3. **替换字符串中的文本：**
-		1. str_replace() 函数用一些字符串替换字符串中的另一些字符。
-1. #### 常量
-	1. **常量：**
-		1. 常量是单个值的标识符（名称）。在脚本中无法改变该值。
-		2. 有效的常量名以字符或下划线开头（常量名称前面没有 $ 符号）。
-		3. 与变量不同，**常量贯穿整个脚本**是**自动全局**的。
-	4. **设置常量：**
-		1. 如需设置常量，请使用 define() 函数 - 它使用三个参数：
-			1. 首个参数定义常量的名称
-			2. 第二个参数定义常量的值
-			3. 可选的第三个参数规定常量名是否对大小写不敏感。默认是 false。
-1. #### 运算符
-	1. **算数运算符:**&lt;br&gt;
-		![avatar](D:\Java\Blog\图片\PHP\php算数运算符.jpg)
-	1. **赋值运算符:**&lt;br&gt;
-		![avatar](D:\Java\Blog\图片\PHP\php赋值运算符.jpg)
-	1. **字符串运算符:**&lt;br&gt;
-	 	![avatar](D:\Java\Blog\图片\PHP\php字符串运算符.jpg)
-	1. **递增/递减运算符:**&lt;br&gt;
-		![avatar](D:\Java\Blog\图片\PHP\php递增递减运算符.jpg)
-	1. **比较运算符:**&lt;br&gt;
-		![avatar](D:\Java\Blog\图片\PHP\php比较运算符.jpg)
-	1. **逻辑运算符:**&lt;br&gt;
-		![avatar](D:\Java\Blog\图片\PHP\php逻辑运算符.jpg)
-	1. **数组运算符:**&lt;br&gt;
-		![avatar](D:\Java\Blog\图片\PHP\php数组运算符.jpg)
-
-1. #### 条件语句
-	1. **if 语句** - 如果指定条件为真，则执行代码
-		1. if 语句用于**在指定条件为 true 时**执行代码。
-	2. **if...else 语句** - 如果条件为 true，则执行代码；如果条件为 false，则执行另一端代码
-		1. if....else 语句**在条件为 true 时执行代码，在条件为 false 时执行另一段代码**。
-	3. **if...elseif....else 语句** - 根据两个以上的条件执行不同的代码块
-		1. if....elseif...else 语句来**根据两个以上的条件执行不同的代码**。
-	4. **switch 语句** - 选择多个代码块之一来执行
-		1. 当希望**有选择地执行若干代码块之一**，请使用 Switch 语句。
-		2. 使用 Switch 语句可以避免冗长的 if..elseif..else 代码块。
-1. #### 循环	
-	1. **while:**- 只要指定条件为真，则循环代码块
-		1. `while (条件为真) {要执行的代码;}`
-	2. **do...while:** - 先执行一次代码块，然后只要指定条件为真则重复循环
-		1. `do {要执行的代码;} while (条件为真);`
-	3. **for:** - 循环代码块指定次数
-		1. `for (init counter; test counter; increment counter) {code to be executed;}`
-			1. init counter：初始化循环计数器的值
-			2. test counter：: 评估每个循环迭代。如果值为 TRUE，继续循环。如果它的值为 FALSE，循环结束。
-			3. increment counter：增加循环计数器的值
-	4. **for each:**- 遍历数组中的每个元素并循环代码块
-		1. foreach 循环只适用于**数组**，并用于遍历数组中的每个键/值对。
-		2. `foreach ($array as $value) {code to be executed;}`
-1. ### 函数
-	1.  PHP 的真正力量来自它的函数：它拥有超过 1000 个内建的函数。
-	2.  **用户定义函数**
-		1.  除了内建的 PHP 函数，我们可以创建我们自己的函数。
-		2.  函数是可以在程序中重复使用的语句块。
-		3.  页面加载时函数不会立即执行。
-		4.  函数只有在被调用时才会执行。
-	5.  **创建用户定义函数：**
-		1.  用户定义的函数声明以单词 &quot;function&quot; 开头：
-			1.  `function functionName() {被执行的代码;}`
-		2.  函数名能够以字母或下划线开头（而非数字）。
-		3.  函数名对大小写不敏感。
-		4.  函数名应该能够反映函数所执行的任务。
-		5.  如需调用该函数，只要使用函数名即可
-	6.  **函数参数：**
-		1.  可以通过参数向函数传递信息。参数类似变量。
-		2.  参数被定义在函数名之后，括号内部。您可以添加任意多参数，只要用逗号隔开即可。
-	3.  **默认参数值：**
-		1.  可以给参数设置默认值，当调用没有参数的函数时，它的参数会取默认值
-	2.  **函数 - 返回值：**
-		1.  如需使函数返回值，可以使用 return 语句
-2. ### 数组
-	1. 数组能够在单独的变量名中存储一个或多个值。数组是特殊的变量，它可以同时保存一个以上的值。
-	2. **创建数组:**
-		1. 在 PHP 中， array() 函数用于创建数组：
-	2. **数组类型：**
-		1. **索引数组** - 带有数字索引的数组
-			1. 有两种创建索引数组的方法：
-				2. 索引自动分配（索引从0开始）
-					1. `$cars=array(&quot;porsche&quot;,&quot;BMW&quot;,&quot;Volvo&quot;);`
-				3. 手动分配索引
-					1. `$cars[0]=&quot;porsche&quot;;$cars[1]=&quot;BMW&quot;;$cars[2]=&quot;Volvo&quot;;`
-			2. 获得数组的长度 - count() 函数
-				1. count(数组名) 函数用于返回数组的长度（元素数）
-			2. 遍历索引数组
-				1. 利用for循环和 count()函数 遍历数组
-		2. **关联数组** - 带有指定键的数组
-			1. 关联数组是使用您分配给数组的指定键的数组。(类似于key value)
-			2. 有两种创建关联数组的方法：
-				1. `$age=array(&quot;Bill&quot;=&gt;&quot;35&quot;,&quot;Steve&quot;=&gt;&quot;37&quot;,&quot;Elon&quot;=&gt;&quot;43&quot;);`	
-				2. `$age['Bill']=&quot;63&quot;;$age['Steve']=&quot;56&quot;;$age['Elon']=&quot;47&quot;;`
-			3. 遍历关联数组
-				1. 利用 foreach 循环：
-				2. `$age=array(&quot;Bill&quot;=&gt;&quot;63&quot;,&quot;Steve&quot;=&gt;&quot;56&quot;,&quot;Elon&quot;=&gt;&quot;47&quot;);`&lt;br&gt;`foreach($age as $x=&gt;$x_value) {echo &quot;Key=&quot; . $x . &quot;, Value=&quot; . $x_value;echo &quot;&lt;br&gt;&quot;;}`
-		3. **多维数组** - 包含一个或多个数组的数组
-4.  #### 数组排序
-	1.  **数组的排序函数：**
-		1.  **对数组进行升序排序 - sort()：**
-			1.  **sort(数组名)：**可按照字母和数字进行升序(A-Z,0-9)
-		2.  **对数组进行降序排序 - rsort()：**
-			1.  **rsort(数组名)：**可按照字母和数字进行升序(Z-A,9-0)
-		3.  **根据值对数组进行升序排序 - asort()：**
-			1.  **asort(数组名)：**根据值的大小对关联数组进行升序排序
-		4.  **根据键对数组进行升序排序 - ksort()：**
-			1.  **ksort(数组名)：**根据键的字母顺序对关联数组进行升序排序
-		5.  **根据值对数组进行降序排序 - arsort()：**
-			1.  **arsort(数组名)：**根据值的大小对关联数组进行降序排序
-		6.  **根据键对数组进行降序排序 - krsort()：**
-			1.  **krsort(数组名)：**根据键的字母顺序对关联数组进行降序排序
-
-2.  #### 全局变量 - 超全局变量 
-	1.  超全局变量在 PHP 4.1.0 中引入，是在全部作用域中始终可用的内置变量。
-	1.  **全局变量 - 超全局变量：**
-		1.  PHP 中的许多预定义变量都是“超全局的”，这意味着它们在一个脚本的全部作用域中都可用。在函数或方法中无需执行 global $variable; 就可以访问它们。
-		2.  **$GLOBALS — 引用全局作用域中可用的全部变量：**
-			1.  $GLOBALS 这种全局变量用于在 PHP 脚本中的任意位置访问全局变量（从函数或方法中均可）。
-			2.  PHP 在名为 $GLOBALS[index] 的数组中存储了所有全局变量。变量的名字就是数组的键。
-		3.  **$_SERVER：**
-			1.  $_SERVER 这种超全局变量保存关于报头、路径和脚本位置的信息。&lt;br&gt;
-				![avatar](D:\Java\Blog\图片\PHP\php$_SERVER函数.jpg)
-		4.  **$_REQUEST：**
-			1.  $_REQUEST 用于收集 HTML 表单提交的数据。
-		5.  **$_POST：**
-			1.  $_POST 广泛用于收集提交 method=&quot;post&quot; 的 HTML 表单后的表单数据。$_POST 也常用于传递变量。
-		6.  **$_GET：**
-			1.  $_GET 也可用于收集提交 HTML 表单 (method=&quot;get&quot;) 之后的表单数据。
-			2.  $_GET 也可以收集 URL 中的发送的数据。
-		7.  **：**
-		8.  **：**
-		9.  **：**
-		10.  **：**
-11.  #### 表单处理
-	1.  **一个简单的 HTML 表单:**
-		1.  下面的例子显示了一个简单的 HTML 表单，它包含两个输入字段和一个提交按钮：&lt;br&gt;
-			![avatar](D:\Java\Blog\图片\PHP\php表单post.jpg)&lt;br&gt;
-		当用户填写此表单并点击提交按钮后，表单数据会发送到名为 &quot;welcome.php&quot; 的 PHP 文件供处理。表单数据是通过 HTTP POST 方法发送的。&lt;br&gt;
-		如需显示出被提交的数据，您可以简单地输出（echo）所有变量。&quot;welcome.php&quot; 文件是这样的：&lt;br&gt;
-			![avatar](D:\Java\Blog\图片\PHP\phppost表单.jpg)&lt;br&gt;
-		输出：&lt;br&gt;
-			![avatar](D:\Java\Blog\图片\PHP\php表单输出.jpg)&lt;br&gt;
-		使用 HTTP GET 方法也能得到相同的结果：&lt;br&gt;
-			![avatar](D:\Java\Blog\图片\PHP\php表单get.jpg)&lt;br&gt;
-		&quot;welcome_get.php&quot; 是这样的：&lt;br&gt;
-			![avatar](D:\Java\Blog\图片\PHP\phpget表单.jpg)&lt;br&gt;
-		1. **上面的代码很简单。不过，最重要的内容被漏掉了。需要对表单数据进行验证，以防止脚本出现漏洞。**
-	2.  **GET vs. POST:**
-		1.  GET 和 POST 都创建数组（例如，array( key =&gt; value, key2 =&gt; value2, key3 =&gt; value3, ...)）。此数组包含键/值对，其中的键是表单控件的名称，而值是来自用户的输入数据。
-		2.  GET 和 POST 被视作 $_GET 和 $_POST。它们是超全局变量，这意味着对它们的访问无需考虑作用域 - 无需任何特殊代码，您能够从任何函数、类或文件访问它们。
-		3.  $_GET 是通过 URL 参数传递到当前脚本的变量数组。
-		4.  $_POST 是通过 HTTP POST 传递到当前脚本的变量数组。
-	3.  **何时使用 GET？:**
-		1.  通过 GET 方法从表单发送的信息**对任何人都是可见的**（所有变量名和值都显示在 URL 中）。GET 对所发送信息的数量也有限制。限制在大约 2000 个字符。不过，由于变量显示在 URL 中，把页面添加到书签中也更为方便。
-		2.  GET 可用于发送非敏感的数据。
-		3.  **绝不能使用 GET 来发送密码或其他敏感信息！**
-	4.  **何时使用 POST？:**
-		1.  通过 POST 方法从表单发送的信息**对其他人是不可见的**（所有名称/值会被嵌入 HTTP 请求的主体中），并且对所发送信息的数量也**无限制**。
-		2.  此外 POST 支持高阶功能，比如在向服务器上传文件时进行 multi-part 二进制输入。
-		3.  不过，由于变量未显示在 URL 中，也就无法将页面添加到书签。</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<h4 id="echo-和-print-语句">echo 和 print 语句</h4>
+<ol>
+<li><strong>echo 和 print 之间的差异</strong>
+<ol>
+<li>echo - 能够输出一个以上的字符串。</li>
+<li>print - 只能输出一个字符串，并始终返回 1。</li>
+<li>echo 比 print 稍快，因为它不返回任何值。</li>
+</ol>
+</li>
+<li><strong>echo 语句:</strong>
+<ol>
+<li>echo 是一个语言结构，有无括号均可使用：echo 或 echo()。</li>
+</ol>
+</li>
+<li><strong>print 语句:</strong>
+<ol>
+<li>print 也是语言结构，有无括号均可使用：print 或 print()。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h4 id="数据类型">数据类型</h4>
+<ol>
+<li><strong>字符串:</strong>
+<ol>
+<li>字符串是字符序列，比如 &quot;Hello world!&quot;;字符串可以是引号内的任何文本。您可以使用单引号或双引号</li>
+</ol>
+</li>
+<li><strong>整数:</strong>
+<ol>
+<li>整数是没有小数的数字。</li>
+<li>整数必须有至少一个数字（0-9）</li>
+<li>整数不能包含逗号或空格</li>
+<li>整数不能有小数点</li>
+<li>整数正负均可</li>
+<li>可以用三种格式规定整数：十进制、十六进制（前缀是 0x）或八进制（前缀是 0）</li>
+<li><strong>var_dump()</strong> 会返回变量的数据类型和值</li>
+</ol>
+</li>
+<li><strong>浮点数：</strong>
+<ol>
+<li>浮点数是有小数点或指数形式的数字。</li>
+</ol>
+</li>
+<li><strong>逻辑：</strong>
+<ol>
+<li>逻辑是 true 或 false。</li>
+</ol>
+</li>
+<li><strong>数组：</strong>
+<ol>
+<li>数组在一个变量中存储多个值。</li>
+</ol>
+</li>
+<li><strong>NULL 值：</strong>
+<ol>
+<li>特殊的 NULL 值表示变量无值。NULL 是数据类型 NULL 唯一可能的值。</li>
+<li>NULL 值标示变量是否为空。也用于区分空字符串与空值数据库。</li>
+<li>可以通过把值设置为 NULL，将变量清空。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h4 id="字符串函数">字符串函数：</h4>
+<ol>
+<li><strong>strlen() 函数：</strong>
+<ol>
+<li>strlen() 函数返回字符串的长度，以字符计。</li>
+<li>strlen() 常用于循环和其他函数，在确定字符串何时结束很重要时。（例如，在循环中，我们也许需要在字符串的最后一个字符之后停止循环）。</li>
+</ol>
+</li>
+<li><strong>对字符串中的单词计数：</strong>
+<ol>
+<li>str_word_count() 函数对字符串中的单词进行计数（空格相隔）</li>
+</ol>
+</li>
+<li><strong>反转字符串：</strong>
+<ol>
+<li>strrev() 函数反转字符串</li>
+</ol>
+</li>
+<li><strong>strpos() 函数：</strong>
+<ol>
+<li>strpos() 函数用于检索字符串内指定的字符或文本。</li>
+<li>如果找到匹配，则会返回首个匹配的字符位置。如果未找到匹配，则将返回 FALSE。</li>
+</ol>
+</li>
+<li><strong>替换字符串中的文本：</strong>
+<ol>
+<li>str_replace() 函数用一些字符串替换字符串中的另一些字符。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h4 id="常量">常量</h4>
+<ol>
+<li><strong>常量：</strong>
+<ol>
+<li>常量是单个值的标识符（名称）。在脚本中无法改变该值。</li>
+<li>有效的常量名以字符或下划线开头（常量名称前面没有 $ 符号）。</li>
+<li>与变量不同，<strong>常量贯穿整个脚本</strong>是<strong>自动全局</strong>的。</li>
+</ol>
+</li>
+<li><strong>设置常量：</strong>
+<ol>
+<li>如需设置常量，请使用 define() 函数 - 它使用三个参数：
+<ol>
+<li>首个参数定义常量的名称</li>
+<li>第二个参数定义常量的值</li>
+<li>可选的第三个参数规定常量名是否对大小写不敏感。默认是 false。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h4 id="运算符">运算符</h4>
+<ol>
+<li><strong>算数运算符:</strong><br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<li><strong>赋值运算符:</strong><br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<li><strong>字符串运算符:</strong><br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<li><strong>递增/递减运算符:</strong><br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E9%80%92%E5%A2%9E%E9%80%92%E5%87%8F%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<li><strong>比较运算符:</strong><br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<li><strong>逻辑运算符:</strong><br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+<li><strong>数组运算符:</strong><br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E6%95%B0%E7%BB%84%E8%BF%90%E7%AE%97%E7%AC%A6.jpg" alt="avatar"></li>
+</ol>
+</li>
+<li>
+<h4 id="条件语句">条件语句</h4>
+<ol>
+<li><strong>if 语句</strong> - 如果指定条件为真，则执行代码
+<ol>
+<li>if 语句用于<strong>在指定条件为 true 时</strong>执行代码。</li>
+</ol>
+</li>
+<li><strong>if...else 语句</strong> - 如果条件为 true，则执行代码；如果条件为 false，则执行另一端代码
+<ol>
+<li>if....else 语句<strong>在条件为 true 时执行代码，在条件为 false 时执行另一段代码</strong>。</li>
+</ol>
+</li>
+<li><strong>if...elseif....else 语句</strong> - 根据两个以上的条件执行不同的代码块
+<ol>
+<li>if....elseif...else 语句来<strong>根据两个以上的条件执行不同的代码</strong>。</li>
+</ol>
+</li>
+<li><strong>switch 语句</strong> - 选择多个代码块之一来执行
+<ol>
+<li>当希望<strong>有选择地执行若干代码块之一</strong>，请使用 Switch 语句。</li>
+<li>使用 Switch 语句可以避免冗长的 if..elseif..else 代码块。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h4 id="循环">循环</h4>
+<ol>
+<li><strong>while:</strong>- 只要指定条件为真，则循环代码块
+<ol>
+<li><code>while (条件为真) {要执行的代码;}</code></li>
+</ol>
+</li>
+<li><strong>do...while:</strong> - 先执行一次代码块，然后只要指定条件为真则重复循环
+<ol>
+<li><code>do {要执行的代码;} while (条件为真);</code></li>
+</ol>
+</li>
+<li><strong>for:</strong> - 循环代码块指定次数
+<ol>
+<li><code>for (init counter; test counter; increment counter) {code to be executed;}</code>
+<ol>
+<li>init counter：初始化循环计数器的值</li>
+<li>test counter：: 评估每个循环迭代。如果值为 TRUE，继续循环。如果它的值为 FALSE，循环结束。</li>
+<li>increment counter：增加循环计数器的值</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><strong>for each:</strong>- 遍历数组中的每个元素并循环代码块
+<ol>
+<li>foreach 循环只适用于<strong>数组</strong>，并用于遍历数组中的每个键/值对。</li>
+<li><code>foreach ($array as $value) {code to be executed;}</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h3 id="函数">函数</h3>
+<ol>
+<li>PHP 的真正力量来自它的函数：它拥有超过 1000 个内建的函数。</li>
+<li><strong>用户定义函数</strong>
+<ol>
+<li>除了内建的 PHP 函数，我们可以创建我们自己的函数。</li>
+<li>函数是可以在程序中重复使用的语句块。</li>
+<li>页面加载时函数不会立即执行。</li>
+<li>函数只有在被调用时才会执行。</li>
+</ol>
+</li>
+<li><strong>创建用户定义函数：</strong>
+<ol>
+<li>用户定义的函数声明以单词 &quot;function&quot; 开头：
+<ol>
+<li><code>function functionName() {被执行的代码;}</code></li>
+</ol>
+</li>
+<li>函数名能够以字母或下划线开头（而非数字）。</li>
+<li>函数名对大小写不敏感。</li>
+<li>函数名应该能够反映函数所执行的任务。</li>
+<li>如需调用该函数，只要使用函数名即可</li>
+</ol>
+</li>
+<li><strong>函数参数：</strong>
+<ol>
+<li>可以通过参数向函数传递信息。参数类似变量。</li>
+<li>参数被定义在函数名之后，括号内部。您可以添加任意多参数，只要用逗号隔开即可。</li>
+</ol>
+</li>
+<li><strong>默认参数值：</strong>
+<ol>
+<li>可以给参数设置默认值，当调用没有参数的函数时，它的参数会取默认值</li>
+</ol>
+</li>
+<li><strong>函数 - 返回值：</strong>
+<ol>
+<li>如需使函数返回值，可以使用 return 语句</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h3 id="数组">数组</h3>
+<ol>
+<li>数组能够在单独的变量名中存储一个或多个值。数组是特殊的变量，它可以同时保存一个以上的值。</li>
+<li><strong>创建数组:</strong>
+<ol>
+<li>在 PHP 中， array() 函数用于创建数组：</li>
+</ol>
+</li>
+<li><strong>数组类型：</strong>
+<ol>
+<li><strong>索引数组</strong> - 带有数字索引的数组
+<ol>
+<li>有两种创建索引数组的方法：
+<ol start="2">
+<li>索引自动分配（索引从0开始）
+<ol>
+<li><code>$cars=array(&quot;porsche&quot;,&quot;BMW&quot;,&quot;Volvo&quot;);</code></li>
+</ol>
+</li>
+<li>手动分配索引
+<ol>
+<li><code>$cars[0]=&quot;porsche&quot;;$cars[1]=&quot;BMW&quot;;$cars[2]=&quot;Volvo&quot;;</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>获得数组的长度 - count() 函数
+<ol>
+<li>count(数组名) 函数用于返回数组的长度（元素数）</li>
+</ol>
+</li>
+<li>遍历索引数组
+<ol>
+<li>利用for循环和 count()函数 遍历数组</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><strong>关联数组</strong> - 带有指定键的数组
+<ol>
+<li>关联数组是使用您分配给数组的指定键的数组。(类似于key value)</li>
+<li>有两种创建关联数组的方法：
+<ol>
+<li><code>$age=array(&quot;Bill&quot;=&gt;&quot;35&quot;,&quot;Steve&quot;=&gt;&quot;37&quot;,&quot;Elon&quot;=&gt;&quot;43&quot;);</code></li>
+<li><code>$age['Bill']=&quot;63&quot;;$age['Steve']=&quot;56&quot;;$age['Elon']=&quot;47&quot;;</code></li>
+</ol>
+</li>
+<li>遍历关联数组
+<ol>
+<li>利用 foreach 循环：</li>
+<li><code>$age=array(&quot;Bill&quot;=&gt;&quot;63&quot;,&quot;Steve&quot;=&gt;&quot;56&quot;,&quot;Elon&quot;=&gt;&quot;47&quot;);</code><br><code>foreach($age as $x=&gt;$x_value) {echo &quot;Key=&quot; . $x . &quot;, Value=&quot; . $x_value;echo &quot;&lt;br&gt;&quot;;}</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><strong>多维数组</strong> - 包含一个或多个数组的数组</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h4 id="数组排序">数组排序</h4>
+<ol>
+<li><strong>数组的排序函数：</strong>
+<ol>
+<li><strong>对数组进行升序排序 - sort()：</strong>
+<ol>
+<li>**sort(数组名)：**可按照字母和数字进行升序(A-Z,0-9)</li>
+</ol>
+</li>
+<li><strong>对数组进行降序排序 - rsort()：</strong>
+<ol>
+<li>**rsort(数组名)：**可按照字母和数字进行升序(Z-A,9-0)</li>
+</ol>
+</li>
+<li><strong>根据值对数组进行升序排序 - asort()：</strong>
+<ol>
+<li>**asort(数组名)：**根据值的大小对关联数组进行升序排序</li>
+</ol>
+</li>
+<li><strong>根据键对数组进行升序排序 - ksort()：</strong>
+<ol>
+<li>**ksort(数组名)：**根据键的字母顺序对关联数组进行升序排序</li>
+</ol>
+</li>
+<li><strong>根据值对数组进行降序排序 - arsort()：</strong>
+<ol>
+<li>**arsort(数组名)：**根据值的大小对关联数组进行降序排序</li>
+</ol>
+</li>
+<li><strong>根据键对数组进行降序排序 - krsort()：</strong>
+<ol>
+<li>**krsort(数组名)：**根据键的字母顺序对关联数组进行降序排序</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h4 id="全局变量-超全局变量">全局变量 - 超全局变量</h4>
+<ol>
+<li>超全局变量在 PHP 4.1.0 中引入，是在全部作用域中始终可用的内置变量。</li>
+<li><strong>全局变量 - 超全局变量：</strong>
+<ol>
+<li>PHP 中的许多预定义变量都是“超全局的”，这意味着它们在一个脚本的全部作用域中都可用。在函数或方法中无需执行 global $variable; 就可以访问它们。</li>
+<li><strong>$GLOBALS — 引用全局作用域中可用的全部变量：</strong>
+<ol>
+<li>$GLOBALS 这种全局变量用于在 PHP 脚本中的任意位置访问全局变量（从函数或方法中均可）。</li>
+<li>PHP 在名为 $GLOBALS[index] 的数组中存储了所有全局变量。变量的名字就是数组的键。</li>
+</ol>
+</li>
+<li><strong>$_SERVER：</strong>
+<ol>
+<li><span class='katex-error' title='ParseError: KaTeX parse error: Undefined control sequence: \Java at position 51: …r&gt;
+![avatar](D:\̲J̲a̲v̲a̲\Blog\图片\PHP\ph…'>_SERVER 这种超全局变量保存关于报头、路径和脚本位置的信息。&lt;br&gt;
+![avatar](D:\Java\Blog\图片\PHP\php</span>_SERVER函数.jpg)</li>
+</ol>
+</li>
+<li><strong>$_REQUEST：</strong>
+<ol>
+<li>$_REQUEST 用于收集 HTML 表单提交的数据。</li>
+</ol>
+</li>
+<li><strong>$_POST：</strong>
+<ol>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mrow></mrow><mi>P</mi></msub><mi>O</mi><mi>S</mi><mi>T</mi><mi mathvariant="normal">广</mi><mi mathvariant="normal">泛</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">于</mi><mi mathvariant="normal">收</mi><mi mathvariant="normal">集</mi><mi mathvariant="normal">提</mi><mi mathvariant="normal">交</mi><mi>m</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>o</mi><mi>d</mi><mo>=</mo><mi mathvariant="normal">&quot;</mi><mi>p</mi><mi>o</mi><mi>s</mi><mi>t</mi><mi mathvariant="normal">&quot;</mi><mi mathvariant="normal">的</mi><mi>H</mi><mi>T</mi><mi>M</mi><mi>L</mi><mi mathvariant="normal">表</mi><mi mathvariant="normal">单</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">表</mi><mi mathvariant="normal">单</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">据</mi><mi mathvariant="normal">。</mi></mrow><annotation encoding="application/x-tex">_POST 广泛用于收集提交 method=&quot;post&quot; 的 HTML 表单后的表单数据。</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord cjk_fallback">广</span><span class="mord cjk_fallback">泛</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">于</span><span class="mord cjk_fallback">收</span><span class="mord cjk_fallback">集</span><span class="mord cjk_fallback">提</span><span class="mord cjk_fallback">交</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">&quot;</span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord">&quot;</span><span class="mord cjk_fallback">的</span><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">L</span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">单</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">单</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">据</span><span class="mord cjk_fallback">。</span></span></span></span>_POST 也常用于传递变量。</li>
+</ol>
+</li>
+<li><strong>$_GET：</strong>
+<ol>
+<li>$_GET 也可用于收集提交 HTML 表单 (method=&quot;get&quot;) 之后的表单数据。</li>
+<li>$_GET 也可以收集 URL 中的发送的数据。</li>
+</ol>
+</li>
+<li><strong>：</strong></li>
+<li><strong>：</strong></li>
+<li><strong>：</strong></li>
+<li><strong>：</strong></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<h4 id="表单处理">表单处理</h4>
+</li>
+<li>
+<p><strong>一个简单的 HTML 表单:</strong></p>
+<ol>
+<li>下面的例子显示了一个简单的 HTML 表单，它包含两个输入字段和一个提交按钮：<br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E8%A1%A8%E5%8D%95post.jpg" alt="avatar"><br><br>
+当用户填写此表单并点击提交按钮后，表单数据会发送到名为 &quot;welcome.php&quot; 的 PHP 文件供处理。表单数据是通过 HTTP POST 方法发送的。<br><br>
+如需显示出被提交的数据，您可以简单地输出（echo）所有变量。&quot;welcome.php&quot; 文件是这样的：<br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphppost%E8%A1%A8%E5%8D%95.jpg" alt="avatar"><br><br>
+输出：<br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E8%A1%A8%E5%8D%95%E8%BE%93%E5%87%BA.jpg" alt="avatar"><br><br>
+使用 HTTP GET 方法也能得到相同的结果：<br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphp%E8%A1%A8%E5%8D%95get.jpg" alt="avatar"><br><br>
+&quot;welcome_get.php&quot; 是这样的：<br><br>
+<img src="D:%5CJava%5CBlog%5C%E5%9B%BE%E7%89%87%5CPHP%5Cphpget%E8%A1%A8%E5%8D%95.jpg" alt="avatar"><br></li>
+<li><strong>上面的代码很简单。不过，最重要的内容被漏掉了。需要对表单数据进行验证，以防止脚本出现漏洞。</strong></li>
+</ol>
+</li>
+<li>
+<p><strong>GET vs. POST:</strong></p>
+<ol>
+<li>GET 和 POST 都创建数组（例如，array( key =&gt; value, key2 =&gt; value2, key3 =&gt; value3, ...)）。此数组包含键/值对，其中的键是表单控件的名称，而值是来自用户的输入数据。</li>
+<li>GET 和 POST 被视作 $_GET 和 $_POST。它们是超全局变量，这意味着对它们的访问无需考虑作用域 - 无需任何特殊代码，您能够从任何函数、类或文件访问它们。</li>
+<li>$_GET 是通过 URL 参数传递到当前脚本的变量数组。</li>
+<li>$_POST 是通过 HTTP POST 传递到当前脚本的变量数组。</li>
+</ol>
+</li>
+<li>
+<p><strong>何时使用 GET？:</strong></p>
+<ol>
+<li>通过 GET 方法从表单发送的信息<strong>对任何人都是可见的</strong>（所有变量名和值都显示在 URL 中）。GET 对所发送信息的数量也有限制。限制在大约 2000 个字符。不过，由于变量显示在 URL 中，把页面添加到书签中也更为方便。</li>
+<li>GET 可用于发送非敏感的数据。</li>
+<li><strong>绝不能使用 GET 来发送密码或其他敏感信息！</strong></li>
+</ol>
+</li>
+<li>
+<p><strong>何时使用 POST？:</strong></p>
+<ol>
+<li>通过 POST 方法从表单发送的信息<strong>对其他人是不可见的</strong>（所有名称/值会被嵌入 HTTP 请求的主体中），并且对所发送信息的数量也<strong>无限制</strong>。</li>
+<li>此外 POST 支持高阶功能，比如在向服务器上传文件时进行 multi-part 二进制输入。</li>
+<li>不过，由于变量未显示在 URL 中，也就无法将页面添加到书签。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 
             </div>
             
