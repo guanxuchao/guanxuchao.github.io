@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://guanxuchao.com/</id>
     <title>Chao&apos;s Blog</title>
-    <updated>2019-10-16T06:46:51.804Z</updated>
+    <updated>2019-11-20T06:31:13.146Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://guanxuchao.com/"/>
     <link rel="self" href="https://guanxuchao.com//atom.xml"/>
@@ -10,6 +10,59 @@
     <logo>https://guanxuchao.com//images/avatar.png</logo>
     <icon>https://guanxuchao.com//favicon.ico</icon>
     <rights>All rights reserved 2019, Chao&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[谷歌VIM插件使用，键盘操作浏览器功能（带下载链接）]]></title>
+        <id>https://guanxuchao.com//post/gu-ge-vim-cha-jian-shi-yong-jian-pan-cao-zuo-liu-lan-qi-gong-neng-dai-xia-zai-lian-jie</id>
+        <link href="https://guanxuchao.com//post/gu-ge-vim-cha-jian-shi-yong-jian-pan-cao-zuo-liu-lan-qi-gong-neng-dai-xia-zai-lian-jie">
+        </link>
+        <updated>2019-11-20T06:18:10.000Z</updated>
+        <summary type="html"><![CDATA[<h1>注意 vim 是严格区分大小写的</h1>
+]]></summary>
+        <content type="html"><![CDATA[<h1>注意 vim 是严格区分大小写的</h1>
+<!-- more -->
+<p>常用快捷键总结如下：<br>
+j :下滚(向下移动)<br>
+k :上滚(向上移动)<br>
+h :向左移动<br>
+l :向右移动<br>
+zH :移到最左<br>
+zL :移到最右<br>
+gg :跳转至当前页面顶部<br>
+G :跳转至当前页面底部<br>
+d :向下翻页(一次滚动一个页面大小)<br>
+u :向上翻页<br>
+以上为当前页移动的常用命令</p>
+<p>x :关闭当前页(等同 ctrl+w)<br>
+X :回滚(恢复刚刚关闭的页面 很实用)<br>
+r :重新载入当前页(等同 F5)<br>
+t :打开新标签页(等同Ctrl+t)<br>
+T :打开全部已有的标签页并选择进行回车跳转(非常实用)<br>
+K :跳转到右边的标签(紧邻的跳转) 也可使用 gt<br>
+J :跳转到左边的标签 也可使用 gT<br>
+W :单独窗口打开(打开对象使用字母编号选择 注意是大写W)<br>
+f :在当前页面打开一个新连接(会自动出现字母组合的索引自行选择)<br>
+F :在新页面打开连接<br>
+b :在当前页面打开一个书签(手动输入网址或连接地址)<br>
+B :在新页面打开(同样手动输入)<br>
+o :比较像 b 命令 不过这里可以匹配历史记录收藏夹等等<br>
+O :同上(在新窗口中打开)<br>
+以上为各个标签页跳转与开闭合命令</p>
+<p>i :输入模式<br>
+gi :聚焦到输入框默认第一个<br>
+2gi :聚焦到第2个输入框(测试可以gi后使用Tab切到第n个换输入框)<br>
+切记：输入/编辑模式后一定要按 Esc 退出才可以继续使用 vim<br>
+yt :复制当前标签<br>
+yy :复制当前页面的URL<br>
+yf :复制某段(具体哪段 请选择前面的字母代码 区分大小写及组合)<br>
+编辑操作命令</p>
+<p>v :开始选择命令(可以配合jklh等移动圈选 然后p粘贴打开等操作)<br>
+? :打开命令帮助提示(再次按压关闭)<br>
+H :恢复到上一个历史标签页<br>
+L :恢复到下一个历史标签页</p>
+<p>谷歌商店下载地址：<a href="https://chrome.google.com/extensions/detail/dbepggeogbaibhgnhhndojpepiihcmeb">点击下载</a><br>
+<span style="color:red">注：因为墙的原因，访问谷歌商店需要VPN</span></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[PHP笔记]]></title>
         <id>https://guanxuchao.com//post/php-xue-xi</id>
@@ -1888,279 +1941,6 @@ public void insert() {
 <blockquote>
 <p>理论上来说，批处理时，不建议一次性处理超过5000条SQL语句。另外，每条SQL语句也不是插入越多数据就越快，拼接这样的SQL语句也是需要耗时的。</p>
 </blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringMVC-3]]></title>
-        <id>https://guanxuchao.com//post/springmvc-3</id>
-        <link href="https://guanxuchao.com//post/springmvc-3">
-        </link>
-        <updated>2019-07-21T07:01:44.000Z</updated>
-        <summary type="html"><![CDATA[<h3 id="1-使用session">1. 使用Session</h3>
-]]></summary>
-        <content type="html"><![CDATA[<h3 id="1-使用session">1. 使用Session</h3>
-<!-- more -->
-<p>当需要向Session中存入数据时，可以使用<code>ModelMap</code>对象将数据进行封装，操作方式与封装转发的数据完全相同，例如：</p>
-<pre><code>modelMap.addAttribute(&quot;username&quot;, username);
-</code></pre>
-<p>然后，需要在当前控制器类之前添加<code>@SessionAttributes</code>注解，并且，在注解中显式的指定<code>ModelMap</code>中封装的哪些数据是需要存储在Session中的，例如：</p>
-<pre><code>@Controller 
-@RequestMapping(value=&quot;user&quot;)
-@SessionAttributes(&quot;username&quot;)
-public class UserController {
-	// ...
-}
-</code></pre>
-<p>当添加了以上注解后，如果<code>ModelMap</code>中被存入了名为<code>username</code>的数据，该数据就在Session中，而<code>ModelMap</code>中的其它数据依然只能用于转发，也就是数据的作用域只在Request级别。</p>
-<p>关于<code>@SessionAttributes</code>注解，其属性的配置可以参考该注解的源代码：</p>
-<pre><code>@AliasFor(&quot;names&quot;)
-String[] value() default {};
-
-@AliasFor(&quot;value&quot;)
-String[] names() default {};
-
-Class&lt;?&gt;[] types() default {};
-</code></pre>
-<p>通过以上源代码可以看到：<code>value</code>和<code>names</code>属性的作用是完全相同，用于指定<code>ModelMap</code>中的哪些名称对应的数据需要存放到Session中，可以使用字符串数组表示多个属性，另外，还可以配置<code>types</code>属性用于指定Session的数据的数据类型，也可以是数组类型，与配置的<code>names</code>保持一致即可。</p>
-<p>使用这种做法操作Session非常简单，但是，也存在一系列的问题：</p>
-<ol>
-<li>
-<p>默认情况下，重定向时会把Session中的数据暴露在URL中；</p>
-</li>
-<li>
-<p>通过<code>ModelMap</code>存放的数据一定会在Request的作用域中，所以，通过这种方式存放到Session中的数据，其实在Request中也是存在的；</p>
-</li>
-<li>
-<p>通过这种方式存放到Session中的数据，不可以通过Session对象的<code>invalidate()</code>方法清除！只能通过<code>SessionStatus</code>类的<code>setComplete()</code>方法进行清除！</p>
-</li>
-</ol>
-<p>更加简单的操作Session的方式就是直接在处理请求的方法中添加<code>HttpSession</code>类型的参数，然后在方法体中直接操作即可，例如：</p>
-<pre><code>@RequestMapping(&quot;handle_login.do&quot;) 
-public String handleLogin(String username, String password,
-		ModelMap modelMap, HttpSession session) {
-	// 日志
-	System.out.println(&quot;UserController.handleLogin()&quot;);
-	System.out.println(&quot;\tusername=&quot; + username);
-	System.out.println(&quot;\tpassword=&quot; + password);
-	
-	// 判断用户名是否正确
-	if (&quot;root&quot;.equals(username)) {
-		// 是：判断密码是否正确
-		if (&quot;1234&quot;.equals(password)) {
-			// 是：登录成功，将用户名存入到Session
-			// modelMap.addAttribute(&quot;username&quot;, username);
-			session.setAttribute(&quot;username&quot;, username);
-			// 重定向到主页
-			return &quot;redirect:../index.do&quot;;
-		} else {
-			// 否：密码错误
-			modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：密码错误&quot;);
-			return &quot;error&quot;;
-		}
-	} else {
-		// 否：用户名错误
-		modelMap.addAttribute(&quot;errorMessage&quot;, &quot;ModelMap：用户名错误&quot;);
-		return &quot;error&quot;;
-	}
-}
-</code></pre>
-<p>使用这种做法并不存在以上使用<code>@SessionAttributes</code>时的各种问题，操作也非常简单，缺点就是不易于执行单元测试！</p>
-<p>可以忽略“不易于执行单元测试”，甚至“不使用<code>@SessionAttributes</code>”的原因可能是：可以使用专门的测试工具去测试控制器，所以，在控制器中的方法本身是不需要执行单元测试的，甚至在大型项目中根本就不会使用Session，那各种使用方式都是不需要的！</p>
-<h3 id="2-springmvc的拦截器interceptor">2. SpringMVC的拦截器(Interceptor)</h3>
-<p>如果项目中有多个请求需要执行相同的数据处理方案，就可以使用拦截器来实现。</p>
-<p>拦截器的作用并不一定是要把请求“拦截下来，不允许向后执行”，其主要特征是：若干种不同的请求都需要先执行拦截器中的代码，才可以向后执行。</p>
-<p>当然，拦截器也确实具备“拦截”的功能，即：可以将请求拦截下来，不允许向后执行。</p>
-<p>假设需要定义一个“登录拦截器”，实现“如果用户已经登录，则放行，如果未登录，则拦截，不允许向后执行”。</p>
-<p>首先，需要自定义<code>cn.tedu.spring.LoginInterceptor</code>拦截器类，实现<code>HandlerInterceptor</code>：</p>
-<pre><code>public class LoginInterceptor implements HandlerInterceptor {
-
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		System.out.println(&quot;LoginInterceptor.preHandle()&quot;);
-		return false;
-	}
-
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		System.out.println(&quot;LoginInterceptor.postHandle()&quot;);
-	}
-
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		System.out.println(&quot;LoginInterceptor.afterCompletion()&quot;);
-	}
-
-}
-</code></pre>
-<p>拦截器需要在Spring的配置文件中进行配置才可以使用：</p>
-<pre><code>&lt;!-- 配置拦截器链 --&gt;
-&lt;mvc:interceptors&gt;
-	&lt;!-- 配置第1个拦截器 --&gt;
-	&lt;mvc:interceptor&gt;
-		&lt;!-- 拦截的路径 --&gt;
-		&lt;mvc:mapping path=&quot;/index.do&quot;/&gt;
-		&lt;!-- 拦截器类 --&gt;
-		&lt;bean class=&quot;cn.tedu.spring.LoginInterceptor&quot; /&gt;
-	&lt;/mvc:interceptor&gt;
-&lt;/mvc:interceptors&gt;
-</code></pre>
-<p>如果需要实现“验证登录以决定是否拦截或者放行”的功能，需要重写拦截器类中的<code>preHandle()</code>方法：</p>
-<pre><code>public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-		throws Exception {
-	System.out.println(&quot;LoginInterceptor.preHandle()&quot;);
-	// 获取HttpSession对象
-	HttpSession session = request.getSession();
-	// 判断Session中有没有登录的数据
-	if (session.getAttribute(&quot;username&quot;) == null) {
-		// 没有登录数据，即未登录，则重定向到登录页
-		// http://localhost:8080/XX/index.do
-		// http://localhost:8080/XX/user/password.do
-		String projectName = request.getServletContext().getContextPath();
-		response.sendRedirect(projectName + &quot;/user/login.do&quot;);
-		// 返回false表示拦截，不允许向后执行
-		return false;
-	}
-	// 返回true表示放行，允许向后执行
-	return true;
-}
-</code></pre>
-<p>注意：即使调用了<code>response.sendRedirect()</code>进行重定向，如果要阻止继续向后运行，仍然需要<code>return false;</code>。</p>
-<p>在配置拦截器时，使用的是<code>&lt;mvc:mapping /&gt;</code>配置需要拦截的路径，每个拦截器都可以配置1~N个该节点。</p>
-<p>在配置路径时，还可以使用<code>*</code>作为通配符，例如配置为<code>&lt;mvc:mapping path=&quot;/product/*&quot; /&gt;</code>，则表示例如<code>/product/index.do</code>、<code>/product/add.do</code>、<code>/product/list.do</code>等路径都会被拦截！但是，1个<code>*</code>只能通配1层资源，例如<code>/product/*</code>就不会匹配上<code>/product/x/y.do</code>，如果需要通配若干层路径，可以使用2个<code>*</code>，即配置为<code>/product/**</code>，使用2个<code>*</code>是无视层级的，无论是<code>/product/list.do</code>，还是<code>/product/x/y.do</code>，甚至更多层级的，都可以通配！</p>
-<p>另外，还可以添加<code>&lt;mvc:exclude-mapping /&gt;</code>用于配置例外路径，也就是“白名单”，被添加在白名单中的路径将不被拦截器处理，与<code>&lt;mvc:mapping /&gt;</code>的配置方式完全相同，可以有多个配置白名单的节点，在配置时，路径中也可以使用通配符。</p>
-<p>在配置整个<code>&lt;mvc:interceptor&gt;</code>节点时，其子级的节点必须先配置<code>&lt;mvc:mapping /&gt;</code>，再配置<code>&lt;mvc:exclude-mapping /&gt;</code>，最后配置<code>&lt;bean&gt;</code>，不可以颠倒顺序！</p>
-<h3 id="3-在springmvc中统一处理异常">3. 在SpringMVC中统一处理异常</h3>
-<p>在Java中，异常的继承体系是：</p>
-<pre><code>Throwable
-	Error
-		OutOfMemoryError
-	Exception
-		SQLException
-		IOException
-			FileNotFoundException
-		RuntimeException
-			NullPointerException
-			ClassCastException
-			ArithmeticException
-			NumberFormatException
-			IndexOutOfBoundsException
-				ArrayIndexOutOfBoundsException
-				StringIndexOutOfBoundsException
-</code></pre>
-<p>在Exception中，RuntimeException及其子孙类异常是比较特殊的异常，完全不受Java处理异常的语法约束，因为这些异常可能出现的频率极高，并且，这些异常是可以通过更加严谨的编程来杜绝异常的发生的！</p>
-<p>常见的处理异常的做法是捕获(try...catch)或者声明抛出(throw/throws)，在实际处理时，如果当前类适合处理异常，就应该使用try...catch捕获并处理，如果当前类不适合处理异常，则应该声明抛出，然后续调用这个方法的角色进行处理。</p>
-<p>在服务器端的项目中，通常适合处理异常的都是控制器，但是，某些异常可能在多个不同的功能中都会出现，在处理不同的请求时采取相同的代码进行处理，就会导致代码冗余，不便于统一管理，所以，在SpringMVC框架中就提供了统一处理异常的机制。</p>
-<p>可以在控制器类中添加统一处理异常的方法，关于该方法：</p>
-<ol>
-<li>
-<p>应该使用<code>public</code>权限；</p>
-</li>
-<li>
-<p>返回值的意义与处理请求的方法完全相同；</p>
-</li>
-<li>
-<p>方法名称可以自定义；</p>
-</li>
-<li>
-<p>方法中必须包含异常类型的参数，且参数的类型能包括所有可能需要处理的异常，例如可能处理<code>NullPointerException</code>，则参数的类型可以是<code>NullPointerException</code>或者<code>RuntimeException</code>或者<code>Exception</code>甚至<code>Throwable</code>，如果同时还需要处理<code>NumberFormatException</code>，参数类型就不可以是<code>NullPointerException</code>，简单来说，写<code>Throwable</code>绝对错不了；</p>
-</li>
-<li>
-<p>与处理请求的方法不同，不可以随心所欲的添加参数，如果需要转发数据，只能添加<code>HttpServletRequest</code>参数，不可以使用<code>ModelMap</code>；</p>
-</li>
-<li>
-<p>必须添加<code>@ExceptionHandler</code>注解。</p>
-</li>
-</ol>
-<p>所以，处理请求的方法可以是：</p>
-<pre><code>@ExceptionHandler
-public String handleException(Throwable ex, HttpServletRequest request) {
-	if (ex instanceof NullPointerException) {
-		request.setAttribute(&quot;errorMessage&quot;, &quot;空指针异常！&quot;);
-	} else if (ex instanceof ArrayIndexOutOfBoundsException) {
-		request.setAttribute(&quot;errorMessage&quot;, &quot;数据下标越界异常异常！&quot;);
-	} else {
-		request.setAttribute(&quot;errorMessage&quot;, &quot;未知异常：&quot; + ex.getClass().getName());
-	}
-	
-	return &quot;error&quot;;
-}
-</code></pre>
-<p>一旦添加了该方法，当前类中任何处理请求的方法都不必处理相关异常，等同于这些方法把异常抛出了，将由以上方法进行统一处理！</p>
-<p>需要注意的是：该方法只能处理当前类处理请求时出现的异常，如果其他控制器类的方法抛出了异常，是不会被处理的！可以把该处理异常的方法放在所有控制器类公共的父类中！</p>
-<p>关于<code>@ExceptionHandler</code>的源代码：</p>
-<pre><code>public @interface ExceptionHandler {
-
-	/**
-	 * Exceptions handled by the annotated method. If empty, will default to any
-	 * exceptions listed in the method argument list.
-	 */
-	Class&lt;? extends Throwable&gt;[] value() default {};
-
-}
-</code></pre>
-<p>该注解可以指定需要被处理的异常的种类！参数可以是数组，即同时指定多种异常都将被该方法进行处理！</p>
-<h3 id="4-springmvc框架小结">4. SpringMVC框架小结</h3>
-<ol>
-<li>
-<p>理解SpringMVC执行核心流程；</p>
-</li>
-<li>
-<p>掌握获取请求参数的方式；</p>
-</li>
-<li>
-<p>理解转发与重定向；</p>
-</li>
-<li>
-<p>了解转发时如何转发数据；</p>
-</li>
-<li>
-<p>掌握@RequestMapping、@RequestParam注解的使用；</p>
-</li>
-<li>
-<p>掌握拦截器的使用；</p>
-</li>
-<li>
-<p>掌握处理异常的使用。</p>
-</li>
-</ol>
-<h3 id="-">---------------------------</h3>
-<h3 id="附1什么时候需要使用session">附1：什么时候需要使用Session</h3>
-<p>由于Http协议是无状态协议，每次请求与响应结束后，服务器与客户端就会断开，期间产生的数据及使用数据创建的状态都不会被保留下来，导致下次再次访问时，不可以使用前序产生的数据和状态，为了解决这个问题，就产生了Cookie和Session的用法，其中，Cookie是把特定的数据存储在客户端，而Session是把特定的信息存储在服务器端的内存中。</p>
-<p>通常，使用Session存储：</p>
-<ol>
-<li>
-<p>用户的身份的唯一标识，例如：用户的id；</p>
-</li>
-<li>
-<p>使用频率较高的数据，例如：用户名；</p>
-</li>
-<li>
-<p>不便于使用其它解决方案去存储或者传递的数据。</p>
-</li>
-</ol>
-<h3 id="附2-拦截器interceptor和过滤器filter的区别">附2. 拦截器(Interceptor)和过滤器(Filter)的区别</h3>
-<p>拦截器和过滤器都是可以设置在若干种不同的请求处理之前的，都可以实现“拦截”和“放行”的做法，项目中，都可以存在若干个拦截器或者过滤器形成拦截器链或者过滤器链。</p>
-<p>过滤器是JavaEE中的组件，拦截器是SpringMVC中的组件，只要是使用Java语言做服务器端开发都可以使用过滤器，但是，只有使用了SpringMVC框架才可以使用拦截器，并且，如果使用SpringMVC时，<code>DispatcherServlet</code>映射的路径是<code>*.do</code>，则只有以<code>.do</code>为后缀的请求才可能被拦截器处理，也就是说，只有被<code>DispatcherServlet</code>映射到的路径才可能被拦截器处理。</p>
-<p>过滤器是执行在所有<code>Servlet</code>组件之前的，而拦截器是执行在<code>DispatcherServlet</code>之后、且在各Controller控制器之前及之后的组件！</p>
-<p>过滤器是需要在<strong>web.xml</strong>中进行配置的，其过滤的路径只能通过<code>&lt;url-pattern&gt;</code>节点配置1个路径，配置非常不灵活，拦截器可以通过若干个<code>&lt;mvc:mapping /&gt;</code>节点配置若干个黑名单，还可以通过若干个<code>&lt;mvc:exclude-mapping /&gt;</code>节点配置若干个白名单，配置就非常灵活！</p>
-<p>虽然拦截器和过滤器可以实现的的功能几乎相同，且拦截器的配置更加灵活，但是，由于执行时间节点的差异，拦截器也并不能完全取代过滤器！</p>
-<h3 id="附3-解决乱码问题">附3. 解决乱码问题</h3>
-<p>计算机能够直接识别并处理的都是二进制数，也就是由0和1组成的序列，每个存储0或者1的空间称为“位(bit)”，由于每个二进制位只能存储1个0或者1个1，只能表达2种可能性，就不足以表示更多的内容，在计算机中，使用了更大的单位“字节(byte)”作为基本单位，每个字节由8个二进制位组成。</p>
-<p>在ASCII编码表中指定了人类生活使用的字符与二进制数的对应关系，例如<code>a</code>对应的就是<code>110 0001</code>，假设输入了1个<code>a</code>，其实计算机处理的是<code>110 0001</code>，当计算机运算得到<code>110 0001</code>，就会显示为<code>a</code>。</p>
-<p>由于ASCII编码表只制定了1个字节的对应关系，但是，中文的汉字种类太多，1个字节无法表达，就需要更多的字节数，例如使用2个字节，就可以表示更多种对应关系，Java语言在处理字符时，内存中就使用的Unicode编码。</p>
-<p>当数据需要传输时，如果传输的是<code>a</code>，只需要1个字节就够了，如果传输的是<code>中</code>这个汉字，至少需要2个字节，所以，如果单纯直接传输二进制数的序列，接收方可能接收到<code>1110 0001 1101 1100 1011 1010</code>，却不知道如何进行分隔！所以，为了保证能够正确的分隔这些二进制的序列，就产生了传输编码，例如UTF-8。</p>
-<p>在UTF-8中，如果某个字符是2个字节的，则使用的格式是：</p>
-<pre><code>110x xxxx	10xx xxxx
-</code></pre>
-<p>如果某个字符是3个字节的，则使用的格式是：</p>
-<pre><code>1110 xxxx	10xx xxxx	10xx xxxx
-</code></pre>
-<p>如果某个字符是4个字节的，则使用的格式是：</p>
-<pre><code>1111 0xxx	10xx xxxx	10xx xxxx	10xx xxxx
-</code></pre>
-<p>通常，UTF-8分为常用版本(utf8mb3)和包括了不常用字符的版本(utf8mb4)，一般默认指的是常用版本。</p>
-<p>当然，除了UTF-8以外，还有其它的编码格式，例如GBK、GB2312、ISO-8859-1、latin1等，不同的编码格式的编码规范是不相同的，甚至有些编码格式并不支持中文！所以，如果发出和接收使用的是不同的编码，甚至使用了不支持中文的编码，就会导致无法解读，进而出现乱码！</p>
-<p>所以，乱码问题都是由于“使用的编码不统一”所导致的，而解决方案就是“使用统一的编码”，在项目中，常见的需要指定编码的位置有：项目的源代码、网络传输和接收的编码、界面、其它网络连接、数据库等存储位置……可以简单的理解为：只要能够指定编码的位置，统统指定同一种编码，就不会出现乱码，如果没有指定，就可能出现乱码。</p>
 ]]></content>
     </entry>
 </feed>
