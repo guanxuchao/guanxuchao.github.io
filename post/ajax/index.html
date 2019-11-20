@@ -9,10 +9,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1574231769918">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1574234706535">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -39,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://guanxuchao.com/">
-        <img src="https://guanxuchao.com//images/avatar.png?v=1574231769918" class="site-logo">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1574234706535" class="site-logo">
         <h1 class="site-title">Chao&#39;s Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -312,6 +318,12 @@ $(&quot;#btn-login&quot;).click(function(){
             
 
             
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
 
           </div>
 
@@ -335,6 +347,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'c326121ff7b8a31b4954',
+        clientSecret: '28b5944bc2461cf2d80ae42e0fffd4f10a17aa2f',
+        repo: 'guanxuchao.github.io',
+        owner: 'guanxuchao',
+        admin: ['guanxuchao'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
