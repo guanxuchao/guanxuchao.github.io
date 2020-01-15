@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>php中-&gt; 、=&gt;、::、$this-&gt;使用方法与场景 | Chao&#39;s Blog</title>
+<meta name="description" content="&lt;h4&gt;个人技术博客&lt;/h4&gt;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1579080041641">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144242444-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144242444-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://guanxuchao.com/">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1579080041641" class="site-logo">
+        <h1 class="site-title">Chao&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <h4>个人技术博客</h4>
+    </div>
+    <div class="site-footer">
+      <h6>主要记录一些自己平时学习的笔记</h6> | <a class="rss" href="https://guanxuchao.com//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">php中-&gt; 、=&gt;、::、$this-&gt;使用方法与场景</h2>
+            <div class="post-date">2020-01-15</div>
+            
+              <div class="feature-container" style="background-image: url('https://guanxuchao.com//post-images/php-zhong-greater-greaterdollarthis-greatershi-yong-fang-fa-yu-chang-jing.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>在php探索过程中我有时候经常搞不明白-&gt;，=&gt;，::，$this-&gt;的作用与含义，今天总结一下记录下来。</p>
+<!-- more -->
+<p>一、***-&gt;***用来引用一个类的属性（变量）、方法（函数）<br>
+可以把-&gt;理解成调用的意思<br>
+比如：</p>
+<pre><code>&lt;?php
+
+Class a{
+var $id;
+function add(){
+  $this-&gt;id=”test”;
+  echo “abc”;
+  }
+}
+$b = new a;
+$b-&gt;add();  //调用类a中的add()方法，输出为abc
+Echo $b-&gt;id; //调用类a中的属性id，输出为test
+</code></pre>
+<p>二、***=&gt;***是用来定义数组用的<br>
+比如：</p>
+<pre><code>$arr1 =array(0=&gt;'php',1=&gt;'is',the=&gt;'the');
+Echo $arra[0],$arr1[1],$arr[‘the’];   //对应输出设置的值
+</code></pre>
+<p>三、***：：***用来直接调用类中的属性或方法，没有实例化<br>
+正常的情况我们用实例化方法来调用类中的属性或方法，但使用：：可以不需要实例化对象，直接调用即可。<br>
+比如：</p>
+<pre><code>&lt;?php
+Class b{
+var $name=”test”;
+function Getname(){
+echo 'test is good';
+}
+}
+//直接调用：
+echo b::Getname();//输出为test isgood
+</code></pre>
+<p>四、***<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mo>−</mo><mo>&gt;</mo><mo>∗</mo><mo>∗</mo><mo>∗</mo><mi mathvariant="normal">表</mi><mi mathvariant="normal">示</mi><mi mathvariant="normal">实</mi><mi mathvariant="normal">例</mi><mi mathvariant="normal">化</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">具</mi><mi mathvariant="normal">体</mi><mi mathvariant="normal">对</mi><mi mathvariant="normal">象</mi><mi mathvariant="normal">我</mi><mi mathvariant="normal">们</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">般</mi><mi mathvariant="normal">在</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">类</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">内</mi><mi mathvariant="normal">部</mi><mi mathvariant="normal">使</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">本</mi><mi mathvariant="normal">类</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">属</mi><mi mathvariant="normal">性</mi><mi mathvariant="normal">或</mi><mi mathvariant="normal">方</mi><mi mathvariant="normal">法</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">使</mi><mi mathvariant="normal">用</mi></mrow><annotation encoding="application/x-tex">this-&gt;***表示实例化后调用具体对象
+我们一般在一个类的内部使用本类的属性或方法时，就使用</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">示</span><span class="mord cjk_fallback">实</span><span class="mord cjk_fallback">例</span><span class="mord cjk_fallback">化</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">具</span><span class="mord cjk_fallback">体</span><span class="mord cjk_fallback">对</span><span class="mord cjk_fallback">象</span><span class="mord cjk_fallback">我</span><span class="mord cjk_fallback">们</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">般</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">类</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">内</span><span class="mord cjk_fallback">部</span><span class="mord cjk_fallback">使</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">本</span><span class="mord cjk_fallback">类</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">属</span><span class="mord cjk_fallback">性</span><span class="mord cjk_fallback">或</span><span class="mord cjk_fallback">方</span><span class="mord cjk_fallback">法</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">使</span><span class="mord cjk_fallback">用</span></span></span></span>this-&gt;<br>
+比如：</p>
+<pre><code>&lt;?php
+Class a{
+var $name;
+function Getname(){
+echo $this-&gt;name;
+}
+}
+$name1 = new a;
+$name1-&gt;name = '赋值给name1';
+$name1-&gt;Getname(); 
+//输出结果为 赋值给name1
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://guanxuchao.com//tag/BvUiPLS5P" class="tag">
+                    PHP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://guanxuchao.com//post/gu-ge-vim-cha-jian-shi-yong-jian-pan-cao-zuo-liu-lan-qi-gong-neng-dai-xia-zai-lian-jie">
+                  <h3 class="post-title">
+                    谷歌VIM插件使用，键盘操作浏览器功能（带下载链接）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'c326121ff7b8a31b4954',
+        clientSecret: '28b5944bc2461cf2d80ae42e0fffd4f10a17aa2f',
+        repo: 'guanxuchao.github.io',
+        owner: 'guanxuchao',
+        admin: ['guanxuchao'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
