@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1579080041641">
+<link rel="shortcut icon" href="https://guanxuchao.com//favicon.ico?v=1579240689579">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://guanxuchao.com//styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://guanxuchao.com/">
-        <img src="https://guanxuchao.com//images/avatar.png?v=1579080041641" class="site-logo">
+        <img src="https://guanxuchao.com//images/avatar.png?v=1579240689579" class="site-logo">
         <h1 class="site-title">Chao&#39;s Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -116,7 +116,7 @@
             <div class="post-content">
               <p>在php探索过程中我有时候经常搞不明白-&gt;，=&gt;，::，$this-&gt;的作用与含义，今天总结一下记录下来。</p>
 <!-- more -->
-<p>一、***-&gt;***用来引用一个类的属性（变量）、方法（函数）<br>
+<p>一、 -&gt; 用来引用一个类的属性（变量）、方法（函数）<br>
 可以把-&gt;理解成调用的意思<br>
 比如：</p>
 <pre><code>&lt;?php
@@ -132,12 +132,12 @@ $b = new a;
 $b-&gt;add();  //调用类a中的add()方法，输出为abc
 Echo $b-&gt;id; //调用类a中的属性id，输出为test
 </code></pre>
-<p>二、***=&gt;***是用来定义数组用的<br>
+<p>二、 =&gt; 是用来定义数组用的<br>
 比如：</p>
 <pre><code>$arr1 =array(0=&gt;'php',1=&gt;'is',the=&gt;'the');
 Echo $arra[0],$arr1[1],$arr[‘the’];   //对应输出设置的值
 </code></pre>
-<p>三、***：：***用来直接调用类中的属性或方法，没有实例化<br>
+<p>三、 ：： 用来直接调用类中的属性或方法，没有实例化<br>
 正常的情况我们用实例化方法来调用类中的属性或方法，但使用：：可以不需要实例化对象，直接调用即可。<br>
 比如：</p>
 <pre><code>&lt;?php
@@ -150,8 +150,8 @@ echo 'test is good';
 //直接调用：
 echo b::Getname();//输出为test isgood
 </code></pre>
-<p>四、***<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mo>−</mo><mo>&gt;</mo><mo>∗</mo><mo>∗</mo><mo>∗</mo><mi mathvariant="normal">表</mi><mi mathvariant="normal">示</mi><mi mathvariant="normal">实</mi><mi mathvariant="normal">例</mi><mi mathvariant="normal">化</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">具</mi><mi mathvariant="normal">体</mi><mi mathvariant="normal">对</mi><mi mathvariant="normal">象</mi><mi mathvariant="normal">我</mi><mi mathvariant="normal">们</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">般</mi><mi mathvariant="normal">在</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">类</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">内</mi><mi mathvariant="normal">部</mi><mi mathvariant="normal">使</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">本</mi><mi mathvariant="normal">类</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">属</mi><mi mathvariant="normal">性</mi><mi mathvariant="normal">或</mi><mi mathvariant="normal">方</mi><mi mathvariant="normal">法</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">使</mi><mi mathvariant="normal">用</mi></mrow><annotation encoding="application/x-tex">this-&gt;***表示实例化后调用具体对象
-我们一般在一个类的内部使用本类的属性或方法时，就使用</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">示</span><span class="mord cjk_fallback">实</span><span class="mord cjk_fallback">例</span><span class="mord cjk_fallback">化</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">具</span><span class="mord cjk_fallback">体</span><span class="mord cjk_fallback">对</span><span class="mord cjk_fallback">象</span><span class="mord cjk_fallback">我</span><span class="mord cjk_fallback">们</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">般</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">类</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">内</span><span class="mord cjk_fallback">部</span><span class="mord cjk_fallback">使</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">本</span><span class="mord cjk_fallback">类</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">属</span><span class="mord cjk_fallback">性</span><span class="mord cjk_fallback">或</span><span class="mord cjk_fallback">方</span><span class="mord cjk_fallback">法</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">使</span><span class="mord cjk_fallback">用</span></span></span></span>this-&gt;<br>
+<p>四、 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mo>−</mo><mo>&gt;</mo><mi mathvariant="normal">表</mi><mi mathvariant="normal">示</mi><mi mathvariant="normal">实</mi><mi mathvariant="normal">例</mi><mi mathvariant="normal">化</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">调</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">具</mi><mi mathvariant="normal">体</mi><mi mathvariant="normal">对</mi><mi mathvariant="normal">象</mi><mi mathvariant="normal">我</mi><mi mathvariant="normal">们</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">般</mi><mi mathvariant="normal">在</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">类</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">内</mi><mi mathvariant="normal">部</mi><mi mathvariant="normal">使</mi><mi mathvariant="normal">用</mi><mi mathvariant="normal">本</mi><mi mathvariant="normal">类</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">属</mi><mi mathvariant="normal">性</mi><mi mathvariant="normal">或</mi><mi mathvariant="normal">方</mi><mi mathvariant="normal">法</mi><mi mathvariant="normal">时</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">就</mi><mi mathvariant="normal">使</mi><mi mathvariant="normal">用</mi></mrow><annotation encoding="application/x-tex">this-&gt; 表示实例化后调用具体对象
+我们一般在一个类的内部使用本类的属性或方法时，就使用</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">示</span><span class="mord cjk_fallback">实</span><span class="mord cjk_fallback">例</span><span class="mord cjk_fallback">化</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">调</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">具</span><span class="mord cjk_fallback">体</span><span class="mord cjk_fallback">对</span><span class="mord cjk_fallback">象</span><span class="mord cjk_fallback">我</span><span class="mord cjk_fallback">们</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">般</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">类</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">内</span><span class="mord cjk_fallback">部</span><span class="mord cjk_fallback">使</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">本</span><span class="mord cjk_fallback">类</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">属</span><span class="mord cjk_fallback">性</span><span class="mord cjk_fallback">或</span><span class="mord cjk_fallback">方</span><span class="mord cjk_fallback">法</span><span class="mord cjk_fallback">时</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">使</span><span class="mord cjk_fallback">用</span></span></span></span>this-&gt;<br>
 比如：</p>
 <pre><code>&lt;?php
 Class a{
